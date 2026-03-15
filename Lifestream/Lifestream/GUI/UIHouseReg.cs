@@ -381,7 +381,7 @@ public static unsafe class UIHouseReg
     {
         if(!TerritoryWatcher.IsDataReliable())
         {
-            ImGuiEx.Text(EColor.RedBright, $"You can not edit house path right now. \nPlease exit and enter your house.");
+            ImGuiEx.Text(EColor.RedBright, $"You can not edit house path right now.\nPlease exit and enter your house.");
             return;
         }
         if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Plus, "Add to the end of the list"))

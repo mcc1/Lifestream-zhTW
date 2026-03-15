@@ -18,9 +18,6 @@ using Lumina.Excel.Sheets;
 namespace Lifestream.Tasks.Shortcuts;
 public static unsafe class TaskPropertyShortcut
 {
-    private static readonly uint[] PrivateHouseAetheryteIds = [59, 60, 61, 97, 165];
-    private static readonly uint[] FreeCompanyAetheryteIds = [56, 57, 58, 96, 164];
-
     public static readonly SortedDictionary<uint, (uint Aethernet, Vector3[] Path)> InnData = new()
     {
         [1185] = (220, [new(-161.9f, -15.0f, 205.0f)]), //tul
@@ -325,10 +322,6 @@ public static unsafe class TaskPropertyShortcut
         enterApartment ??= C.EnterMyApartment;
         var a = GetApartmentAetheryteID();
         var nextToMyApt = AgentHUD.Instance()->MapMarkers.Any(x => x.IconId.EqualsAny(60790u, 60792u) && Vector3.Distance(Player.Position, new Vector3(x.X, x.Y, x.Z)) < 50f) && Svc.Objects.Any(x => x.DataId == 2007402 && Vector3.Distance(x.Position, Player.Position) < 20f);
-        if(EzThrottler.Throttle("Lifestream.Debug.ApartmentShortcut", 3000))
-        {
-            PluginLog.Information($"[Debug] Apartment shortcut: aetheryte=({a.ID},{a.Sub}), nextToMyApt={nextToMyApt}, enterApartment={enterApartment}, territory={P.Territory}, homeWorld={Player.Object?.HomeWorld.RowId}, currentWorld={Player.Object?.CurrentWorld.RowId}");
-        }
         P.TaskManager.BeginStack();
         try
         {
@@ -377,16 +370,11 @@ public static unsafe class TaskPropertyShortcut
     {
         foreach(var x in Svc.AetheryteList)
         {
-            if(!x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny(PrivateHouseAetheryteIds))
+            if(!x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny<uint>(59, 60, 61, 97, 165))
             {
-                if(EzThrottler.Throttle("Lifestream.Debug.PrivateHouseMatch", 5000))
-                {
-                    PluginLog.Information($"[Debug] Matched private house aetheryte: {DescribeHousingEntry(x)}");
-                }
                 return x.AetheryteId;
             }
         }
-        LogHousingAetherytes("private-house-miss");
         return 0;
     }
 
@@ -394,16 +382,11 @@ public static unsafe class TaskPropertyShortcut
     {
         foreach(var x in Svc.AetheryteList)
         {
-            if(x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny(PrivateHouseAetheryteIds))
+            if(x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny<uint>(59, 60, 61, 97, 165))
             {
-                if(EzThrottler.Throttle("Lifestream.Debug.ApartmentMatch", 5000))
-                {
-                    PluginLog.Information($"[Debug] Matched apartment aetheryte: {DescribeHousingEntry(x)}");
-                }
                 return (x.AetheryteId, x.SubIndex);
             }
         }
-        LogHousingAetherytes("apartment-miss");
         return (0, 0);
     }
 
@@ -411,37 +394,12 @@ public static unsafe class TaskPropertyShortcut
     {
         foreach(var x in Svc.AetheryteList)
         {
-            if(!x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny(FreeCompanyAetheryteIds))
+            if(!x.IsApartment && !x.IsSharedHouse && x.AetheryteId.EqualsAny<uint>(56, 57, 58, 96, 164))
             {
-                if(EzThrottler.Throttle("Lifestream.Debug.FreeCompanyMatch", 5000))
-                {
-                    PluginLog.Information($"[Debug] Matched FC house aetheryte: {DescribeHousingEntry(x)}");
-                }
                 return x.AetheryteId;
             }
         }
-        LogHousingAetherytes("fc-house-miss");
         return 0;
-    }
-
-    private static void LogHousingAetherytes(string reason)
-    {
-        if(!EzThrottler.Throttle($"Lifestream.Debug.HousingEntries.{reason}", 5000))
-        {
-            return;
-        }
-
-        var entries = Svc.AetheryteList
-            .Where(x => x.AetheryteId.EqualsAny(PrivateHouseAetheryteIds) || x.AetheryteId.EqualsAny(FreeCompanyAetheryteIds))
-            .Select(DescribeHousingEntry)
-            .ToArray();
-
-        PluginLog.Warning($"[Debug] Housing aetherytes ({reason}): count={entries.Length}, territory={P.Territory}, homeWorld={Player.Object?.HomeWorld.RowId}, currentWorld={Player.Object?.CurrentWorld.RowId}, entries=[{string.Join(" | ", entries)}]");
-    }
-
-    private static string DescribeHousingEntry(IAetheryteEntry entry)
-    {
-        return $"id={entry.AetheryteId},sub={entry.SubIndex},territory={entry.TerritoryId},ward={entry.Ward},plot={entry.Plot},isApartment={entry.IsApartment},isShared={entry.IsSharedHouse}";
     }
 
     private static bool ConfirmHouseEntrance()

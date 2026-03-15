@@ -283,10 +283,10 @@ public class Overlay : Window
         else
         {
             ImGuiEx.Text($"""
-                Instances available, 
+                Instances available,
                 but not initialized.
                 
-                To initialize instances, 
+                To initialize instances,
                 access aetheryte once.
                 """);
         }

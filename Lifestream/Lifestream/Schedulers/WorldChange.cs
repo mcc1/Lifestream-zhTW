@@ -64,15 +64,7 @@ internal static unsafe class WorldChange
     internal static bool? SelectVisitAnotherWorld()
     {
         if(!Player.Available) return false;
-        var selected = Utils.TrySelectSpecificEntry(Lang.VisitAnotherWorld, () => EzThrottler.Throttle("SelectString"));
-        if(selected != true &&
-           EzThrottler.Throttle("Lifestream.Debug.SelectVisitAnotherWorld", 5000) &&
-           TryGetAddonByName<AddonSelectString>("SelectString", out var addon) &&
-           IsAddonReady(&addon->AtkUnitBase))
-        {
-            PluginLog.Warning($"[Debug] VisitAnotherWorld not found. Expected=[{string.Join(" | ", Lang.VisitAnotherWorld)}], entries=[{string.Join(" | ", Utils.GetEntries(addon))}]");
-        }
-        return selected;
+        return Utils.TrySelectSpecificEntry(Lang.VisitAnotherWorld, () => EzThrottler.Throttle("SelectString"));
     }
 
     internal static bool? ConfirmWorldVisit(string s)
@@ -86,15 +78,6 @@ internal static unsafe class WorldChange
                 new AddonMaster.SelectYesno(x).Yes();
                 return true;
             }
-
-            if(EzThrottler.Throttle("Lifestream.Debug.ConfirmWorldVisit.Disabled", 5000))
-            {
-                PluginLog.Warning($"[Debug] ConfirmWorldVisit dialog found but yes button disabled for target={s}");
-            }
-        }
-        else if(EzThrottler.Throttle("Lifestream.Debug.ConfirmWorldVisit.Missing", 5000))
-        {
-            PluginLog.Warning($"[Debug] ConfirmWorldVisit dialog missing for target={s}");
         }
         return false;
     }
@@ -110,15 +93,10 @@ internal static unsafe class WorldChange
             {
                 if(EzThrottler.Throttle("SelectWorldToVisit", 1000))
                 {
-                    PluginLog.Information($"[Debug] Selecting world visit target={world}, index={index}, available=[{string.Join(" | ", worlds)}]");
                     Callback.Fire(addon, true, index + 2);
                     return true;
                 }
             }
-        }
-        else if(EzThrottler.Throttle("Lifestream.Debug.SelectWorldToVisit.Miss", 5000))
-        {
-            PluginLog.Warning($"[Debug] Target world not found in WorldTravelSelect. target={world}, available=[{string.Join(" | ", worlds)}]");
         }
         return false;
     }
