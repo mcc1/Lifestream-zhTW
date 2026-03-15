@@ -1,0 +1,26 @@
+diff --git a/Lifestream/Lifestream/Utils.cs b/Lifestream/Lifestream/Utils.cs
+index b4a1101..f72e7df 100644
+--- a/Lifestream/Lifestream/Utils.cs
++++ b/Lifestream/Lifestream/Utils.cs
+@@ -31,7 +31,6 @@ using NightmareUI;
+ using PInvoke;
+ using System;
+ using System.Collections.Specialized;
+ using System.Text.RegularExpressions;
+ using System.Windows.Forms;
+-using static FFXIVClientStructs.FFXIV.Client.UI.AddonAirShipExploration;
+ using Action = System.Action;
+ using CharaData = (string Name, ushort World);
+diff --git a/Lifestream/Lifestream/Tasks/SameWorld/TaskTryTpToAethernetDestination.cs b/Lifestream/Lifestream/Tasks/SameWorld/TaskTryTpToAethernetDestination.cs
+index 650a81e..0d55c1a 100644
+--- a/Lifestream/Lifestream/Tasks/SameWorld/TaskTryTpToAethernetDestination.cs
++++ b/Lifestream/Lifestream/Tasks/SameWorld/TaskTryTpToAethernetDestination.cs
+@@ -4,7 +4,6 @@ using ECommons.ChatMethods;
+ using ECommons.ExcelServices;
+ using ECommons.GameHelpers;
+ using Lifestream.Schedulers;
+ using Lifestream.Systems.Legacy;
+-using static FFXIVClientStructs.FFXIV.Client.UI.AddonAirShipExploration;
+ using static System.Net.Mime.MediaTypeNames;
+ 
+ namespace Lifestream.Tasks.SameWorld;
