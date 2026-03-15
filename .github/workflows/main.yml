@@ -41,6 +41,7 @@ jobs:
       mod_repo_dir: Lifestream
       localizer_source_subpaths: Lifestream
       localizer_dict_path: zh-TW.json
+      run_localizer: false
       build_project_path: Lifestream/Lifestream/Lifestream.csproj
       custom_cs: false
       package_build_dir: Lifestream/Lifestream/bin/Release
