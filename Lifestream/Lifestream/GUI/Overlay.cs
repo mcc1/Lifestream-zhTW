@@ -285,7 +285,7 @@ public class Overlay : Window
             ImGuiEx.Text($"""
                 Instances available, 
                 but not initialized.
-
+                
                 To initialize instances, 
                 access aetheryte once.
                 """);

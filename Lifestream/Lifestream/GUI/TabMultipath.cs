@@ -1,4 +1,4 @@
-﻿using ECommons.Configuration;
+using ECommons.Configuration;
 using ECommons.ExcelServices;
 using ECommons.GameHelpers;
 using Lifestream.Data;
@@ -27,7 +27,7 @@ public static class TabMultipath
             Safe(() =>
             {
                 var mp = EzConfig.DefaultSerializationFactory.Deserialize<MultiPath>(Paste());
-                mp.Name += " - copy";
+                mp.Name += "- copy";
                 mp.GUID = Guid.NewGuid();
                 C.MultiPathes.Add(mp);
                 Selected = mp;

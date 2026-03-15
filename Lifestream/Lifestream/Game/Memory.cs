@@ -1,4 +1,4 @@
-﻿using Dalamud.Hooking;
+using Dalamud.Hooking;
 using Dalamud.Utility.Signatures;
 using ECommons.EzHookManager;
 using ECommons.MathHelpers;

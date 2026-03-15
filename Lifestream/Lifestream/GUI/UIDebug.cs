@@ -1,4 +1,4 @@
-﻿using Dalamud.Game;
+using Dalamud.Game;
 using Dalamud.Plugin.Ipc.Exceptions;
 using Dalamud.Utility;
 using ECommons.Automation;
@@ -305,7 +305,7 @@ internal static unsafe class UIDebug
                     ImGuiEx.Text($"  {dc.RegionTitle}");
                     foreach(var world in dc.DataCenters)
                     {
-                        ImGuiEx.Text($"    {world.Id}/{world.Name}");
+                        ImGuiEx.Text($"{world.Id}/{world.Name}");
                     }
                 }
             }
@@ -658,7 +658,7 @@ internal static unsafe class UIDebug
         {
             ImGuiEx.Text($"""
                 Max instances: {*S.Memory.MaxInstances}
-                Initialized: {S.InstanceHandler.InstancesInitizliaed(out var maxInstances)} {maxInstances}
+                Initialized: {S.InstanceHandler.InstancesInitizliaed(out var maxInstances)}{maxInstances}
                 GetInstance: {S.InstanceHandler.GetInstance()}
                 DrawConditions: {S.Gui.Overlay.DrawConditions()}
                 """);
@@ -674,13 +674,13 @@ internal static unsafe class UIDebug
             foreach(var x in S.Data.DataStore.Aetherytes)
             {
                 ImGuiEx.Text($"""
-                    Key:
+                        Key:
                         Name: {x.Key.Name}
                         ID: {x.Key.ID}
                         Pos: {x.Key.Position}
                         Group: {x.Key.Group}
                         Territory: {ExcelTerritoryHelper.GetName(x.Key.TerritoryType, true)}
-                    Value:
+                        Value:
                         Cnt: {x.Value.Count}
                     """);
                 foreach(var z in x.Value)

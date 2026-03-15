@@ -1,4 +1,4 @@
-﻿using ECommons.Configuration;
+using ECommons.Configuration;
 using ECommons.GameHelpers;
 using static Lifestream.Paissa.PaissaData;
 

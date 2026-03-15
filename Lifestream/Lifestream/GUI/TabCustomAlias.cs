@@ -1,4 +1,4 @@
-﻿using ECommons.Configuration;
+using ECommons.Configuration;
 using ECommons.GameHelpers;
 using ECommons.MathHelpers;
 using ECommons.SplatoonAPI;
@@ -235,7 +235,7 @@ public static class TabCustomAlias
         {
             ImGui.SameLine();
             ImGuiEx.ButtonCheckbox(FontAwesomeIcon.Plane, ref command.UseFlight, EColor.Green);
-            ImGuiEx.Tooltip("Fly for movement. Don't forget to use \"Mount Up\" command before. ");
+            ImGuiEx.Tooltip("Fly for movement. Don't forget to use \"Mount Up\" command before.");
         }
 
         if(command.Kind == CustomAliasKind.Change_world)
@@ -291,30 +291,30 @@ public static class TabCustomAlias
                 ImGui.TableNextRow();
 
                 ImGui.TableNextColumn();
-                ImGuiEx.TextV($"Center point: ");
+                ImGuiEx.TextV($"Center point:");
                 ImGui.TableNextColumn();
                 Utils.DrawVector2Selector("center", ref command.CenterPoint);
 
                 ImGui.TableNextColumn();
-                ImGuiEx.TextV($"Exit point: ");
+                ImGuiEx.TextV($"Exit point:");
                 ImGui.TableNextColumn();
                 Utils.DrawVector3Selector($"exit{command.ID}", ref command.CircularExitPoint);
                 ImGui.Checkbox("Finish by walking to exit point", ref command.WalkToExit);
 
                 ImGui.TableNextColumn();
-                ImGuiEx.TextV($"Precision: ");
+                ImGuiEx.TextV($"Precision:");
                 ImGui.TableNextColumn();
                 ImGui.SetNextItemWidth(100f.Scale());
                 ImGui.DragFloat("##precision", ref command.Precision.ValidateRange(4f, 100f), 0.01f);
 
                 ImGui.TableNextColumn();
-                ImGuiEx.TextV($"Tolerance: ");
+                ImGuiEx.TextV($"Tolerance:");
                 ImGui.TableNextColumn();
                 ImGui.SetNextItemWidth(100f.Scale());
                 ImGui.DragInt("##tol", ref command.Tolerance.ValidateRange(1, (int)(command.Precision * 0.75f)), 0.01f);
 
                 ImGui.TableNextColumn();
-                ImGuiEx.TextV($"Distance limit: ");
+                ImGuiEx.TextV($"Distance limit:");
                 ImGui.TableNextColumn();
                 var en = command.Clamp != null;
                 if(ImGui.Checkbox($"##clamp", ref en))

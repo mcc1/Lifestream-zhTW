@@ -1,4 +1,4 @@
-﻿using ECommons.SimpleGui;
+using ECommons.SimpleGui;
 using ECommons.SplatoonAPI;
 
 namespace Lifestream.GUI;

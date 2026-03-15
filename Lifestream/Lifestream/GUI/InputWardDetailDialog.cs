@@ -1,4 +1,4 @@
-﻿using ECommons.Configuration;
+using ECommons.Configuration;
 using Lifestream.Data;
 using NightmareUI.ImGuiElements;
 

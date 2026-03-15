@@ -1,4 +1,4 @@
-﻿namespace Lifestream.GUI;
+namespace Lifestream.GUI;
 
 internal static class UIServiceAccount
 {

@@ -1,4 +1,4 @@
-﻿using ECommons.GameHelpers;
+using ECommons.GameHelpers;
 using Lifestream.Data;
 using Lumina.Excel.Sheets;
 using ResidentialAetheryte = Lifestream.Systems.Residential.ResidentialAetheryte;

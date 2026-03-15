@@ -1,4 +1,4 @@
-﻿using NightmareUI.ImGuiElements;
+using NightmareUI.ImGuiElements;
 
 namespace Lifestream.GUI.Windows;
 public class GameCloseWindow : Window

@@ -1,4 +1,4 @@
-﻿using AutoRetainerAPI;
+using AutoRetainerAPI;
 using Dalamud.Game.Gui.Dtr;
 using ECommons.Automation;
 using ECommons.Automation.NeoTaskManager;
@@ -71,7 +71,7 @@ public unsafe class Lifestream : IDalamudPlugin
     {
         P = this;
         ECommonsMain.Init(pluginInterface, this, Module.SplatoonAPI);
-#if false
+#if CUSTOMCS
         PluginLog.Warning($"Using custom FFXIVClientStructs");
         var gameVersion = DalamudReflector.TryGetDalamudStartInfo(out var ver) ? ver.GameVersion.ToString() : "unknown";
         InteropGenerator.Runtime.Resolver.GetInstance.Setup(Svc.SigScanner.SearchBase, gameVersion, new(Svc.PluginInterface.ConfigDirectory.FullName + "/cs.json"));
@@ -659,6 +659,17 @@ public unsafe class Lifestream : IDalamudPlugin
                 return;
             }
 
+            var addon = component->ContainingAddon;
+            if(addon == null) addon = component->ContainingAddon2;
+            if(addon == null || addon->NameString != "ChatLog")
+            {
+                if(S.SearchHelperOverlay.IsOpen)
+                {
+                    S.SearchHelperOverlay.IsOpen = false;
+                }
+                return;
+            }
+
             var currentText = component->UnkText1.ToString();
 
             if(currentText.StartsWith("/li", StringComparison.OrdinalIgnoreCase))
@@ -690,9 +701,22 @@ public unsafe class Lifestream : IDalamudPlugin
     {
         try
         {
-            // Disable chat input monitoring on this API 12 baseline until a
-            // compatible text-input hook path is identified.
-            return null;
+            var mod = RaptureAtkModule.Instance();
+            if(mod == null) return null;
+
+            var basePtr = mod->TextInput.TargetTextInputEventInterface;
+            if(basePtr == null) return null;
+
+            // Memory signature from Dalamud's Completion.cs (line 102)
+            // Used to identify the correct text input component vtable
+            var wantedVtblPtr = Svc.SigScanner.GetStaticAddressFromSig(
+"48 89 01 48 8D 05 ?? ?? ?? ?? 48 89 81 ?? ?? ?? ?? 48 8D 05 ?? ?? ?? ?? 48 89 81 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 8B 48 68",
+                4);
+
+            var vtblPtr = *(nint*)basePtr;
+            if(vtblPtr != wantedVtblPtr) return null;
+
+            return (AtkComponentTextInput*)((AtkComponentInputBase*)basePtr - 1);
         }
         catch
         {

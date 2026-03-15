@@ -1,4 +1,4 @@
-﻿using ECommons.Configuration;
+using ECommons.Configuration;
 using ECommons.ExcelServices;
 using ECommons.GameHelpers;
 using ECommons.Reflection;
@@ -25,7 +25,7 @@ public static unsafe class UIHouseReg
         }
         else
         {
-            ImGuiEx.TextWrapped("Please log in to be able to create and edit registrations. ");
+            ImGuiEx.TextWrapped("Please log in to be able to create and edit registrations.");
             DrawOverview();
         }
     }
@@ -293,7 +293,7 @@ public static unsafe class UIHouseReg
         var plotDataAvailable = TryGetCurrentPlotInfo(out var kind, out var ward, out var plot);
         if(data == null)
         {
-            ImGuiEx.Text($"No data found. ");
+            ImGuiEx.Text($"No data found.");
             if(plotDataAvailable && Player.IsInHomeWorld)
             {
                 if(ImGui.Button($"Register {kind.GetName()}, ward {ward + 1}, plot {plot + 1} as {(isPrivate ? "private" : "free company")} house."))

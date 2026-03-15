@@ -1,4 +1,4 @@
-﻿using ECommons.EzSharedDataManager;
+using ECommons.EzSharedDataManager;
 
 namespace Lifestream.IPC;
 

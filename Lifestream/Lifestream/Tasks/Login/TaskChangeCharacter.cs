@@ -1,4 +1,4 @@
-﻿using ECommons.Automation;
+using ECommons.Automation;
 using ECommons.Automation.UIInput;
 using ECommons.ExcelServices;
 using ECommons.GameHelpers;

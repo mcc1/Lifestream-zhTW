@@ -1,4 +1,4 @@
-﻿using ECommons.Funding;
+using ECommons.Funding;
 
 namespace Lifestream.GUI;
 

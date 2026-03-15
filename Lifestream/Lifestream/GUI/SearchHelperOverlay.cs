@@ -265,12 +265,12 @@ public unsafe class SearchHelperOverlay : Window
 
             var typeColor = suggestion.Type switch
             {
-                "Built-in" => 0xFF4080FF,
-                "System" => 0xFF8040FF,
-                "Custom Alias" => 0xFFFF6000,
-                "Address Book" => 0xFFFF0080,
-                "World" => 0xFFFFD000,
-                "DC World" => 0xFFFF4080,
+"Built-in" => 0xFF4080FF,
+"System" => 0xFF8040FF,
+"Custom Alias" => 0xFFFF6000,
+"Address Book" => 0xFFFF0080,
+"World" => 0xFFFFD000,
+"DC World" => 0xFFFF4080,
                 _ => 0xFF808080
             };
 
@@ -322,9 +322,16 @@ public unsafe class SearchHelperOverlay : Window
 
     private unsafe AtkComponentTextInput* GetActiveTextInput()
     {
-        // The API 12 client structs available on this build line do not expose
-        // the text-input event interface used by upstream autocomplete hooks.
-        return null;
+        var mod = RaptureAtkModule.Instance();
+        if(mod == null) return null;
+
+        var basePtr = mod->TextInput.TargetTextInputEventInterface;
+        if(basePtr == null) return null;
+
+        var vtblPtr = *(nint*)basePtr;
+        if(vtblPtr != WantedVtblPtr) return null;
+
+        return (AtkComponentTextInput*)((AtkComponentInputBase*)basePtr - 1);
     }
 
     public override bool DrawConditions()

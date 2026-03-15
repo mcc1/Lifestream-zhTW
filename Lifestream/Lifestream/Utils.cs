@@ -1038,20 +1038,20 @@ internal static unsafe partial class Utils
         builder.Append(ExcelWorldHelper.GetName(entry.World));
         builder.Append(", ");
         builder.Append(TabAddressBook.ResidentialNames.SafeSelect(entry.City) ?? "???");
-        builder.Append(", Ward ");
+        builder.Append(", Ward");
         builder.Append(entry.Ward);
         if(entry.PropertyType == PropertyType.House)
         {
-            builder.Append(", Plot ");
+            builder.Append(", Plot");
             builder.Append(entry.Plot);
         }
         if(entry.PropertyType == PropertyType.Apartment)
         {
-            builder.Append(", Apartment ");
+            builder.Append(", Apartment");
             builder.Append(entry.Apartment);
             if(entry.ApartmentSubdivision)
             {
-                builder.Append(" (subdivision)");
+                builder.Append("(subdivision)");
             }
         }
         return builder.ToString();

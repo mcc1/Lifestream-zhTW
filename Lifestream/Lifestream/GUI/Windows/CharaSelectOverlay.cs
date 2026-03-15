@@ -1,4 +1,4 @@
-﻿using ECommons.ExcelServices;
+using ECommons.ExcelServices;
 using ECommons.SimpleGui;
 using ECommons.UIHelpers.AddonMasterImplementations;
 using Lifestream.Systems;

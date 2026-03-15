@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.ClientState.Aetherytes;
+using Dalamud.Game.ClientState.Aetherytes;
 using Dalamud.Game.ClientState.Objects.Enums;
 using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.ExcelServices;

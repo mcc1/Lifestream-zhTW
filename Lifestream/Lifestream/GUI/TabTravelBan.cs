@@ -1,4 +1,4 @@
-﻿using ECommons.GameHelpers;
+using ECommons.GameHelpers;
 using Lifestream.Data;
 using NightmareUI.ImGuiElements;
 
