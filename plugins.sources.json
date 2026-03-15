@@ -43,13 +43,6 @@
     "internal_name": "Lifestream",
     "source_repo": "mcc1/Lifestream-zhTW",
     "manifest_path": "Lifestream.json",
-    "asset_name_regex": "^Lifestream-.*\\.zip$",
-    "include_prereleases": false
-  },
-  {
-    "internal_name": "Lifestream",
-    "source_repo": "mcc1/Lifestream-zhTW",
-    "manifest_path": "Lifestream.json",
     "fixed_release_tag": "lifestream-dev",
     "asset_name_regex": "^Lifestream-dev\\.zip$",
     "manifest_overrides": {
