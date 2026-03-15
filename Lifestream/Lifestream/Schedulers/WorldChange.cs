@@ -64,7 +64,27 @@ internal static unsafe class WorldChange
     internal static bool? SelectVisitAnotherWorld()
     {
         if(!Player.Available) return false;
-        return Utils.TrySelectSpecificEntry(Lang.VisitAnotherWorld, () => EzThrottler.Throttle("SelectString"));
+        if(TryGetAddonByName<AddonSelectString>("SelectString", out var addon) && IsAddonReady(&addon->AtkUnitBase))
+        {
+            var entries = Utils.GetEntries(addon);
+            if(Utils.TryFindEqualsOrContains(entries, x => x, Lang.VisitAnotherWorld, out var entry))
+            {
+                var index = entries.IndexOf(entry);
+                if(index >= 0 && EzThrottler.Throttle("SelectString"))
+                {
+                    new AddonMaster.SelectString(addon).Entries[index].Select();
+                    PluginLog.Information($"[Debug] SelectVisitAnotherWorld matched entry={entry}, index={index}");
+                    return true;
+                }
+                return false;
+            }
+
+            if(EzThrottler.Throttle("Lifestream.Debug.SelectVisitAnotherWorld", 5000))
+            {
+                PluginLog.Warning($"[Debug] VisitAnotherWorld not found. Expected=[{string.Join(" | ", Lang.VisitAnotherWorld)}], entries=[{string.Join(" | ", entries)}]");
+            }
+        }
+        return false;
     }
 
     internal static bool? ConfirmWorldVisit(string s)
