@@ -1437,7 +1437,15 @@ internal static unsafe partial class Utils
                 if(text == "") break;
                 arr.Add(text);
             }
+            if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations", 5000))
+            {
+                PluginLog.Information($"[Debug] WorldTravelSelect entries: [{string.Join(" | ", arr)}]");
+            }
             return [.. arr];
+        }
+        if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations.Missing", 5000))
+        {
+            PluginLog.Warning("[Debug] WorldTravelSelect addon missing or not ready");
         }
         return Array.Empty<string>();
     }
