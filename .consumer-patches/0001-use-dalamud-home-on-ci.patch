@@ -1,0 +1,15 @@
+diff --git a/Lifestream/Lifestream/Lifestream.csproj b/Lifestream/Lifestream/Lifestream.csproj
+index be7f4fc..6ea6692 100644
+--- a/Lifestream/Lifestream/Lifestream.csproj
++++ b/Lifestream/Lifestream/Lifestream.csproj
+@@ -34,6 +34,10 @@
+         <PackageReference Include="NotificationMasterAPI" Version="1.0.0.1" />
+     </ItemGroup>
+ 
++    <PropertyGroup Condition="'$(OS)' != 'Windows_NT' OR '$(CI)' == 'true'">
++        <DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
++    </PropertyGroup>
++
+     <ItemGroup>
+       <ProjectReference Include="..\AutoRetainerAPI\AutoRetainerAPI\AutoRetainerAPI.csproj" />
+       <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />

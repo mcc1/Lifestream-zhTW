@@ -49,15 +49,20 @@ jobs:
         *.dll
         *.json
         *.pdb
+        images/*.png
       dalamud_asset_url: https://github.com/yanmucorp/Dalamud/releases/download/25-12-26-01/latest.7z
       dalamud_assets_json_url: https://raw.githubusercontent.com/yanmucorp/DalamudAssets/master/assetCN.json
       dalamud_required_files: |
         Dalamud.dll
         Dalamud.Common.dll
+        Newtonsoft.Json.dll
         ImGui.NET.dll
         Lumina.dll
         Lumina.Excel.dll
         ImGuiScene.dll
+        SharpDX.dll
+        PInvoke.User32.dll
+        PInvoke.Windows.Core.dll
         InteropGenerator.Runtime.dll
         FFXIVClientStructs.dll
       commit_changes: ${{ github.event_name == 'workflow_dispatch' && inputs.workflow_mode != 'build' }}
