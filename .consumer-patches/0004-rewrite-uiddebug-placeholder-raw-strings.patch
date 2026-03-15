@@ -1,0 +1,23 @@
+diff --git a/Lifestream/Lifestream/GUI/UIDebug.cs b/Lifestream/Lifestream/GUI/UIDebug.cs
+index 668036d..bb6e731 100644
+--- a/Lifestream/Lifestream/GUI/UIDebug.cs
++++ b/Lifestream/Lifestream/GUI/UIDebug.cs
+@@ -441,16 +441,12 @@ internal static unsafe class UIDebug
+                 ImGui.Indent();
+                 foreach(var region in r.Regions)
+                 {
+-                    ImGuiEx.Text($"""
+-                        {region.RegionTitle}
+-                        """);
++                    ImGuiEx.Text($"{region.RegionTitle}");
+                     ImGuiEx.Text("DataCenters");
+                     foreach(var dc in region.DataCenters)
+                     {
+                         ImGui.Indent();
+-                        ImGuiEx.Text($"""
+-                            {dc.Name}
+-                            """);
++                        ImGuiEx.Text($"{dc.Name}");
+                         ImGui.Unindent();
+                     }
+                 }
