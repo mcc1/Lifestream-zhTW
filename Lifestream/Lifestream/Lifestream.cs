@@ -119,6 +119,7 @@ public unsafe class Lifestream : IDalamudPlugin
         var argsSplit = arguments.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var primary = argsSplit.SafeSelect(0) ?? "";
         var additionalCommand = argsSplit.Length > 1 ? argsSplit[1..].Join(",") : null;
+        PluginLog.Information($"[Debug] /li received: command='{command}', arguments='{arguments}', primary='{primary}', additional='{additionalCommand ?? "<null>"}'");
         if(arguments.StartsWith("debug TaskAetheryteAethernetTeleport "))
         {
             var args = arguments.Split(" ");
@@ -351,6 +352,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 }
                 if(ProcessCustomShortcuts(primary))
                 {
+                    PluginLog.Information($"[Debug] /li primary matched custom shortcut: '{primary}'");
                     ProcessAdditionalCommand(additionalCommand);
                     return;
                 }
@@ -373,24 +375,37 @@ public unsafe class Lifestream : IDalamudPlugin
 
                 var targetInput = primary == "" ? Player.HomeWorld : primary;
                 var normalizedPrimary = Utils.NormalizeTravelWorldAlias(targetInput);
+                var sameDcMatched = Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.Worlds, out var sameDcWorld);
+                var crossDcMatched = Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.DCWorlds, out var crossDcWorld);
+                var dataCenterMatched = Utils.TryGetWorldFromDataCenter(normalizedPrimary, out var dataCenterWorld, out var dataCenterId);
 
-                if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.Worlds, out var w))
+                PluginLog.Information(
+                    $"[Debug] /li routing input: target='{targetInput}', normalized='{normalizedPrimary}', " +
+                    $"sameDcWorlds=[{string.Join(" | ", S.Data.DataStore.Worlds)}], crossDcWorlds=[{string.Join(" | ", S.Data.DataStore.DCWorlds)}]");
+                PluginLog.Information(
+                    $"[Debug] /li routing result: sameDcMatched={sameDcMatched} ({sameDcWorld ?? "<none>"}), " +
+                    $"crossDcMatched={crossDcMatched} ({crossDcWorld ?? "<none>"}), " +
+                    $"dataCenterMatched={dataCenterMatched} ({dataCenterWorld ?? "<none>"}, dc={dataCenterId})");
+
+                if(sameDcMatched)
                 {
-                    PluginLog.Information($"Same dc/{primary}/{w}");
-                    TPAndChangeWorld(w, false, gateway: gateway);
+                    PluginLog.Information($"[Debug] /li branch: same-dc world travel -> '{sameDcWorld}'");
+                    TPAndChangeWorld(sameDcWorld, false, gateway: gateway);
                 }
-                else if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.DCWorlds, out var dcw))
+                else if(crossDcMatched)
                 {
-                    PluginLog.Information($"Cross dc/{primary}/{w}");
-                    TPAndChangeWorld(dcw, true, gateway: gateway);
+                    PluginLog.Information($"[Debug] /li branch: cross-dc world travel -> '{crossDcWorld}'");
+                    TPAndChangeWorld(crossDcWorld, true, gateway: gateway);
                 }
-                else if(Utils.TryGetWorldFromDataCenter(normalizedPrimary, out var world, out var dc))
+                else if(dataCenterMatched)
                 {
-                    Utils.DisplayInfo($"Random world from {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name}: {world}");
-                    TPAndChangeWorld(world, Player.Object.CurrentWorld.ValueNullable?.DataCenter.RowId != dc, gateway: gateway);
+                    PluginLog.Information($"[Debug] /li branch: datacenter random world -> '{dataCenterWorld}' (dc={dataCenterId})");
+                    Utils.DisplayInfo($"Random world from {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dataCenterId).Name}: {dataCenterWorld}");
+                    TPAndChangeWorld(dataCenterWorld, Player.Object.CurrentWorld.ValueNullable?.DataCenter.RowId != dataCenterId, gateway: gateway);
                 }
                 else
                 {
+                    PluginLog.Warning($"[Debug] /li branch: fallback to aethernet/destination lookup for '{primary}'");
                     TaskTryTpToAethernetDestination.Enqueue(primary, true, true);
                 }
 

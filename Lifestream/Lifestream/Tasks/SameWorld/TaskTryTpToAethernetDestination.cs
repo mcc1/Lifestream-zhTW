@@ -13,6 +13,9 @@ internal static class TaskTryTpToAethernetDestination
 {
     public static void Enqueue(string targetName, bool allowPartial = false, bool allowTpFallback = false)
     {
+        PluginLog.Information(
+            $"[Debug] Aethernet lookup enqueue: target='{targetName}', allowPartial={allowPartial}, allowTpFallback={allowTpFallback}, " +
+            $"activeAetheryte='{(P.ActiveAetheryte?.Name ?? "<none>")}'");
         TaskManagerTask[] waiters = [new(WorldChange.WaitUntilMasterAetheryteExists), new FrameDelayTask(10), new(process)];
         if(C.WaitForScreenReady) P.TaskManager.Enqueue(Utils.WaitForScreen);
         if(P.ActiveAetheryte != null)
@@ -67,6 +70,7 @@ internal static class TaskTryTpToAethernetDestination
                         {
                             if(!Utils.EnqueueTeleport(targetName, null))
                             {
+                                PluginLog.Warning($"[Debug] Aethernet lookup failed before TP fallback error: target='{targetName}', territory={P.Territory}, playerWorld='{Player.CurrentWorld}'");
                                 DuoLog.Error("Destination could not be found");
                             }
                         });
@@ -167,6 +171,7 @@ internal static class TaskTryTpToAethernetDestination
                 {
                     if(!Utils.EnqueueTeleport(targetName, null))
                     {
+                        PluginLog.Warning($"[Debug] Aethernet lookup failed after active/master search: target='{targetName}', territory={P.Territory}, playerWorld='{Player.CurrentWorld}'");
                         DuoLog.Error("Destination could not be found");
                     }
                 });
