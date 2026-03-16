@@ -261,7 +261,7 @@ public class ItemSelector<T>
         var       newFilter = Filter;
         using var style     = ImRaii.PushStyle(ImGuiStyleVar.FrameRounding, 0);
         ImGui.SetNextItemWidth(width);
-        var enterPressed = ImUtf8.InputText("##"u8, ref newFilter, "Filter..."u8, ImGuiInputTextFlags.EnterReturnsTrue);
+        var enterPressed = ImUtf8.InputText("##"u8, ref newFilter, "篩選..."u8, ImGuiInputTextFlags.EnterReturnsTrue);
         if (newFilter != Filter)
         {
             Filter      = newFilter;
@@ -309,7 +309,7 @@ public class ItemSelector<T>
         if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), Vector2.UnitX * width))
             ImGui.OpenPopup(newNamePopupAdd);
         using var font = ImRaii.PushFont(UiBuilder.DefaultFont);
-        ImGuiUtil.HoverTooltip("Add New");
+        ImGuiUtil.HoverTooltip("新增");
 
         if (!OpenNameField(newNamePopupAdd, out var newName))
             return;

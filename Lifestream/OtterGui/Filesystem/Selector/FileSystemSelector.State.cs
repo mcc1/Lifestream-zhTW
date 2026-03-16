@@ -66,7 +66,7 @@ public partial class FileSystemSelector<T, TStateStorage> : IDisposable
         ImGui.SetNextItemWidth(width);
         var       tmp    = FilterValue;
         using var id     = ImRaii.PushId(0, clear);
-        var       change = ImGui.InputTextWithHint("##Filter", "Filter...", ref tmp, 128);
+        var       change = ImGui.InputTextWithHint("##Filter", "篩選...", ref tmp, 128);
         if (ImGui.IsItemClicked(ImGuiMouseButton.Right) && !ImGui.IsItemFocused())
         {
             try

@@ -83,7 +83,7 @@ public class StartTimeTracker
     public void Draw(string label)
     {
         using var id = ImRaii.PushId(label);
-        UserRegex.DrawRegexInput("##filter", ref _filter, "Filter...", null, ImGui.GetContentRegionAvail().X, 0xFF4040F0);
+        UserRegex.DrawRegexInput("##filter", ref _filter, "篩選...", null, ImGui.GetContentRegionAvail().X, 0xFF4040F0);
         using var table = ImRaii.Table("##startTimeTable", 5, ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.RowBg);
 
         ImGui.TableSetupColumn("Name",   ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
