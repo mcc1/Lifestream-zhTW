@@ -22,13 +22,14 @@ index 0f0e0de..732f273 100644
                      PluginLog.Information($"Cross dc/{primary}/{w}");
                      TPAndChangeWorld(dcw, true, gateway: gateway);
 diff --git a/Lifestream/Lifestream/Systems/Legacy/DataStore.cs b/Lifestream/Lifestream/Systems/Legacy/DataStore.cs
-index da3eb1f..9e73f74 100644
+index efab9a7..9e73f74 100644
 --- a/Lifestream/Lifestream/Systems/Legacy/DataStore.cs
 +++ b/Lifestream/Lifestream/Systems/Legacy/DataStore.cs
-@@ -114,6 +114,14 @@ public class DataStore
+@@ -114,9 +114,17 @@ public class DataStore
  
      internal void BuildWorlds(uint dc)
      {
+-        Worlds = [.. Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId == dc && Utils.IsTravelWorld(x)).Select(x => x.Name.ToString()).Order()];
 +        if(Utils.ShouldUseTwTravelWorlds(dc))
 +        {
 +            Worlds = Utils.GetTwTravelWorlds();
@@ -37,11 +38,15 @@ index da3eb1f..9e73f74 100644
 +            return;
 +        }
 +
-         Worlds = [.. Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId == dc && x.IsPublic()).Select(x => x.Name.ToString()).Order()];
++        Worlds = [.. Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId == dc && x.IsPublic()).Select(x => x.Name.ToString()).Order()];
          PluginLog.Debug($"Built worlds: {Worlds.Print()}");
-         DCWorlds = Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId != dc && x.IsPublic() && (x.DataCenter.Value.Region == Player.Object.HomeWorld.Value.DataCenter.Value.Region || x.DataCenter.Value.Region == 4)).Select(x => x.Name.ToString()).ToArray();
+-        DCWorlds = Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId != dc && Utils.IsTravelWorld(x) && (x.DataCenter.Value.Region == Player.Object.HomeWorld.Value.DataCenter.Value.Region || x.DataCenter.Value.Region == 4)).Select(x => x.Name.ToString()).ToArray();
++        DCWorlds = Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId != dc && x.IsPublic() && (x.DataCenter.Value.Region == Player.Object.HomeWorld.Value.DataCenter.Value.Region || x.DataCenter.Value.Region == 4)).Select(x => x.Name.ToString()).ToArray();
+         PluginLog.Debug($"Built DCworlds: {DCWorlds.Print()}");
+     }
+ 
 diff --git a/Lifestream/Lifestream/Utils.cs b/Lifestream/Lifestream/Utils.cs
-index fa69ce2..8a7231b 100644
+index ad12b2b..cd4e8f3 100644
 --- a/Lifestream/Lifestream/Utils.cs
 +++ b/Lifestream/Lifestream/Utils.cs
 @@ -42,6 +42,17 @@ namespace Lifestream;
@@ -62,31 +67,43 @@ index fa69ce2..8a7231b 100644
      private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
      {
          ["伊弗利特"] = "Ifrit",
-@@ -83,6 +94,60 @@ internal static unsafe partial class Utils
+@@ -83,27 +94,58 @@ internal static unsafe partial class Utils
          return input;
      }
  
+-    public static bool IsTravelWorld(World world)
 +    public static string[] GetTwTravelWorlds()
-+    {
+     {
+-        if(world.IsPublic())
+-        {
+-            return true;
+-        }
 +        return [.. Svc.Data.GetExcelSheet<World>()
 +            .Where(x => x.DataCenter.Value.RowId == 151 && TwTravelWorldNames.Contains(x.Name.ToString()))
 +            .Select(x => x.Name.ToString())
 +            .Distinct(StringComparer.OrdinalIgnoreCase)
 +            .OrderBy(x => Array.IndexOf(TwTravelWorldNames, x))];
 +    }
-+
+ 
+-        if(world.DataCenter.Value.RowId == 151 &&
+-           TravelWorldAliases.Keys.Contains(world.Name.ToString(), StringComparer.OrdinalIgnoreCase))
 +    public static bool ShouldUseTwTravelWorlds(uint dc)
 +    {
 +        if(dc == 151)
-+        {
-+            return true;
-+        }
-+
+         {
+             return true;
+         }
+ 
+-        return false;
 +        return GetTwTravelWorlds().Length > 0;
-+    }
-+
+     }
+ 
+-    public static World[] GetTravelWorlds(uint dataCenter)
 +    public static bool TryResolveTravelWorldInput(string input, IEnumerable<string> worlds, out string world)
-+    {
+     {
+-        return Svc.Data.GetExcelSheet<World>()
+-            .Where(x => x.DataCenter.RowId == dataCenter && IsTravelWorld(x))
+-            .ToArray();
 +        if(string.IsNullOrWhiteSpace(input))
 +        {
 +            world = default;
@@ -118,8 +135,6 @@ index fa69ce2..8a7231b 100644
 +
 +        world = default;
 +        return false;
-+    }
-+
+     }
+ 
      public static Vector3 Scatter(this Vector3 point, float radius)
-     {
-         if(radius > 0)
