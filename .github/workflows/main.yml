@@ -44,6 +44,9 @@ jobs:
       mod_repo_dir: Lifestream
       localizer_source_subpaths: Lifestream
       localizer_dict_path: zh-TW.json
+      dotnet_sdk_versions: |
+        8.0.x
+        9.0.x
       build_project_path: Lifestream/Lifestream/Lifestream.csproj
       custom_cs: false
       package_build_dir: Lifestream/Lifestream/bin/Release
