@@ -72,7 +72,7 @@ public class ClippedSelectableCombo<T>
 
         ImGui.SetNextItemWidth(-1);
         var tmp   = _filter;
-        var enter = ImGui.InputTextWithHint("##filter", "篩選...", ref tmp, 255, ImGuiInputTextFlags.EnterReturnsTrue);
+        var enter = ImGui.InputTextWithHint("##filter", "Filter...", ref tmp, 255, ImGuiInputTextFlags.EnterReturnsTrue);
         UpdateFilter(tmp);
 
         if (enter && _remainingItems.Count == 0)
