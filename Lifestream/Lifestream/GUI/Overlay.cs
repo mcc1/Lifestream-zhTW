@@ -13,7 +13,7 @@ namespace Lifestream.GUI;
 
 public class Overlay : Window
 {
-    private Overlay() : base("Lifestream Overlay", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoFocusOnAppearing, true)
+    private Overlay() : base("Lifestream 覆蓋層", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoFocusOnAppearing, true)
     {
         EzConfigGui.WindowSystem.AddWindow(this);
         IsOpen = true;
@@ -201,7 +201,7 @@ public class Overlay : Window
 
         if(P.ActiveAetheryte.Value.ID == 70 && C.Firmament)
         {
-            var name = "Firmament";
+            var name = "蒼天街";
             ResizeButton($"{Pad}{name}");
             if(ImGui.Button($"{Pad}{name}", ButtonSizeAetheryte))
             {
@@ -270,7 +270,7 @@ public class Overlay : Window
         {
             for(var i = 1; i <= Math.Min(maxInstances, 9); i++)
             {
-                var name = $"Instance {TaskChangeInstance.InstanceNumbers[i]}";
+                var name = $"副本 {TaskChangeInstance.InstanceNumbers[i]}";
                 ResizeButton(name);
                 var d = S.InstanceHandler.GetInstance() == i;
                 if(ImGuiEx.Button($"{Pad}{name}", ButtonSizeInstance, !d))
@@ -283,11 +283,11 @@ public class Overlay : Window
         else
         {
             ImGuiEx.Text($"""
-                Instances available,
-                but not initialized.
+                有可用副本，
+                但尚未初始化。
                 
-                To initialize instances,
-                access aetheryte once.
+                若要初始化副本，
+                請先存取一次以太之光。
                 """);
         }
     }
@@ -300,15 +300,15 @@ public class Overlay : Window
         }
         if(ImGui.BeginPopup($"LifestreamPopup{x.ID}"))
         {
-            if(ImGuiEx.CollectionCheckbox("Favorite", x.ID, C.Favorites))
+            if(ImGuiEx.CollectionCheckbox("收藏", x.ID, C.Favorites))
             {
                 PluginLog.Debug($"Rebuilding data store");
                 S.Data.DataStore = new();
                 EzConfig.Save();
             }
-            if(ImGuiEx.CollectionCheckbox("Hidden", x.ID, C.Hidden)) EzConfig.Save();
+            if(ImGuiEx.CollectionCheckbox("隱藏", x.ID, C.Hidden)) EzConfig.Save();
             var newName = C.Renames.TryGetValue(x.ID, out var value) ? value : "";
-            ImGuiEx.Text($"Rename:");
+            ImGuiEx.Text($"重新命名：");
             ImGui.SetNextItemWidth(200f.Scale());
             if(ImGui.InputText($"##LifestreamRename", ref newName, 100))
             {
@@ -338,7 +338,7 @@ public class Overlay : Window
             {
                 TaskRemoveAfkStatus.Enqueue();
                 TaskChangeWorld.Enqueue(x);
-                TaskDesktopNotification.Enqueue($"Arrived to {x}");
+                TaskDesktopNotification.Enqueue($"已抵達 {x}");
                 if(C.WorldVisitTPToAethernet && !C.WorldVisitTPTarget.IsNullOrEmpty() && !C.WorldVisitTPOnlyCmd)
                 {
                     P.TaskManager.Enqueue(() => Player.Interactable);

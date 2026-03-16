@@ -18,13 +18,13 @@ public static class TabUtility
     public static void Draw()
     {
         new NuiBuilder()
-            .Section("Shutdown game upon arriving to the world")
+            .Section("抵達伺服器時關閉遊戲")
             .Widget(() =>
             {
                 ImGuiEx.SetNextItemFullWidth();
                 WorldSelector.Draw(ref TargetWorldID);
             })
-            .Section("Import house listings from PaissaDB")
+            .Section("從 PaissaDB 匯入房屋列表")
             .Widget(() =>
             {
                 ImGuiEx.SetNextItemFullWidth();

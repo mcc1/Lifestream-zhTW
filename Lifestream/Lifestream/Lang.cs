@@ -1,4 +1,4 @@
-﻿using Dalamud.Utility;
+using Dalamud.Utility;
 using Lifestream.Enums;
 using Lumina.Excel.Sheets;
 using System.Text.RegularExpressions;
@@ -14,47 +14,47 @@ internal static class Lang
     public static readonly (string Normal, string GameFont) Digits = ("0123456789", "");
 
     public static readonly string Help = $"""
-    -- Main Travel --
-
-    /li → go to your home world
-    /li <world> → go to specified world
-    /li <datacenter> → go to a random world of specified data center
-    /li <aethernet> → go to specified aethernet destination
-    /li <world>, tp <location> → go to specified aetheryte destination of specified world
-    /li <world>, tp <aethernet> → go to specified aethernet destination of specified world
-
-    -- Market Board --
-
-    /li mb → go to market board
-    /li <world> mb → go to market board of specified world
-
-    -- Estates --
-
-    /li auto → go to your private estate, shared estate, FC estate or apartment, based on configured preference
-    /li shared → go to your shared estate, based on configured preference
-    /li home → go to your private estate, alias: /li home|house|private
-    /li fc → go to your FC estate, alias: /li fc|free|company|free company
-    /li apt → go to your apartment, alias: /li apt|apartment
-    /li ws → go to your FC's workshop, alias: /li ws|workshop
-
-    /li <district> <ward> <plot> → go to specified plot in current world
-    /li <world> <district> <ward> <plot> → go to specified plot of specified world
-    Examples: /li lavender 1 30, /li goblet 1 30, /li mist 1 30
-
-    -- Grand Company --
-
-    /li gc → go to your grand company, alias: /li gc|hcc
-    /li gc <grandcompany> → go to specified grand company, alias: /li gc|hcc <grandcompany>
-    /li gcc → go to your grand company city's FC chest, alias: /li gc|hcc
-    /li gcc <grandcompany> → go to specified grand company city's FC chest, alias: /li gc|hcc <grandcompany>
-    Using "hc" or "hcc" instead of "gc" or "gcc" moves to you to your home world first
-
-    -- Others --
-
-    /li cosmic → go to Sinus Ardorum, alias: /li cosmic|moon|ardorum
-    /li island → go to Island Sanctuary
-    /li w → open world travel window, alias: /li w|world|open|select
-    /lifestream → open plugin configuration 
+    -- 主要傳送 --
+    
+    /li → 回到你的原伺服器
+    /li <world> → 前往指定伺服器
+    /li <datacenter> → 前往指定資料中心的隨機伺服器
+    /li <aethernet> → 前往指定都市傳送網目的地
+    /li <world>, tp <location> → 前往指定伺服器的指定以太之光目的地
+    /li <world>, tp <aethernet> → 前往指定伺服器的指定都市傳送網目的地
+    
+    -- 市場板 --
+    
+    /li mb → 前往市場板
+    /li <world> mb → 前往指定伺服器的市場板
+    
+    -- 房產 --
+    
+    /li auto → 根據設定偏好前往你的私人房屋、共享房屋、部隊房屋或公寓
+    /li shared → 根據設定偏好前往你的共享房屋
+    /li home → 前往你的私人房屋，別名：/li home|house|private
+    /li fc → 前往你的部隊房屋，別名：/li fc|free|company|free company
+    /li apt → 前往你的公寓，別名：/li apt|apartment
+    /li ws → 前往你的部隊工房，別名：/li ws|workshop
+    
+    /li <district> <ward> <plot> → 前往當前伺服器的指定地號
+    /li <world> <district> <ward> <plot> → 前往指定伺服器的指定地號
+    範例：/li lavender 1 30、/li goblet 1 30、/li mist 1 30
+    
+    -- 大國防聯軍 --
+    
+    /li gc → 前往你的大國防聯軍，別名：/li gc|hcc
+    /li gc <grandcompany> → 前往指定大國防聯軍，別名：/li gc|hcc <grandcompany>
+    /li gcc → 前往你所屬大國防聯軍所在城市的部隊櫃，別名：/li gc|hcc
+    /li gcc <grandcompany> → 前往指定大國防聯軍所在城市的部隊櫃，別名：/li gc|hcc <grandcompany>
+    使用 "hc" 或 "hcc" 代替 "gc" 或 "gcc" 會先將你移動到原伺服器
+    
+    -- 其他 --
+    
+    /li cosmic → 前往宇宙探索區域，別名：/li cosmic|moon|ardorum
+    /li island → 前往無人島
+    /li w → 開啟跨界傳送視窗，別名：/li w|world|open|select
+    /lifestream → 開啟插件設定
     """;
     internal static string[] AdditionalChambersEntrance =>
     [
@@ -110,7 +110,7 @@ internal static class Lang
     //2	TEXT_AETHERYTE_HOUSING_WARP	<Gui(69)/> Wohngebiet
     //2	TEXT_AETHERYTE_HOUSING_WARP	<Gui(69)/> Quartier résidentiel
     public static readonly string[] ResidentialDistrict = ["Residential District Aethernet.", "冒険者居住区転送", "Wohngebiet", "Quartier résidentiel", "冒险者住宅区传送", "冒險者住宅區傳送", "모험가 거주구 이동"];
-    public static readonly string[] GoToWard = ["Go to specified ward. (Review Tabs)", "区を指定して移動（ハウスアピール確認）", "Zum angegebenen Bezirk (Zweck der Unterkunft einsehen)", "Spécifier le secteur où aller (Voir les attraits)", "移动到指定小区（查看房屋宣传标签）", "移動到指定小區（查看房屋宣傳標籤）", "移動到指定社區（查看房屋宣傳標籤）", "구역을 지정하여 이동(주택 정보 확인)"];
+    public static readonly string[] GoToWard = ["Go to specified ward. (Review Tabs)", "区を指定して移動（ハウスアピール確認）", "Zum angegebenen Bezirk (Zweck der Unterkunft einsehen)", "Spécifier le secteur où aller (Voir les attraits)", "移动到指定小区（查看房屋宣传标签）", "移動到指定小區（查看房屋宣傳標籤）", "구역을 지정하여 이동(주택 정보 확인)"];
 
     //6355	<Sheet(PlaceName,IntegerParameter(1),0)/>第<Value>IntegerParameter(2)</Value>区に移動します。
     //よろしいですか？

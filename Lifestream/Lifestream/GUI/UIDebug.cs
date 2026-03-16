@@ -42,11 +42,11 @@ internal static unsafe class UIDebug
     {
         ImGuiEx.EzTabBar("debug",
             InternalLog.ImGuiTab(),
-            ("Data editor", Editor, null, true),
-            ("Housing data", Housing, null, true),
+            ("資料編輯器", Editor, null, true),
+            ("房屋資料", Housing, null, true),
             ("AtkReader", Reader, null, true),
-            ("Debug", Debug, null, true),
-            ("Multipath", TabMultipath.Draw, null, true)
+            ("除錯", Debug, null, true),
+            ("多路徑", TabMultipath.Draw, null, true)
             );
     }
 
@@ -71,7 +71,7 @@ internal static unsafe class UIDebug
         {
             if(ImGui.Begin($"Lifestream Edit Path"))
             {
-                if(ImGui.Button("Finish"))
+                if(ImGui.Button("完成"))
                 {
                     Svc.Framework.RunOnFrameworkThread(() =>
                     {
@@ -86,13 +86,13 @@ internal static unsafe class UIDebug
             }
             ImGui.End();
         }
-        if(ImGui.Button("Load from config folder"))
+        if(ImGui.Button("從設定資料夾載入"))
         {
             var d = EzConfig.LoadConfiguration<HousingData>("GeneratedHousingData.json", true);
             if(d != null) S.Data.ResidentialAethernet.HousingData = d;
         }
         var data = S.Data.ResidentialAethernet.HousingData.Data;
-        if(ImGui.CollapsingHeader("Autotest"))
+        if(ImGui.CollapsingHeader("自動測試"))
         {
             if(DoAutotest)
             {
@@ -104,21 +104,21 @@ internal static unsafe class UIDebug
                 {
                     if(AutotestPlot >= 60)
                     {
-                        DuoLog.Information("Autotest complete");
+                        DuoLog.Information("自動測試完成");
                         DoAutotest = false;
                     }
                     else if(EzThrottler.Throttle("Autotest"))
                     {
                         AutotestPlot++;
-                        DuoLog.Information($"Now going to plot {AutotestPlot}");
+                        DuoLog.Information($"現在前往地號 {AutotestPlot}");
                         TaskTpAndGoToWard.Enqueue(Player.CurrentWorld, AutotestKind, AutotestWard, AutotestPlot - 1, false, false);
                     }
                 }
             }
-            ImGui.Checkbox("Autotest active", ref DoAutotest);
-            ImGuiEx.EnumCombo("Autotest aetheryte", ref AutotestKind);
-            ImGui.InputInt("Autotest ward", ref AutotestWard);
-            ImGui.InputInt("Autotest current plot", ref AutotestPlot);
+            ImGui.Checkbox("自動測試啟用中", ref DoAutotest);
+            ImGuiEx.EnumCombo("自動測試以太之光", ref AutotestKind);
+            ImGui.InputInt("自動測試小區", ref AutotestWard);
+            ImGui.InputInt("自動測試目前地號", ref AutotestPlot);
             if(DoAutotest && EzThrottler.Throttle("StuckAutocheck", 1000))
             {
                 if(P.FollowPath.Waypoints.Count > 0)
@@ -129,10 +129,10 @@ internal static unsafe class UIDebug
                         StuckRecords.RemoveAll(x => Environment.TickCount64 - x > 10000);
                         if(StuckRecords.Count > 1)
                         {
-                            DuoLog.Information($"Stuck at {AutotestPlot} - {AutotestKind}");
+                            DuoLog.Information($"卡在 {AutotestPlot} - {AutotestKind}");
                             DoAutotest = false;
                             P.FollowPath.Stop();
-                            Utils.TryNotify("Stuck");
+                            Utils.TryNotify("卡住");
                         }
                     }
                     LastPosition = Player.Position;
@@ -145,11 +145,11 @@ internal static unsafe class UIDebug
         }
         if(data.TryGetValue(P.Territory, out var plots))
         {
-            if(ImGui.CollapsingHeader("Control"))
+            if(ImGui.CollapsingHeader("控制"))
             {
-                ImGui.Checkbox($"Show pathes", ref ShowPathes);
+                ImGui.Checkbox($"顯示路徑", ref ShowPathes);
                 ImGui.SameLine();
-                ImGui.Checkbox("Show first point", ref ShowFirstPoint);
+                ImGui.Checkbox("顯示第一個點", ref ShowFirstPoint);
                 if(ShowPathes)
                 {
                     var aetheryte = S.Data.ResidentialAethernet.ActiveAetheryte ?? S.Data.ResidentialAethernet.GetFromIGameObject(Svc.Targets.Target);
@@ -166,16 +166,16 @@ internal static unsafe class UIDebug
                 }
                 var curPlot = HousingManager.Instance()->GetCurrentPlot();
                 if(curPlot != -1) LastPlot = curPlot;
-                ImGuiEx.Text($"Plot: {curPlot + 1}");
+                ImGuiEx.Text($"地號：{curPlot + 1}");
                 ImGui.SetNextItemWidth(150f.Scale());
-                ImGui.InputInt($"Resize", ref Resize);
+                ImGui.InputInt($"調整大小", ref Resize);
                 ImGui.SameLine();
-                if(ImGui.Button("Resize arrays"))
+                if(ImGui.Button("調整陣列大小"))
                 {
                     while(plots.Count > Resize) plots.RemoveAt(plots.Count - 1);
                     while(plots.Count < Resize) plots.Add(new());
                 }
-                if(ImGui.Button("Begin path calculation"))
+                if(ImGui.Button("開始計算路徑"))
                 {
                     Chat.ExecuteCommand("/clearlog");
                     var aetheryte = S.Data.ResidentialAethernet.ActiveAetheryte ?? S.Data.ResidentialAethernet.GetFromIGameObject(Svc.Targets.Target);
@@ -204,7 +204,7 @@ internal static unsafe class UIDebug
                         P.TaskManager.Enqueue(() => P.NotificationMasterApi.DisplayTrayNotification("Path Completed"));
                     }
                 }
-                if(ImGui.Button($"For plot {LastPlot + 1}"))
+                if(ImGui.Button($"用於地號 {LastPlot + 1}"))
                 {
                     doCurPlot = true;
                 }
@@ -220,19 +220,19 @@ internal static unsafe class UIDebug
                     new("Aethernet", () => ImGuiEx.Text($"{Svc.Data.GetExcelSheet<HousingAethernet>().GetRowOrDefault(plot.AethernetID)?.PlaceName.ValueNullable?.Name ?? plot.AethernetID.ToString()}")),
                     new("Edit", () =>
                     {
-                        if(ImGui.Button($"Edit{index + 1}"))
+                        if(ImGui.Button($"編輯{index + 1}"))
                         {
                             CurrentPath = plots[index].Path;
                         }
                     }),
                     new("Action", () =>
                     {
-                        if(ImGui.Button($"Set{index + 1}") || (doCurPlot && index == LastPlot))
+                        if(ImGui.Button($"設定{index + 1}") || (doCurPlot && index == LastPlot))
                         {
                             LastPlot = -1;
                             doCurPlot = false;
                             Chat.ExecuteCommand("/clearlog");
-                            DuoLog.Information($"For plot {index + 1}");
+                            DuoLog.Information($"用於地號 {index + 1}");
                             plot.Front = Player.Object.Position;
                             var candidates = Svc.Objects.Where(x => x.DataId.EqualsAny(Utils.AethernetShards) && Vector3.Distance(plot.Front, x.Position) < 100f && S.Data.ResidentialAethernet.GetFromIGameObject(x) != null);
                             Task.Run(() =>
@@ -241,13 +241,13 @@ internal static unsafe class UIDebug
                                 var currentAetheryte = -1;
                                 foreach(var x in candidates)
                                 {
-                                    DuoLog.Information($"Candidate: {S.Data.ResidentialAethernet.GetFromIGameObject(x).Value.Name}");
+                                    DuoLog.Information($"候選：{S.Data.ResidentialAethernet.GetFromIGameObject(x).Value.Name}");
                                     var path = S.Ipc.VnavmeshIPC.Pathfind(plot.Front, x.Position, false);
                                     path.Wait();
                                     if(path.Result != null)
                                     {
                                         var distance = Utils.CalculatePathDistance([.. path.Result]);
-                                        DuoLog.Information($"-- Distance: {distance} - best: {distance < currentDistance}");
+                                        DuoLog.Information($"-- 距離：{distance} - 最佳：{distance < currentDistance}");
                                         if(distance < currentDistance)
                                         {
                                             currentDistance = distance;
@@ -256,7 +256,7 @@ internal static unsafe class UIDebug
                                     }
                                     else
                                     {
-                                        DuoLog.Information($"-- Failed to calculate distance");
+                                        DuoLog.Information($"-- 計算距離失敗");
                                     }
                                 }
                                 Svc.Framework.RunOnFrameworkThread(() =>
@@ -269,7 +269,7 @@ internal static unsafe class UIDebug
                     }),
                     new("Path", () =>
                     {
-                        ImGuiEx.Text($"Points: {plot.Path.Count}, Distance: {Utils.CalculatePathDistance([Player.Object.Position, .. plot.Path])}");
+                        ImGuiEx.Text($"點位：{plot.Path.Count}，距離：{Utils.CalculatePathDistance([Player.Object.Position, .. plot.Path])}");
                         if(ImGui.IsItemHovered())
                         {
                             S.Ipc.SplatoonManager.RenderPath(plot.Path);
@@ -285,7 +285,7 @@ internal static unsafe class UIDebug
         }
         else
         {
-            if(ImGui.Button($"Create data for {ExcelTerritoryHelper.GetName(P.Territory)}"))
+            if(ImGui.Button($"為 {ExcelTerritoryHelper.GetName(P.Territory)} 建立資料"))
             {
                 data[P.Territory] = [];
             }
@@ -298,8 +298,8 @@ internal static unsafe class UIDebug
             if(TryGetAddonByName<AtkUnitBase>("LobbyDKTWorldList", out var addon) && IsAddonReady(addon))
             {
                 var r = new ReaderLobbyDKTWorldList(addon);
-                ImGuiEx.Text($"Source: {r.Source}");
-                ImGuiEx.Text($"Destination: {r.Destination}");
+                ImGuiEx.Text($"來源：{r.Source}");
+                ImGuiEx.Text($"目的地：{r.Destination}");
                 foreach(var dc in r.Regions)
                 {
                     ImGuiEx.Text($"  {dc.RegionTitle}");
@@ -340,16 +340,16 @@ internal static unsafe class UIDebug
 
     private static void Debug()
     {
-        if(ImGui.CollapsingHeader("IPC test - travel from chara select screen"))
+        if(ImGui.CollapsingHeader("IPC 測試 - 從角色選擇畫面旅行"))
         {
             ref var name = ref Ref<string>.Get("name");
             ref var world = ref Ref<string>.Get("world");
             ref var dest = ref Ref<string>.Get("dest");
             ref var nologin = ref Ref<bool>.Get("nologin");
-            ImGui.InputText("Chara name", ref name, 100);
-            ImGui.InputText("Chara world", ref world, 100);
-            ImGui.InputText("Destination", ref dest, 100);
-            ImGui.Checkbox("No login", ref nologin);
+            ImGui.InputText("角色名稱", ref name, 100);
+            ImGui.InputText("角色伺服器", ref world, 100);
+            ImGui.InputText("目的地", ref dest, 100);
+            ImGui.Checkbox("不登入", ref nologin);
             ImGuiEx.Text($"CanInitiateTravelFromCharaSelectList: {S.Ipc.IPCProvider.CanInitiateTravelFromCharaSelectList()}");
             ImGuiEx.Text($"CanAutoLogin: {S.Ipc.IPCProvider.CanAutoLogin()}");
             if(ImGui.Button("ConnectAndOpenCharaSelect")) DuoLog.Information($"{S.Ipc.IPCProvider.ConnectAndOpenCharaSelect(name, world)}");
@@ -376,7 +376,7 @@ internal static unsafe class UIDebug
         {
             if(TryGetAddonByName<AddonAreaMap>("AreaMap", out var addon))
             {
-                ImGuiEx.Text($"{addon->HoveredCoords} - press ctrl to copy");
+                ImGuiEx.Text($"{addon->HoveredCoords} - 按下 ctrl 以複製");
                 if(ImGuiEx.Ctrl && EzThrottler.Throttle("Copy") && !CSFramework.Instance()->WindowInactive)
                 {
                     Copy($", new({addon->HoveredCoords.X}f, {addon->HoveredCoords.Y}f)");
@@ -395,15 +395,15 @@ internal static unsafe class UIDebug
             if(ImGui.Button("GetActiveResidentialAetheryte")) DuoLog.Information($"{S.Ipc.IPCProvider.GetActiveResidentialAetheryte()}");
         }
         ImGuiEx.Text($"Active aetheryte: {P.ActiveAetheryte}");
-        if(ImGui.CollapsingHeader("Chat"))
+        if(ImGui.CollapsingHeader("聊天"))
         {
-            if(ImGui.Button("Send message (echo)")) Chat.ExecuteCommand($"/e Test test test {Random.Shared.Next()}");
-            if(ImGui.Button("Send message (current channel)")) Chat.SendMessage($"Password: {Random.Shared.Next()}");
-            if(ImGui.Button("Use sprint")) Chat.ExecuteAction(3);
-            if(ImGui.Button("Use jump")) Chat.ExecuteGeneralAction(2);
+            if(ImGui.Button("發送訊息（echo）")) Chat.ExecuteCommand($"/e Test test test {Random.Shared.Next()}");
+            if(ImGui.Button("發送訊息（目前頻道）")) Chat.SendMessage($"Password: {Random.Shared.Next()}");
+            if(ImGui.Button("使用衝刺")) Chat.ExecuteAction(3);
+            if(ImGui.Button("使用跳躍")) Chat.ExecuteGeneralAction(2);
             try
             {
-                if(ImGui.Button("Try invalid string")) Chat.ExecuteCommand("/e \u000012345");
+                if(ImGui.Button("嘗試無效字串")) Chat.ExecuteCommand("/e \u000012345");
             }
             catch(Exception e)
             {
@@ -437,14 +437,14 @@ internal static unsafe class UIDebug
                     Destination {r.Destination}
                     SelectedDataCenter {r.SelectedDataCenter}
                     """);
-                ImGuiEx.Text($"Regions:");
+                ImGuiEx.Text($"資料區：");
                 ImGui.Indent();
                 foreach(var region in r.Regions)
                 {
                     ImGuiEx.Text($"""
                         {region.RegionTitle}
                         """);
-                    ImGuiEx.Text("DataCenters");
+                    ImGuiEx.Text("資料中心");
                     foreach(var dc in region.DataCenters)
                     {
                         ImGui.Indent();
@@ -455,17 +455,17 @@ internal static unsafe class UIDebug
                     }
                 }
                 ImGui.Separator();
-                ImGuiEx.Text($"Worlds: {r.GetNumWorlds()}");
+                ImGuiEx.Text($"伺服器：{r.GetNumWorlds()}");
                 ImGui.Indent();
                 foreach(var x in r.Worlds)
                 {
-                    ImGuiEx.Text($"{x.WorldName}, active={x.IsAvailable}");
+                    ImGuiEx.Text($"{x.WorldName}，active={x.IsAvailable}");
                 }
                 ImGui.Unindent();
                 ImGui.Unindent();
             }
         }
-        if(ImGui.CollapsingHeader("Context"))
+        if(ImGui.CollapsingHeader("內容"))
         {
             if(TryGetAddonMaster<AddonMaster.ContextMenu>(out var m))
             {
@@ -485,9 +485,9 @@ internal static unsafe class UIDebug
                 }
             }
         }
-        if(ImGui.CollapsingHeader("Custom aethernet"))
+        if(ImGui.CollapsingHeader("自訂以太網"))
         {
-            if(ImGui.Button("Copy target") && Svc.Targets.Target != null)
+            if(ImGui.Button("複製目標") && Svc.Targets.Target != null)
             {
                 var pname = TerritoryInfo.Instance()->AreaPlaceNameId;
                 var pname2 = TerritoryInfo.Instance()->SubAreaPlaceNameId;
@@ -495,8 +495,8 @@ internal static unsafe class UIDebug
                     new(new({Svc.Targets.Target.Position.X:F1}f, {Svc.Targets.Target.Position.Z:F1}f), {P.Territory}, GetPlaceName({pname}), Base), //{Svc.Data.GetExcelSheet<PlaceName>().GetRowOrDefault(pname)?.Name.GetText()} ({pname}), {Svc.Data.GetExcelSheet<PlaceName>().GetRowOrDefault(pname2)?.Name.GetText()} ({pname2}), 
                     """);
             }
-            ImGuiEx.Text($"Active: {S.Data.CustomAethernet.ActiveAetheryte}");
-            ImGuiEx.Text($"Valid: {Utils.GetValidAetheryte()}");
+            ImGuiEx.Text($"啟用中：{S.Data.CustomAethernet.ActiveAetheryte}");
+            ImGuiEx.Text($"有效：{Utils.GetValidAetheryte()}");
             if(Utils.GetValidAetheryte() != null) ImGuiEx.Text($"FromIGameObject: {S.Data.CustomAethernet.GetFromIGameObject(Utils.GetValidAetheryte())}");
         }
         if(ImGui.Button("Get file list")) Utils.ReadClipboardFiles();
@@ -528,7 +528,7 @@ internal static unsafe class UIDebug
             ref var lim1 = ref Ref<float>.Get("lim1");
             ref var lim2 = ref Ref<float>.Get("lim2");
             ref var auto = ref Ref<bool>.Get("autocalc");
-            if(ImGui.Button("Import"))
+            if(ImGui.Button("匯入"))
             {
                 try
                 {
@@ -545,33 +545,33 @@ internal static unsafe class UIDebug
                     e.LogDuo();
                 }
             }
-            if(ImGui.Button("Set target")) target = Svc.Targets.Target?.Position ?? default;
+            if(ImGui.Button("設定目標")) target = Svc.Targets.Target?.Position ?? default;
             ImGui.SameLine();
             ImGuiEx.Text($"{target}");
-            if(ImGui.Button("Set exit")) exit = Player.Position;
+            if(ImGui.Button("設定出口")) exit = Player.Position;
             ImGui.SameLine();
             ImGuiEx.Text($"{exit}");
             ImGui.InputFloat("Precision", ref prec);
-            ImGui.InputInt("Tolerance", ref tol);
+            ImGui.InputInt("容差", ref tol);
             ImGui.InputFloat("Limit1", ref lim1);
             ImGui.InputFloat("Limit2", ref lim2);
-            if(ImGui.Button("Calculate") || (auto && EzThrottler.Throttle("AutoRec", 100)))
+            if(ImGui.Button("計算") || (auto && EzThrottler.Throttle("AutoRec", 100)))
             {
                 (float, float)? lmt = lim2 > lim1 ? (lim1, lim2) : null;
                 list = MathHelper.CalculateCircularMovement(target, Player.Position, exit, out listList, prec, tol, lmt);
             }
             ImGui.SameLine();
-            ImGui.Checkbox("AutoCalc", ref auto);
+            ImGui.Checkbox("自動計算", ref auto);
             if(list != null)
             {
-                ImGuiEx.Text($"List: {list.Print()}");
+                ImGuiEx.Text($"列表：{list.Print()}");
                 S.Ipc.SplatoonManager.RenderPath(list, false, true);
             }
             if(listList != null)
             {
                 foreach(var x in listList)
                 {
-                    ImGuiEx.Text($"Candidate: {x.Print()}");
+                    ImGuiEx.Text($"候選：{x.Print()}");
                     if(ImGui.IsItemHovered())
                     {
                         S.Ipc.SplatoonManager.RenderPath(x, false, true);
@@ -587,7 +587,7 @@ internal static unsafe class UIDebug
                 if(x.Value == null) continue;
                 ImGuiEx.Text($"{x.Value->NameString}");
             }
-            { if(TryGetAddonMaster<AddonMaster._CharaSelectListMenu>(out var m)) ImGuiEx.Text($"Selected chara: {m.Characters.FirstOrDefault(x => x.IsSelected)?.Name}"); }
+            { if(TryGetAddonMaster<AddonMaster._CharaSelectListMenu>(out var m)) ImGuiEx.Text($"已選角色：{m.Characters.FirstOrDefault(x => x.IsSelected)?.Name}"); }
         }
         ImGui.Checkbox("DisableHousePathData", ref P.DisableHousePathData);
         if(ImGui.CollapsingHeader("HUD"))
@@ -632,9 +632,9 @@ internal static unsafe class UIDebug
             }
         }
         ImGui.InputText("##copyaddon", ref text, 300);
-        if(ImGui.CollapsingHeader("Misc"))
+        if(ImGui.CollapsingHeader("雜項"))
         {
-            if(ImGui.Button("Switch"))
+            if(ImGui.Button("切換"))
             {
                 bool Do()
                 {
@@ -654,7 +654,7 @@ internal static unsafe class UIDebug
                 }
             }
         }
-        if(ImGui.CollapsingHeader("Instance"))
+        if(ImGui.CollapsingHeader("副本"))
         {
             ImGuiEx.Text($"""
                 Max instances: {*S.Memory.MaxInstances}
@@ -699,18 +699,18 @@ internal static unsafe class UIDebug
         }
         if(ImGui.CollapsingHeader("Lobby test"))
         {
-            ImGui.InputText("Chara name", ref CharaName, 100);
+            ImGui.InputText("角色名稱", ref CharaName, 100);
             WorldSelector.Instance.Draw(ref WorldSel);
-            if(ImGui.Button("Select"))
+            if(ImGui.Button("選擇"))
             {
                 DCChange.SelectCharacter(CharaName, (uint)WorldSel);
             }
-            if(ImGui.Button("Context"))
+            if(ImGui.Button("內容"))
             {
                 DCChange.OpenContextMenuForChara(CharaName, (uint)WorldSel, (uint)WorldSel);
             }
             var agent = AgentLobby.Instance();
-            ImGuiEx.Text($"Active: {agent->IsAgentActive()}");
+            ImGuiEx.Text($"啟用中：{agent->IsAgentActive()}");
             for(var i = 0; i < agent->LobbyData.CharaSelectEntries.Count; i++)
             {
                 var c = agent->LobbyData.CharaSelectEntries[i].Value;
@@ -733,17 +733,17 @@ internal static unsafe class UIDebug
                 }
             }
         }
-        if(ImGui.Button("Refresh color"))
+        if(ImGui.Button("重新整理顏色"))
         {
             DalamudReflector.GetService("Dalamud.Plugin.Ipc.Internal.DataShare").GetFoP<System.Collections.IDictionary>("caches").Remove("ECommonsPatreonBannerRandomColor");
             ((System.Collections.IDictionary)typeof(EzSharedData).GetFieldPropertyUnion("Cache", ReflectionHelper.AllFlags).GetValue(null)).Remove("ECommonsPatreonBannerRandomColor");
         }
-        if(ImGui.CollapsingHeader("Render"))
+        if(ImGui.CollapsingHeader("渲染"))
         {
 
-            if(ImGui.Button("Save")) Svc.Data.GetFile("ui/uld/Teleport_hr1.tex").SaveFile("d:\\file.tex");
+            if(ImGui.Button("儲存")) Svc.Data.GetFile("ui/uld/Teleport_hr1.tex").SaveFile("d:\\file.tex");
         }
-        if(ImGui.CollapsingHeader("Housing manager"))
+        if(ImGui.CollapsingHeader("房屋管理器"))
         {
             var h = HousingManager.Instance();
             if(h == null)
@@ -752,16 +752,16 @@ internal static unsafe class UIDebug
             }
             else
             {
-                ImGuiEx.Text($"Ward: {h->GetCurrentWard()}");
-                ImGuiEx.Text($"Plot: {h->GetCurrentPlot()}");
-                ImGuiEx.Text($"Division: {h->GetCurrentDivision()}");
+                ImGuiEx.Text($"小區：{h->GetCurrentWard()}");
+                ImGuiEx.Text($"地號：{h->GetCurrentPlot()}");
+                ImGuiEx.Text($"分區：{h->GetCurrentDivision()}");
             }
         }
-        if(ImGui.CollapsingHeader("Path"))
+        if(ImGui.CollapsingHeader("路徑"))
         {
-            if(ImGui.Button("Add")) DebugPath.Add(Player.Object.Position);
+            if(ImGui.Button("新增")) DebugPath.Add(Player.Object.Position);
             //if (ImGui.Button("Go")) P.FollowPath.Waypoints.AddRange(Enumerable.Reverse(DebugPath));
-            if(ImGui.Button("Copy")) Copy($"new Vector3({Player.Object.Position.X}f, {Player.Object.Position.Y}f, {Player.Object.Position.Z}f);");
+            if(ImGui.Button("複製")) Copy($"new Vector3({Player.Object.Position.X}f, {Player.Object.Position.Y}f, {Player.Object.Position.Z}f);");
             for(var i = 0; i < DebugPath.Count; i++)
             {
                 ImGuiEx.Text($"{DebugPath[i]}");
@@ -774,9 +774,9 @@ internal static unsafe class UIDebug
         }
         if(ImGui.CollapsingHeader("TPW"))
         {
-            ImGui.InputText("World", ref World, 100);
+            ImGui.InputText("伺服器", ref World, 100);
             ImGuiEx.EnumCombo("Resi", ref ResiA);
-            ImGui.InputInt("Ward", ref Ward);
+            ImGui.InputInt("小區", ref Ward);
             if(ImGui.Button("Go"))
             {
                 TaskTpAndGoToWard.Enqueue(World, ResiA, Ward, 1, false, false);
@@ -804,7 +804,7 @@ internal static unsafe class UIDebug
         }
         if(ImGui.CollapsingHeader("DCV"))
         {
-            if(ImGui.Button("Unlock all worlds")) UnlockAllWorlds();
+            if(ImGui.Button("解鎖所有伺服器")) UnlockAllWorlds();
             if(ImGui.Button("Enable AtkComponentTreeList_vf31Hook hook"))
             {
                 S.Memory.AtkComponentTreeList_vf31Hook.Enable();
@@ -822,7 +822,7 @@ internal static unsafe class UIDebug
             if(ImGui.Button($"{nameof(DCChange.TitleScreenClickStart)}")) PluginLog.Information($"{DCChange.TitleScreenClickStart()}");
             //if (ImGui.Button($"{nameof(DCChange.OpenContextMenuForChara)}")) PluginLog.Information($"{DCChange.OpenContextMenuForChara(str)}");
             ImGui.SameLine();
-            ImGui.InputText($"Chara name", ref str, 100);
+            ImGui.InputText($"角色名稱", ref str, 100);
             if(ImGui.Button($"{nameof(DCChange.SelectVisitAnotherDC)}")) PluginLog.Information($"{DCChange.SelectVisitAnotherDC()}");
             if(ImGui.Button($"{nameof(DCChange.SelectTargetDataCenter)}")) PluginLog.Information($"{DCChange.SelectTargetDataCenter(str2)}");
             ImGui.SameLine();
@@ -836,7 +836,7 @@ internal static unsafe class UIDebug
             if(ImGui.Button($"{nameof(DCChange.ConfirmDcVisitIntention)}")) PluginLog.Information($"{DCChange.ConfirmDcVisitIntention()}");
             if(ImGui.Button($"{nameof(DCChange.SelectYesLogin)}")) PluginLog.Information($"{DCChange.SelectYesLogin()}");
             ImGui.InputInt("Index", ref index);
-            if(ImGui.Button("Open context menu"))
+            if(ImGui.Button("開啟右鍵選單"))
             {
                 if(TryGetAddonByName<AtkUnitBase>("_CharaSelectListMenu", out var addon) && IsAddonReady(addon))
                 {
@@ -877,7 +877,7 @@ internal static unsafe class UIDebug
     private static void Editor()
     {
         var bsize = ImGuiHelpers.GetButtonSize("A") with { X = 280 };
-        if(ImGui.Button("Save"))
+        if(ImGui.Button("儲存"))
         {
             ImGui.SetClipboardText(JsonConvert.SerializeObject(S.Data.DataStore.StaticData));
             S.Data.DataStore.StaticData.SaveConfiguration(Path.Combine(Svc.PluginInterface.AssemblyLocation.DirectoryName, S.Data.DataStore.FileName));

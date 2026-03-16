@@ -420,7 +420,7 @@ internal static unsafe partial class Utils
 
     public static void DrawWorldSelector(ICollection<int> worldList)
     {
-        ImGuiEx.CollectionCheckbox("All", ExcelWorldHelper.GetPublicWorlds().Select(x => (int)x.RowId), worldList);
+        ImGuiEx.CollectionCheckbox("全部", ExcelWorldHelper.GetPublicWorlds().Select(x => (int)x.RowId), worldList);
         ImGui.Indent();
         var regions = Enum.GetValues<ExcelWorldHelper.Region>();
         foreach(var r in regions)
@@ -496,7 +496,7 @@ internal static unsafe partial class Utils
                 point = worldPos;
             }
             ImGui.BeginTooltip();
-            ImGuiEx.Text($"Point: {point:F2}\nLeft-click to finish");
+            ImGuiEx.Text($"點位：{point:F2}\n左鍵完成");
             ImGui.EndTooltip();
             if(IsKeyPressed((int)Keys.LButton))
             {
@@ -526,7 +526,7 @@ internal static unsafe partial class Utils
                 point = worldPos.ToVector2();
             }
             ImGui.BeginTooltip();
-            ImGuiEx.Text($"Point: {point:F2}\nLeft-click to finish");
+            ImGuiEx.Text($"點位：{point:F2}\n左鍵完成");
             ImGui.EndTooltip();
             if(IsKeyPressed((int)Keys.LButton))
             {
@@ -571,20 +571,20 @@ internal static unsafe partial class Utils
         {
             value = Player.Position.ToVector2();
         }
-        ImGuiEx.Tooltip("To player positon");
+        ImGuiEx.Tooltip("到玩家位置");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.Crosshairs, $"target{id}", enabled: Svc.Targets.Target != null))
         {
             value = Svc.Targets.Target.Position.ToVector2();
         }
-        ImGuiEx.Tooltip("To target positon");
+        ImGuiEx.Tooltip("到目標位置");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.MousePointer, $"target{id}", enabled: Player.Interactable))
         {
             BeginScreenToWorldSelection(id, value);
         }
         ScreenToWorldSelector(id, ref value);
-        ImGuiEx.Tooltip("Select with mouse");
+        ImGuiEx.Tooltip("用滑鼠選擇");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.Flag, $"flag{id}", enabled: Player.Interactable && AgentMap.Instance()->IsFlagMarkerSet == true))
         {
@@ -592,7 +592,7 @@ internal static unsafe partial class Utils
             value = new(marker.XFloat, marker.YFloat);
         }
         ScreenToWorldSelector(id, ref value);
-        ImGuiEx.Tooltip("To map flag");
+        ImGuiEx.Tooltip("到地圖標記");
     }
 
     public static void DrawVector3Selector(string id, ref Vector3 value)
@@ -604,20 +604,20 @@ internal static unsafe partial class Utils
         {
             value = Player.Position;
         }
-        ImGuiEx.Tooltip("To player positon");
+        ImGuiEx.Tooltip("到玩家位置");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.Crosshairs, $"target{id}", enabled: Svc.Targets.Target != null))
         {
             value = Svc.Targets.Target.Position;
         }
-        ImGuiEx.Tooltip("To target positon");
+        ImGuiEx.Tooltip("到目標位置");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.MousePointer, $"target{id}", enabled: Player.Interactable))
         {
             BeginScreenToWorldSelection(id, value);
         }
         ScreenToWorldSelector(id, ref value);
-        ImGuiEx.Tooltip("Select with mouse");
+        ImGuiEx.Tooltip("用滑鼠選擇");
         ImGui.SameLine();
         if(ImGuiEx.IconButton(FontAwesomeIcon.Flag, $"flag{id}", enabled: Player.Interactable && AgentMap.Instance()->IsFlagMarkerSet == true))
         {
@@ -625,7 +625,7 @@ internal static unsafe partial class Utils
             value = new(marker.XFloat, 0, marker.YFloat);
         }
         ScreenToWorldSelector(id, ref value);
-        ImGuiEx.Tooltip("To map flag");
+        ImGuiEx.Tooltip("到地圖標記");
     }
 
     public static IEnumerable<uint> GetAllRegisteredAethernetDestinations()
@@ -1147,7 +1147,7 @@ internal static unsafe partial class Utils
 
     internal static string GetInnNameFromTerritory(uint tt)
     {
-        if(tt == 0) return "Autodetect";
+        if(tt == 0) return "自動偵測";
         if(Svc.Data.GetExcelSheet<TerritoryType>().TryGetRow(tt, out var t))
         {
             var inn = Svc.Data.GetExcelSheet<TerritoryType>().FirstOrNull(x => x.PlaceNameRegion.ValueNullable?.RowId == t.PlaceNameRegion.Value.RowId && x.TerritoryIntendedUse.RowId == (int)TerritoryIntendedUseEnum.Inn);

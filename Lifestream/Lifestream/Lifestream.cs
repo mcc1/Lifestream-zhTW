@@ -153,7 +153,7 @@ public unsafe class Lifestream : IDalamudPlugin
         }
         else if(arguments == "stop")
         {
-            Notify.Info($"Discarding {TaskManager.NumQueuedTasks + (TaskManager.IsBusy ? 1 : 0)} tasks");
+            Notify.Info($"丟棄 {TaskManager.NumQueuedTasks + (TaskManager.IsBusy ? 1 : 0)} 個任務");
             TaskManager.Abort();
             followPath?.Stop();
             TabUtility.TargetWorldID = 0;
@@ -373,17 +373,17 @@ public unsafe class Lifestream : IDalamudPlugin
 
                 if(S.Data.DataStore.Worlds.TryGetFirst(x => x.StartsWith(primary == "" ? Player.HomeWorld : primary, StringComparison.OrdinalIgnoreCase), out var w))
                 {
-                    PluginLog.Information($"Same dc/{primary}/{w}");
+                    PluginLog.Information($"同資料中心/{primary}/{w}");
                     TPAndChangeWorld(w, false, gateway: gateway);
                 }
                 else if(S.Data.DataStore.DCWorlds.TryGetFirst(x => x.StartsWith(primary == "" ? Player.HomeWorld : primary, StringComparison.OrdinalIgnoreCase), out var dcw))
                 {
-                    PluginLog.Information($"Cross dc/{primary}/{w}");
+                    PluginLog.Information($"跨資料中心/{primary}/{w}");
                     TPAndChangeWorld(dcw, true, gateway: gateway);
                 }
                 else if(Utils.TryGetWorldFromDataCenter(primary, out var world, out var dc))
                 {
-                    Utils.DisplayInfo($"Random world from {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name}: {world}");
+                    Utils.DisplayInfo($"從 {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name} 隨機選擇伺服器：{world}");
                     TPAndChangeWorld(world, Player.Object.CurrentWorld.ValueNullable?.DataCenter.RowId != dc, gateway: gateway);
                 }
                 else
@@ -443,7 +443,7 @@ public unsafe class Lifestream : IDalamudPlugin
             {
                 Notify.Warning("You must disband party in order to switch worlds");
             }
-            Utils.DisplayInfo($"Destination: {destinationWorld}");
+            Utils.DisplayInfo($"目的地：{destinationWorld}");
             if(isDcTransfer)
             {
                 var type = DCVType.Unknown;
@@ -501,7 +501,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 {
                     DuoLog.Error($"Error - unknown data center visit type");
                 }
-                PluginLog.Information($"Data center visit: {type}");
+                PluginLog.Information($"資料中心訪問：{type}");
             }
             else
             {

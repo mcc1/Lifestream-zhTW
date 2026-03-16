@@ -75,10 +75,10 @@ public unsafe class SearchHelperOverlay : Window
 
         var additionalDescriptions = new Dictionary<string, string>
         {
-            ["help"] = "Show command help",
-            ["?"] = "Show command help",
-            ["commands"] = "Show command help",
-            ["stop"] = "Stop all tasks"
+            ["help"] = "顯示指令說明",
+            ["?"] = "顯示指令說明",
+            ["commands"] = "顯示指令說明",
+            ["stop"] = "停止所有任務"
         };
 
         foreach(var kvp in additionalDescriptions)
@@ -221,7 +221,7 @@ public unsafe class SearchHelperOverlay : Window
         if(FilteredSuggestions.Count == 0)
         {
             ImGui.PushStyleColor(ImGuiCol.Text, 0xFF808080);
-            ImGui.Text("No matching commands found");
+            ImGui.Text("找不到符合的指令");
             ImGui.PopStyleColor();
             return;
         }
@@ -265,11 +265,11 @@ public unsafe class SearchHelperOverlay : Window
 
             var typeColor = suggestion.Type switch
             {
-"Built-in" => 0xFF4080FF,
-"System" => 0xFF8040FF,
-"Custom Alias" => 0xFFFF6000,
-"Address Book" => 0xFFFF0080,
-"World" => 0xFFFFD000,
+"內建" => 0xFF4080FF,
+"系統" => 0xFF8040FF,
+"自訂別名" => 0xFFFF6000,
+"地址簿" => 0xFFFF0080,
+"伺服器" => 0xFFFFD000,
 "DC World" => 0xFFFF4080,
                 _ => 0xFF808080
             };
@@ -281,7 +281,7 @@ public unsafe class SearchHelperOverlay : Window
 
         ImGui.Separator();
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFF808080);
-        ImGui.Text("Click to complete");
+        ImGui.Text("點擊以完成");
         ImGui.PopStyleColor();
         WindowSize = ImGui.GetWindowSize();
     }

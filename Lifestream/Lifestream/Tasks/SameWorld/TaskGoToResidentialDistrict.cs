@@ -65,7 +65,7 @@ public static unsafe class TaskGoToResidentialDistrict
         if(TryGetAddonByName<AtkUnitBase>("HousingSelectBlock", out var addon) && IsAddonReady(addon))
         {
             var button = addon->GetButtonNodeById(34);
-            if(button != null && button->IsEnabled)
+            if(button->IsEnabled)
             {
                 if(EzThrottler.Throttle("HousingSelectBlockConfirm"))
                 {

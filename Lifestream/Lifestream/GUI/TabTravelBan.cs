@@ -16,7 +16,7 @@ public static class TabTravelBan
 
         ImGuiEx.LineCentered(() =>
         {
-            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Plus, "Add new entry"))
+            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Plus, "新增項目"))
             {
                 var entry = new TravelBanInfo();
                 if(Player.Available)
@@ -30,9 +30,9 @@ public static class TabTravelBan
         if(ImGui.BeginTable("Bantable", 5, ImGuiTableFlags.RowBg | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Borders))
         {
             ImGui.TableSetupColumn("##enabled");
-            ImGui.TableSetupColumn("Character name and world", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableSetupColumn("Travel source");
-            ImGui.TableSetupColumn("Travel destination");
+            ImGui.TableSetupColumn("角色名稱與伺服器", ImGuiTableColumnFlags.WidthStretch);
+            ImGui.TableSetupColumn("傳送來源");
+            ImGui.TableSetupColumn("傳送目的地");
             ImGui.TableSetupColumn("##control");
 
             ImGui.TableHeadersRow();
@@ -46,7 +46,7 @@ public static class TabTravelBan
                 ImGui.TableNextColumn();
                 ImGuiEx.InputWithRightButtonsArea(() =>
                 {
-                    ImGui.InputTextWithHint("##chara", "Character name", ref entry.CharaName, 30);
+                    ImGui.InputTextWithHint("##chara", "角色名稱", ref entry.CharaName, 30);
                 }, () =>
                 {
                     ImGuiEx.Text("@");

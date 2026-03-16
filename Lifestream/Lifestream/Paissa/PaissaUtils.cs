@@ -80,7 +80,7 @@ public class PaissaUtils
                     plotStr,
                     false,
                     false,
-                    $"{district.Name} Ward {wardStr} Plot {plotStr} ({GetCostString(plot.Price)})",
+                    $"{district.Name} 第 {wardStr} 區 地號 {plotStr}（{GetCostString(plot.Price)}）",
                     plot.Size,
                     plot.LottoEntries,
                     plot.PurchaseSystem
@@ -91,7 +91,7 @@ public class PaissaUtils
 
         PaissaAddressBookFolder folder = new()
         {
-            ExportedName = "House Listings",
+            ExportedName = "房屋列表",
             Entries = entries,
             IsDefault = false,
             GUID = Guid.NewGuid()
@@ -131,15 +131,15 @@ public class PaissaUtils
             }
             else
             {
-                var errorMessage = $"Error: {response.StatusCode} - {response.ReasonPhrase}";
+                var errorMessage = $"錯誤：{response.StatusCode} - {response.ReasonPhrase}";
                 PluginLog.Error(errorMessage);
                 return errorMessage;
             }
         }
         catch(Exception ex)
         {
-            PluginLog.Error($"Exception occurred when getting house listings from PaissaDB: {ex.Message}");
-            return $"Exception: {ex.Message}";
+            PluginLog.Error($"從 PaissaDB 取得房屋列表時發生例外：{ex.Message}");
+            return $"例外：{ex.Message}";
         }
     }
 
@@ -148,9 +148,9 @@ public class PaissaUtils
         return status switch
         {
             PaissaStatus.Idle => "",
-            PaissaStatus.Progress => "Retrieving...",
-            PaissaStatus.Success => "Success!",
-            PaissaStatus.Error => "Error!",
+            PaissaStatus.Progress => "取得中...",
+            PaissaStatus.Success => "成功！",
+            PaissaStatus.Error => "錯誤！",
             _ => "",
         };
     }
@@ -171,9 +171,9 @@ public class PaissaUtils
     {
         return size switch
         {
-            0 => "Small",
-            1 => "Medium",
-            _ => "Large"
+            0 => "小型",
+            1 => "中型",
+            _ => "大型"
         };
     }
 
@@ -186,9 +186,9 @@ public class PaissaUtils
     {
         return purchaseSystem switch
         {
-            3 => "Free Company",
-            5 => "Individual",
-            7 => "Unrestricted",
+            3 => "部隊",
+            5 => "個人",
+            7 => "不限",
             _ => "N/A"
         };
     }

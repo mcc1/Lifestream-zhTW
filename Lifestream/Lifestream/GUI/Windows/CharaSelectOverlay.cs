@@ -41,7 +41,7 @@ public unsafe class CharaSelectOverlay : EzOverlayWindow
         var worlds = Utils.GetVisitableWorldsFrom(homeWorldData.Value).OrderBy(x => x.Name.ToString()).ToArray();
         if(worlds.Length == 0)
         {
-            ImGuiEx.Text($"No available destinations");
+            ImGuiEx.Text($"沒有可用的目的地");
             return;
         }
         if(TryGetValidCharaSelectListMenu(out var m))
