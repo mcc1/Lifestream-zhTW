@@ -46,7 +46,7 @@ index efab9a7..9e73f74 100644
      }
  
 diff --git a/Lifestream/Lifestream/Utils.cs b/Lifestream/Lifestream/Utils.cs
-index ad12b2b..cd4e8f3 100644
+index ad12b2b..c2e54d6 100644
 --- a/Lifestream/Lifestream/Utils.cs
 +++ b/Lifestream/Lifestream/Utils.cs
 @@ -42,6 +42,17 @@ namespace Lifestream;
@@ -67,43 +67,31 @@ index ad12b2b..cd4e8f3 100644
      private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
      {
          ["伊弗利特"] = "Ifrit",
-@@ -83,27 +94,58 @@ internal static unsafe partial class Utils
+@@ -83,6 +94,60 @@ internal static unsafe partial class Utils
          return input;
      }
  
--    public static bool IsTravelWorld(World world)
 +    public static string[] GetTwTravelWorlds()
-     {
--        if(world.IsPublic())
--        {
--            return true;
--        }
++    {
 +        return [.. Svc.Data.GetExcelSheet<World>()
 +            .Where(x => x.DataCenter.Value.RowId == 151 && TwTravelWorldNames.Contains(x.Name.ToString()))
 +            .Select(x => x.Name.ToString())
 +            .Distinct(StringComparer.OrdinalIgnoreCase)
 +            .OrderBy(x => Array.IndexOf(TwTravelWorldNames, x))];
 +    }
- 
--        if(world.DataCenter.Value.RowId == 151 &&
--           TravelWorldAliases.Keys.Contains(world.Name.ToString(), StringComparer.OrdinalIgnoreCase))
++
 +    public static bool ShouldUseTwTravelWorlds(uint dc)
 +    {
 +        if(dc == 151)
-         {
-             return true;
-         }
- 
--        return false;
++        {
++            return true;
++        }
++
 +        return GetTwTravelWorlds().Length > 0;
-     }
- 
--    public static World[] GetTravelWorlds(uint dataCenter)
++    }
++
 +    public static bool TryResolveTravelWorldInput(string input, IEnumerable<string> worlds, out string world)
-     {
--        return Svc.Data.GetExcelSheet<World>()
--            .Where(x => x.DataCenter.RowId == dataCenter && IsTravelWorld(x))
--            .ToArray();
++    {
 +        if(string.IsNullOrWhiteSpace(input))
 +        {
 +            world = default;
@@ -135,6 +123,8 @@ index ad12b2b..cd4e8f3 100644
 +
 +        world = default;
 +        return false;
-     }
- 
-     public static Vector3 Scatter(this Vector3 point, float radius)
++    }
++
+     public static bool IsTravelWorld(World world)
+     {
+         if(world.IsPublic())
