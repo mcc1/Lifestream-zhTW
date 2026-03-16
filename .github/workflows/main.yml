@@ -80,6 +80,7 @@ jobs:
     permissions:
       contents: write
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       DEV_TAG: lifestream-dev
       DEV_TITLE: Lifestream-zhTW dev
       DEV_NOTES: Latest automated dev build for in-game testing install.
