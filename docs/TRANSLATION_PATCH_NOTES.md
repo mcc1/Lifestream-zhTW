@@ -26,6 +26,7 @@
   - 這條線不是純文字翻譯，而是台服 world / UI 行為相容修正
 - 備註:
   - 這個 patch 已合併原本分散的 `0004` 與停用中的舊 `0005`
+  - 目前版本是依 `sync` 後的 post-localizer source base 重新生成，避免 workflow 再次因 patch base 不一致而失敗
   - 之後升版時，應優先維持這個單一 patch，不要再拆回多層 patch
 
 ## 0006 translate address book controls and filter hints
