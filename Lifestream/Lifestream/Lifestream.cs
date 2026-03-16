@@ -371,20 +371,17 @@ public unsafe class Lifestream : IDalamudPlugin
                     gateway = WorldChangeAetheryte.Uldah;
                 }
 
-                var targetInput = primary == "" ? Player.HomeWorld : primary;
-                var normalizedPrimary = Utils.NormalizeTravelWorldAlias(targetInput);
-
-                if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.Worlds, out var w))
+                if(S.Data.DataStore.Worlds.TryGetFirst(x => x.StartsWith(primary == "" ? Player.HomeWorld : primary, StringComparison.OrdinalIgnoreCase), out var w))
                 {
                     PluginLog.Information($"Same dc/{primary}/{w}");
                     TPAndChangeWorld(w, false, gateway: gateway);
                 }
-                else if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.DCWorlds, out var dcw))
+                else if(S.Data.DataStore.DCWorlds.TryGetFirst(x => x.StartsWith(primary == "" ? Player.HomeWorld : primary, StringComparison.OrdinalIgnoreCase), out var dcw))
                 {
                     PluginLog.Information($"Cross dc/{primary}/{w}");
                     TPAndChangeWorld(dcw, true, gateway: gateway);
                 }
-                else if(Utils.TryGetWorldFromDataCenter(normalizedPrimary, out var world, out var dc))
+                else if(Utils.TryGetWorldFromDataCenter(primary, out var world, out var dc))
                 {
                     Utils.DisplayInfo($"Random world from {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name}: {world}");
                     TPAndChangeWorld(world, Player.Object.CurrentWorld.ValueNullable?.DataCenter.RowId != dc, gateway: gateway);

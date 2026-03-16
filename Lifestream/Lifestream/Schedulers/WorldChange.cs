@@ -64,27 +64,7 @@ internal static unsafe class WorldChange
     internal static bool? SelectVisitAnotherWorld()
     {
         if(!Player.Available) return false;
-        if(TryGetAddonByName<AddonSelectString>("SelectString", out var addon) && IsAddonReady(&addon->AtkUnitBase))
-        {
-            var entries = Utils.GetEntries(addon);
-            if(Utils.TryFindEqualsOrContains(entries, x => x, Lang.VisitAnotherWorld, out var entry))
-            {
-                var index = entries.IndexOf(entry);
-                if(index >= 0 && EzThrottler.Throttle("SelectString"))
-                {
-                    new AddonMaster.SelectString(addon).Entries[index].Select();
-                    PluginLog.Information($"[Debug] SelectVisitAnotherWorld matched entry={entry}, index={index}");
-                    return true;
-                }
-                return false;
-            }
-
-            if(EzThrottler.Throttle("Lifestream.Debug.SelectVisitAnotherWorld", 5000))
-            {
-                PluginLog.Warning($"[Debug] VisitAnotherWorld not found. Expected=[{string.Join(" | ", Lang.VisitAnotherWorld)}], entries=[{string.Join(" | ", entries)}]");
-            }
-        }
-        return false;
+        return Utils.TrySelectSpecificEntry(Lang.VisitAnotherWorld, () => EzThrottler.Throttle("SelectString"));
     }
 
     internal static bool? ConfirmWorldVisit(string s)
@@ -98,15 +78,6 @@ internal static unsafe class WorldChange
                 new AddonMaster.SelectYesno(x).Yes();
                 return true;
             }
-
-            if(EzThrottler.Throttle("Lifestream.Debug.ConfirmWorldVisit.Disabled", 5000))
-            {
-                PluginLog.Warning($"[Debug] ConfirmWorldVisit dialog found but yes button disabled for target={s}");
-            }
-        }
-        else if(EzThrottler.Throttle("Lifestream.Debug.ConfirmWorldVisit.Missing", 5000))
-        {
-            PluginLog.Warning($"[Debug] ConfirmWorldVisit dialog missing for target={s}");
         }
         return false;
     }
@@ -122,15 +93,10 @@ internal static unsafe class WorldChange
             {
                 if(EzThrottler.Throttle("SelectWorldToVisit", 1000))
                 {
-                    PluginLog.Information($"[Debug] Selecting world visit target={world}, index={index}, available=[{string.Join(" | ", worlds)}]");
                     Callback.Fire(addon, true, index + 2);
                     return true;
                 }
             }
-        }
-        else if(EzThrottler.Throttle("Lifestream.Debug.SelectWorldToVisit.Miss", 5000))
-        {
-            PluginLog.Warning($"[Debug] Target world not found in WorldTravelSelect. target={world}, available=[{string.Join(" | ", worlds)}]");
         }
         return false;
     }

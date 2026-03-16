@@ -2,6 +2,32 @@
 
 這份文件只記錄「無法單靠字典 / extract / shared localizer 完成，必須進 consumer patch」的翻譯修改。
 
+## 0005 support TW cross-world travel
+
+- Patch file:
+  - `.consumer-patches/0005-support-tw-cross-world-travel.patch`
+- 類型:
+  - 功能與翻譯混合 patch
+- 原因:
+  - 台服世界清單、世界別名、跨服選單匹配、`WorldTravelSelect` 讀取方式，和原始上游假設不一致
+  - 單靠字典 / extract 無法解決
+- 修正範圍:
+  - 台服 world alias 解析
+  - 台服 world list 建立
+  - `/li <world>` 對台服世界名稱的輸入判定
+  - `Visit Another World` 選單匹配容錯
+  - `WorldTravelSelect` 目的地清單讀取容錯
+- 實際修改檔案:
+  - `Lifestream/Lifestream/Lifestream.cs`
+  - `Lifestream/Lifestream/Schedulers/WorldChange.cs`
+  - `Lifestream/Lifestream/Systems/Legacy/DataStore.cs`
+  - `Lifestream/Lifestream/Utils.cs`
+- 為什麼不是字典:
+  - 這條線不是純文字翻譯，而是台服 world / UI 行為相容修正
+- 備註:
+  - 這個 patch 已合併原本分散的 `0004` 與停用中的舊 `0005`
+  - 之後升版時，應優先維持這個單一 patch，不要再拆回多層 patch
+
 ## 0006 translate address book controls and filter hints
 
 - Patch file:

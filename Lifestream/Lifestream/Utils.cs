@@ -42,134 +42,6 @@ namespace Lifestream;
 internal static unsafe partial class Utils
 {
     public static string[] LifestreamNativeCommands = ["auto", "home", "house", "private", "fc", "free", "company", "free company", "apartment", "apt", "shared", "inn", "hinn", "gc", "gcc", "hc", "hcc", "fcgc", "gcfc", "mb", "market", "island", "is", "sanctuary", "cosmic", "ardorum", "moon", "tp"];
-    private static readonly string[] TwTravelWorldNames =
-    [
-        "伊弗利特",
-        "迦樓羅",
-        "利維坦",
-        "鳳凰",
-        "奧汀",
-        "巴哈姆特",
-        "拉姆",
-        "泰坦",
-    ];
-    private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["伊弗利特"] = "Ifrit",
-        ["伊弗"] = "Ifrit",
-        ["迦樓羅"] = "Garuda",
-        ["迦樓"] = "Garuda",
-        ["利維坦"] = "Leviathan",
-        ["利維"] = "Leviathan",
-        ["鳳凰"] = "Phoenix",
-        ["奧汀"] = "Odin",
-        ["奧丁"] = "Odin",
-        ["巴哈姆特"] = "Bahamut",
-        ["巴哈"] = "Bahamut",
-        ["拉姆"] = "Ramuh",
-        ["拉姆烏"] = "Ramuh",
-        ["泰坦"] = "Titan",
-    };
-
-    public static string NormalizeTravelWorldAlias(string input)
-    {
-        if(string.IsNullOrWhiteSpace(input))
-        {
-            return input;
-        }
-
-        if(TravelWorldAliases.TryGetValue(input, out var world))
-        {
-            return world;
-        }
-
-        foreach(var alias in TravelWorldAliases)
-        {
-            if(alias.Key.StartsWith(input, StringComparison.OrdinalIgnoreCase))
-            {
-                return alias.Value;
-            }
-        }
-
-        return input;
-    }
-
-    public static string[] GetTwTravelWorlds()
-    {
-        return [.. Svc.Data.GetExcelSheet<World>()
-            .Where(x => x.DataCenter.Value.RowId == 151 && TwTravelWorldNames.Contains(x.Name.ToString()))
-            .Select(x => x.Name.ToString())
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(x => Array.IndexOf(TwTravelWorldNames, x))];
-    }
-
-    public static bool ShouldUseTwTravelWorlds(uint dc)
-    {
-        if(dc == 151)
-        {
-            return true;
-        }
-
-        return GetTwTravelWorlds().Length > 0;
-    }
-
-    public static bool TryResolveTravelWorldInput(string input, IEnumerable<string> worlds, out string world)
-    {
-        if(string.IsNullOrWhiteSpace(input))
-        {
-            world = default;
-            return false;
-        }
-
-        var candidates = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            input,
-            NormalizeTravelWorldAlias(input),
-        };
-
-        foreach(var alias in TravelWorldAliases)
-        {
-            if(alias.Value.Equals(input, StringComparison.OrdinalIgnoreCase) ||
-               alias.Value.Equals(NormalizeTravelWorldAlias(input), StringComparison.OrdinalIgnoreCase))
-            {
-                candidates.Add(alias.Key);
-            }
-        }
-
-        foreach(var candidate in candidates)
-        {
-            if(worlds.TryGetFirst(x => x.StartsWith(candidate, StringComparison.OrdinalIgnoreCase), out world))
-            {
-                return true;
-            }
-        }
-
-        world = default;
-        return false;
-    }
-
-    public static bool IsTravelWorld(World world)
-    {
-        if(world.IsPublic())
-        {
-            return true;
-        }
-
-        if(world.DataCenter.Value.RowId == 151 &&
-           TravelWorldAliases.Keys.Contains(world.Name.ToString(), StringComparer.OrdinalIgnoreCase))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static World[] GetTravelWorlds(uint dataCenter)
-    {
-        return Svc.Data.GetExcelSheet<World>()
-            .Where(x => x.DataCenter.RowId == dataCenter && IsTravelWorld(x))
-            .ToArray();
-    }
 
     public static Vector3 Scatter(this Vector3 point, float radius)
     {
@@ -890,7 +762,7 @@ internal static unsafe partial class Utils
             if(x.RowId == 0 || x.Name == "") continue;
             if(x.Name.GetText().StartsWith(s, StringComparison.OrdinalIgnoreCase))
             {
-                var worlds = GetTravelWorlds(x.RowId);
+                var worlds = ExcelWorldHelper.GetPublicWorlds(x.RowId);
                 if(worlds.Length > 0)
                 {
                     world = worlds[Random.Shared.Next(worlds.Length)].Name.ToString();

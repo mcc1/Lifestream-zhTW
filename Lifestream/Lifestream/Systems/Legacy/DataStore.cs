@@ -114,14 +114,6 @@ public class DataStore
 
     internal void BuildWorlds(uint dc)
     {
-        if(Utils.ShouldUseTwTravelWorlds(dc))
-        {
-            Worlds = Utils.GetTwTravelWorlds();
-            DCWorlds = Array.Empty<string>();
-            PluginLog.Debug($"Built TW worlds: {Worlds.Print()}");
-            return;
-        }
-
         Worlds = [.. Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId == dc && x.IsPublic()).Select(x => x.Name.ToString()).Order()];
         PluginLog.Debug($"Built worlds: {Worlds.Print()}");
         DCWorlds = Svc.Data.GetExcelSheet<World>().Where(x => x.DataCenter.Value.RowId != dc && x.IsPublic() && (x.DataCenter.Value.Region == Player.Object.HomeWorld.Value.DataCenter.Value.Region || x.DataCenter.Value.Region == 4)).Select(x => x.Name.ToString()).ToArray();
