@@ -42,6 +42,46 @@ namespace Lifestream;
 internal static unsafe partial class Utils
 {
     public static string[] LifestreamNativeCommands = ["auto", "home", "house", "private", "fc", "free", "company", "free company", "apartment", "apt", "shared", "inn", "hinn", "gc", "gcc", "hc", "hcc", "fcgc", "gcfc", "mb", "market", "island", "is", "sanctuary", "cosmic", "ardorum", "moon", "tp"];
+    private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["伊弗利特"] = "Ifrit",
+        ["伊弗"] = "Ifrit",
+        ["迦樓羅"] = "Garuda",
+        ["迦樓"] = "Garuda",
+        ["利維坦"] = "Leviathan",
+        ["利維"] = "Leviathan",
+        ["鳳凰"] = "Phoenix",
+        ["奧汀"] = "Odin",
+        ["奧丁"] = "Odin",
+        ["巴哈姆特"] = "Bahamut",
+        ["巴哈"] = "Bahamut",
+        ["拉姆"] = "Ramuh",
+        ["拉姆烏"] = "Ramuh",
+        ["泰坦"] = "Titan",
+    };
+
+    public static string NormalizeTravelWorldAlias(string input)
+    {
+        if(string.IsNullOrWhiteSpace(input))
+        {
+            return input;
+        }
+
+        if(TravelWorldAliases.TryGetValue(input, out var world))
+        {
+            return world;
+        }
+
+        foreach(var alias in TravelWorldAliases)
+        {
+            if(alias.Key.StartsWith(input, StringComparison.OrdinalIgnoreCase))
+            {
+                return alias.Value;
+            }
+        }
+
+        return input;
+    }
 
     public static Vector3 Scatter(this Vector3 point, float radius)
     {
