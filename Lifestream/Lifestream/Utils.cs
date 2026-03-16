@@ -83,6 +83,29 @@ internal static unsafe partial class Utils
         return input;
     }
 
+    public static bool IsTravelWorld(World world)
+    {
+        if(world.IsPublic())
+        {
+            return true;
+        }
+
+        if(world.DataCenter.Value.RowId == 151 &&
+           TravelWorldAliases.Keys.Contains(world.Name.ToString(), StringComparer.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static World[] GetTravelWorlds(uint dataCenter)
+    {
+        return Svc.Data.GetExcelSheet<World>()
+            .Where(x => x.DataCenter.RowId == dataCenter && IsTravelWorld(x))
+            .ToArray();
+    }
+
     public static Vector3 Scatter(this Vector3 point, float radius)
     {
         if(radius > 0)
@@ -802,7 +825,7 @@ internal static unsafe partial class Utils
             if(x.RowId == 0 || x.Name == "") continue;
             if(x.Name.GetText().StartsWith(s, StringComparison.OrdinalIgnoreCase))
             {
-                var worlds = ExcelWorldHelper.GetPublicWorlds(x.RowId);
+                var worlds = GetTravelWorlds(x.RowId);
                 if(worlds.Length > 0)
                 {
                     world = worlds[Random.Shared.Next(worlds.Length)].Name.ToString();
