@@ -57,3 +57,21 @@
 - 後續處理方向:
   - 若 shared localizer 未來支援這類 ImGui hint / tooltip 文字抽取，應評估把這個 patch 回推成 shared 能力
   - 在那之前，必須維持這個 consumer patch，否則 `sync` 後會被上游 source 覆蓋
+
+## 0007 add TW housing ward menu variant
+
+- Patch file:
+  - `.consumer-patches/0007-add-tw-housing-ward-menu-variant.patch`
+- 類型:
+  - 翻譯相容 patch
+- 原因:
+  - 台服住宅區第二層選單實際文案是 `移動到指定社區（查看房屋宣傳標籤）`
+  - 上游 `Lang.GoToWard` 只有 `移動到指定小區（查看房屋宣傳標籤）`
+  - 導致 `TaskGoToResidentialDistrict` 在 overlay 住宅區流程中匹配不到正確選項並超時
+- 修正範圍:
+  - 為 `Lang.GoToWard` 補上台服選單文字變體
+- 實際修改檔案:
+  - `Lifestream/Lifestream/Lang.cs`
+- 為什麼不是字典:
+  - 這不是一般 UI 顯示翻譯，而是流程判斷用的選單匹配字串
+  - 若不進 source patch，`sync` 後會回到只認 `小區` 的狀態

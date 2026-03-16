@@ -1,0 +1,13 @@
+diff --git a/Lifestream/Lifestream/Lang.cs b/Lifestream/Lifestream/Lang.cs
+index 9deff80..e9f7b84 100644
+--- a/Lifestream/Lifestream/Lang.cs
++++ b/Lifestream/Lifestream/Lang.cs
+@@ -110,7 +110,7 @@ internal static class Lang
+     //2	TEXT_AETHERYTE_HOUSING_WARP	<Gui(69)/> Wohngebiet
+     //2	TEXT_AETHERYTE_HOUSING_WARP	<Gui(69)/> Quartier résidentiel
+     public static readonly string[] ResidentialDistrict = ["Residential District Aethernet.", "冒険者居住区転送", "Wohngebiet", "Quartier résidentiel", "冒险者住宅区传送", "冒險者住宅區傳送", "모험가 거주구 이동"];
+-    public static readonly string[] GoToWard = ["Go to specified ward. (Review Tabs)", "区を指定して移動（ハウスアピール確認）", "Zum angegebenen Bezirk (Zweck der Unterkunft einsehen)", "Spécifier le secteur où aller (Voir les attraits)", "移动到指定小区（查看房屋宣传标签）", "移動到指定小區（查看房屋宣傳標籤）", "구역을 지정하여 이동(주택 정보 확인)"];
++    public static readonly string[] GoToWard = ["Go to specified ward. (Review Tabs)", "区を指定して移動（ハウスアピール確認）", "Zum angegebenen Bezirk (Zweck der Unterkunft einsehen)", "Spécifier le secteur où aller (Voir les attraits)", "移动到指定小区（查看房屋宣传标签）", "移動到指定小區（查看房屋宣傳標籤）", "移動到指定社區（查看房屋宣傳標籤）", "구역을 지정하여 이동(주택 정보 확인)"];
+ 
+     //6355	<Sheet(PlaceName,IntegerParameter(1),0)/>第<Value>IntegerParameter(2)</Value>区に移動します。
+     //よろしいですか？
