@@ -1430,80 +1430,16 @@ internal static unsafe partial class Utils
         if(TryGetAddonByName<AtkUnitBase>("WorldTravelSelect", out var addon) && IsAddonReady(addon))
         {
             List<string> arr = [];
-            try
+            for(var i = 3; i <= 9; i++)
             {
-                for(var i = 3; i <= 9; i++)
-                {
-                    var item = addon->UldManager.NodeList[4]->GetAsAtkComponentNode()->Component->UldManager.NodeList[i];
-                    var text = GenericHelpers.ReadSeString(&item->GetAsAtkComponentNode()->Component->UldManager.NodeList[4]->GetAsAtkTextNode()->NodeText).GetText();
-                    if(text == "") break;
-                    arr.Add(text);
-                }
-            }
-            catch(Exception ex)
-            {
-                if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations.LegacyReadFailed", 5000))
-                {
-                    PluginLog.Warning($"[Debug] Legacy WorldTravelSelect read failed: {ex.Message}");
-                }
-            }
-            if(arr.Count == 0)
-            {
-                arr = GetAvailableWorldDestinationsFromNodeTree(addon);
-            }
-            if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations", 5000))
-            {
-                PluginLog.Information($"[Debug] WorldTravelSelect entries: [{string.Join(" | ", arr)}]");
+                var item = addon->UldManager.NodeList[4]->GetAsAtkComponentNode()->Component->UldManager.NodeList[i];
+                var text = GenericHelpers.ReadSeString(&item->GetAsAtkComponentNode()->Component->UldManager.NodeList[4]->GetAsAtkTextNode()->NodeText).GetText();
+                if(text == "") break;
+                arr.Add(text);
             }
             return [.. arr];
         }
-        if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations.Missing", 5000))
-        {
-            PluginLog.Warning("[Debug] WorldTravelSelect addon missing or not ready");
-        }
         return Array.Empty<string>();
-    }
-
-    private static List<string> GetAvailableWorldDestinationsFromNodeTree(AtkUnitBase* addon)
-    {
-        var knownWorlds = new HashSet<string>(
-            S.Data.DataStore.DCWorlds
-                .Concat(S.Data.DataStore.Worlds)
-                .Where(x => !string.IsNullOrWhiteSpace(x)),
-            StringComparer.OrdinalIgnoreCase);
-
-        var results = new List<string>();
-        var visited = new HashSet<nint>();
-        CollectWorldTravelTexts(addon->RootNode, visited, results, knownWorlds);
-        return results;
-    }
-
-    private static void CollectWorldTravelTexts(AtkResNode* node, HashSet<nint> visited, List<string> results, HashSet<string> knownWorlds)
-    {
-        if(node == null)
-        {
-            return;
-        }
-
-        var ptr = (nint)node;
-        if(!visited.Add(ptr))
-        {
-            return;
-        }
-
-        if(node->Type == NodeType.Text)
-        {
-            var text = GenericHelpers.ReadSeString(&node->GetAsAtkTextNode()->NodeText).GetText().Trim();
-            if(!string.IsNullOrWhiteSpace(text) &&
-               knownWorlds.Contains(text) &&
-               !results.Contains(text, StringComparer.OrdinalIgnoreCase))
-            {
-                results.Add(text);
-            }
-        }
-
-        CollectWorldTravelTexts(node->ChildNode, visited, results, knownWorlds);
-        CollectWorldTravelTexts(node->NextSiblingNode, visited, results, knownWorlds);
     }
 
     internal static string[] GetAvailableAethernetDestinations()
