@@ -371,14 +371,15 @@ public unsafe class Lifestream : IDalamudPlugin
                     gateway = WorldChangeAetheryte.Uldah;
                 }
 
-                var normalizedPrimary = Utils.NormalizeTravelWorldAlias(primary == "" ? Player.HomeWorld : primary);
+                var targetInput = primary == "" ? Player.HomeWorld : primary;
+                var normalizedPrimary = Utils.NormalizeTravelWorldAlias(targetInput);
 
-                if(S.Data.DataStore.Worlds.TryGetFirst(x => x.StartsWith(normalizedPrimary, StringComparison.OrdinalIgnoreCase), out var w))
+                if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.Worlds, out var w))
                 {
                     PluginLog.Information($"Same dc/{primary}/{w}");
                     TPAndChangeWorld(w, false, gateway: gateway);
                 }
-                else if(S.Data.DataStore.DCWorlds.TryGetFirst(x => x.StartsWith(normalizedPrimary, StringComparison.OrdinalIgnoreCase), out var dcw))
+                else if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.DCWorlds, out var dcw))
                 {
                     PluginLog.Information($"Cross dc/{primary}/{w}");
                     TPAndChangeWorld(dcw, true, gateway: gateway);

@@ -42,6 +42,17 @@ namespace Lifestream;
 internal static unsafe partial class Utils
 {
     public static string[] LifestreamNativeCommands = ["auto", "home", "house", "private", "fc", "free", "company", "free company", "apartment", "apt", "shared", "inn", "hinn", "gc", "gcc", "hc", "hcc", "fcgc", "gcfc", "mb", "market", "island", "is", "sanctuary", "cosmic", "ardorum", "moon", "tp"];
+    private static readonly string[] TwTravelWorldNames =
+    [
+        "伊弗利特",
+        "迦樓羅",
+        "利維坦",
+        "鳳凰",
+        "奧汀",
+        "巴哈姆特",
+        "拉姆",
+        "泰坦",
+    ];
     private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
     {
         ["伊弗利特"] = "Ifrit",
@@ -81,6 +92,60 @@ internal static unsafe partial class Utils
         }
 
         return input;
+    }
+
+    public static string[] GetTwTravelWorlds()
+    {
+        return [.. Svc.Data.GetExcelSheet<World>()
+            .Where(x => x.DataCenter.Value.RowId == 151 && TwTravelWorldNames.Contains(x.Name.ToString()))
+            .Select(x => x.Name.ToString())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(x => Array.IndexOf(TwTravelWorldNames, x))];
+    }
+
+    public static bool ShouldUseTwTravelWorlds(uint dc)
+    {
+        if(dc == 151)
+        {
+            return true;
+        }
+
+        return GetTwTravelWorlds().Length > 0;
+    }
+
+    public static bool TryResolveTravelWorldInput(string input, IEnumerable<string> worlds, out string world)
+    {
+        if(string.IsNullOrWhiteSpace(input))
+        {
+            world = default;
+            return false;
+        }
+
+        var candidates = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            input,
+            NormalizeTravelWorldAlias(input),
+        };
+
+        foreach(var alias in TravelWorldAliases)
+        {
+            if(alias.Value.Equals(input, StringComparison.OrdinalIgnoreCase) ||
+               alias.Value.Equals(NormalizeTravelWorldAlias(input), StringComparison.OrdinalIgnoreCase))
+            {
+                candidates.Add(alias.Key);
+            }
+        }
+
+        foreach(var candidate in candidates)
+        {
+            if(worlds.TryGetFirst(x => x.StartsWith(candidate, StringComparison.OrdinalIgnoreCase), out world))
+            {
+                return true;
+            }
+        }
+
+        world = default;
+        return false;
     }
 
     public static bool IsTravelWorld(World world)
