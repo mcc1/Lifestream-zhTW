@@ -42,6 +42,134 @@ namespace Lifestream;
 internal static unsafe partial class Utils
 {
     public static string[] LifestreamNativeCommands = ["auto", "home", "house", "private", "fc", "free", "company", "free company", "apartment", "apt", "shared", "inn", "hinn", "gc", "gcc", "hc", "hcc", "fcgc", "gcfc", "mb", "market", "island", "is", "sanctuary", "cosmic", "ardorum", "moon", "tp"];
+    private static readonly string[] TwTravelWorldNames =
+    [
+        "伊弗利特",
+        "迦樓羅",
+        "利維坦",
+        "鳳凰",
+        "奧汀",
+        "巴哈姆特",
+        "拉姆",
+        "泰坦",
+    ];
+    private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["伊弗利特"] = "Ifrit",
+        ["伊弗"] = "Ifrit",
+        ["迦樓羅"] = "Garuda",
+        ["迦樓"] = "Garuda",
+        ["利維坦"] = "Leviathan",
+        ["利維"] = "Leviathan",
+        ["鳳凰"] = "Phoenix",
+        ["奧汀"] = "Odin",
+        ["奧丁"] = "Odin",
+        ["巴哈姆特"] = "Bahamut",
+        ["巴哈"] = "Bahamut",
+        ["拉姆"] = "Ramuh",
+        ["拉姆烏"] = "Ramuh",
+        ["泰坦"] = "Titan",
+    };
+
+    public static string NormalizeTravelWorldAlias(string input)
+    {
+        if(string.IsNullOrWhiteSpace(input))
+        {
+            return input;
+        }
+
+        if(TravelWorldAliases.TryGetValue(input, out var world))
+        {
+            return world;
+        }
+
+        foreach(var alias in TravelWorldAliases)
+        {
+            if(alias.Key.StartsWith(input, StringComparison.OrdinalIgnoreCase))
+            {
+                return alias.Value;
+            }
+        }
+
+        return input;
+    }
+
+    public static string[] GetTwTravelWorlds()
+    {
+        return [.. Svc.Data.GetExcelSheet<World>()
+            .Where(x => x.DataCenter.Value.RowId == 151 && TwTravelWorldNames.Contains(x.Name.ToString()))
+            .Select(x => x.Name.ToString())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(x => Array.IndexOf(TwTravelWorldNames, x))];
+    }
+
+    public static bool ShouldUseTwTravelWorlds(uint dc)
+    {
+        if(dc == 151)
+        {
+            return true;
+        }
+
+        return GetTwTravelWorlds().Length > 0;
+    }
+
+    public static bool TryResolveTravelWorldInput(string input, IEnumerable<string> worlds, out string world)
+    {
+        if(string.IsNullOrWhiteSpace(input))
+        {
+            world = default;
+            return false;
+        }
+
+        var candidates = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            input,
+            NormalizeTravelWorldAlias(input),
+        };
+
+        foreach(var alias in TravelWorldAliases)
+        {
+            if(alias.Value.Equals(input, StringComparison.OrdinalIgnoreCase) ||
+               alias.Value.Equals(NormalizeTravelWorldAlias(input), StringComparison.OrdinalIgnoreCase))
+            {
+                candidates.Add(alias.Key);
+            }
+        }
+
+        foreach(var candidate in candidates)
+        {
+            if(worlds.TryGetFirst(x => x.StartsWith(candidate, StringComparison.OrdinalIgnoreCase), out world))
+            {
+                return true;
+            }
+        }
+
+        world = default;
+        return false;
+    }
+
+    public static bool IsTravelWorld(World world)
+    {
+        if(world.IsPublic())
+        {
+            return true;
+        }
+
+        if(world.DataCenter.Value.RowId == 151 &&
+           TravelWorldAliases.Keys.Contains(world.Name.ToString(), StringComparer.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static World[] GetTravelWorlds(uint dataCenter)
+    {
+        return Svc.Data.GetExcelSheet<World>()
+            .Where(x => x.DataCenter.RowId == dataCenter && IsTravelWorld(x))
+            .ToArray();
+    }
 
     public static Vector3 Scatter(this Vector3 point, float radius)
     {
@@ -762,7 +890,7 @@ internal static unsafe partial class Utils
             if(x.RowId == 0 || x.Name == "") continue;
             if(x.Name.GetText().StartsWith(s, StringComparison.OrdinalIgnoreCase))
             {
-                var worlds = ExcelWorldHelper.GetPublicWorlds(x.RowId);
+                var worlds = GetTravelWorlds(x.RowId);
                 if(worlds.Length > 0)
                 {
                     world = worlds[Random.Shared.Next(worlds.Length)].Name.ToString();
@@ -1430,16 +1558,80 @@ internal static unsafe partial class Utils
         if(TryGetAddonByName<AtkUnitBase>("WorldTravelSelect", out var addon) && IsAddonReady(addon))
         {
             List<string> arr = [];
-            for(var i = 3; i <= 9; i++)
+            try
             {
-                var item = addon->UldManager.NodeList[4]->GetAsAtkComponentNode()->Component->UldManager.NodeList[i];
-                var text = GenericHelpers.ReadSeString(&item->GetAsAtkComponentNode()->Component->UldManager.NodeList[4]->GetAsAtkTextNode()->NodeText).GetText();
-                if(text == "") break;
-                arr.Add(text);
+                for(var i = 3; i <= 9; i++)
+                {
+                    var item = addon->UldManager.NodeList[4]->GetAsAtkComponentNode()->Component->UldManager.NodeList[i];
+                    var text = GenericHelpers.ReadSeString(&item->GetAsAtkComponentNode()->Component->UldManager.NodeList[4]->GetAsAtkTextNode()->NodeText).GetText();
+                    if(text == "") break;
+                    arr.Add(text);
+                }
+            }
+            catch(Exception ex)
+            {
+                if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations.LegacyReadFailed", 5000))
+                {
+                    PluginLog.Warning($"[Debug] Legacy WorldTravelSelect read failed: {ex.Message}");
+                }
+            }
+            if(arr.Count == 0)
+            {
+                arr = GetAvailableWorldDestinationsFromNodeTree(addon);
+            }
+            if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations", 5000))
+            {
+                PluginLog.Information($"[Debug] WorldTravelSelect entries: [{string.Join(" | ", arr)}]");
             }
             return [.. arr];
         }
+        if(EzThrottler.Throttle("Lifestream.Debug.WorldTravelDestinations.Missing", 5000))
+        {
+            PluginLog.Warning("[Debug] WorldTravelSelect addon missing or not ready");
+        }
         return Array.Empty<string>();
+    }
+
+    private static List<string> GetAvailableWorldDestinationsFromNodeTree(AtkUnitBase* addon)
+    {
+        var knownWorlds = new HashSet<string>(
+            S.Data.DataStore.DCWorlds
+                .Concat(S.Data.DataStore.Worlds)
+                .Where(x => !string.IsNullOrWhiteSpace(x)),
+            StringComparer.OrdinalIgnoreCase);
+
+        var results = new List<string>();
+        var visited = new HashSet<nint>();
+        CollectWorldTravelTexts(addon->RootNode, visited, results, knownWorlds);
+        return results;
+    }
+
+    private static void CollectWorldTravelTexts(AtkResNode* node, HashSet<nint> visited, List<string> results, HashSet<string> knownWorlds)
+    {
+        if(node == null)
+        {
+            return;
+        }
+
+        var ptr = (nint)node;
+        if(!visited.Add(ptr))
+        {
+            return;
+        }
+
+        if(node->Type == NodeType.Text)
+        {
+            var text = GenericHelpers.ReadSeString(&node->GetAsAtkTextNode()->NodeText).GetText().Trim();
+            if(!string.IsNullOrWhiteSpace(text) &&
+               knownWorlds.Contains(text) &&
+               !results.Contains(text, StringComparer.OrdinalIgnoreCase))
+            {
+                results.Add(text);
+            }
+        }
+
+        CollectWorldTravelTexts(node->ChildNode, visited, results, knownWorlds);
+        CollectWorldTravelTexts(node->NextSiblingNode, visited, results, knownWorlds);
     }
 
     internal static string[] GetAvailableAethernetDestinations()
