@@ -74,7 +74,7 @@ jobs:
         FFXIVClientStructs.dll
       commit_changes: ${{ github.event_name == 'workflow_dispatch' && inputs.workflow_mode != 'build' }}
       publish_release: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_release }}
-      template_ref: 32f2a6ed19f837516fe381f7cac02bd40e1ce62d
+      template_ref: 7ed93743e0cfbadb2b313c9a57c145bc18312f64
 
   publish-dev:
     name: Publish Fixed Dev Prerelease
