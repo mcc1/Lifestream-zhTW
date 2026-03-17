@@ -42,7 +42,9 @@ jobs:
       mod_repo_url: https://github.com/NightmareXIV/Lifestream.git
       mod_ref: e91124d8f7fb0477b46d2c12c9db0fd59e66f3ad
       mod_repo_dir: Lifestream
-      localizer_source_subpaths: Lifestream
+      localizer_source_subpaths: |
+        Lifestream
+        OtterGui
       localizer_dict_path: zh-TW.json
       dotnet_sdk_versions: |
         8.0.x
