@@ -42,7 +42,9 @@ jobs:
       mod_repo_url: https://github.com/NightmareXIV/Lifestream.git
       mod_ref: e91124d8f7fb0477b46d2c12c9db0fd59e66f3ad
       mod_repo_dir: Lifestream
-      localizer_source_subpaths: Lifestream
+      localizer_source_subpaths: |
+        Lifestream
+        Lifestream/OtterGui
       localizer_dict_path: zh-TW.json
       dotnet_sdk_versions: |
         8.0.x
@@ -74,7 +76,7 @@ jobs:
         FFXIVClientStructs.dll
       commit_changes: ${{ github.event_name == 'workflow_dispatch' && inputs.workflow_mode != 'build' }}
       publish_release: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_release }}
-      template_ref: 83a4a25eeb565b7f4fe2c9bf1493763d502f572a
+      template_ref: c63f38413274139f5f2dd908cd49391ca70146c9
 
   publish-dev:
     name: Publish Fixed Dev Prerelease
