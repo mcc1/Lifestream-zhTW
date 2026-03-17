@@ -12,7 +12,7 @@ public static class TabTravelBan
         ImGuiEx.Text(EColor.RedBright, FontAwesomeIcon.ExclamationTriangle.ToIconString());
         ImGui.PopFont();
         ImGui.SameLine();
-        ImGuiEx.TextWrapped(EColor.RedBright, "Be mindful that this function is meant to be the last chance to avoid unrecoverable mistakes. Using this function may break other plugins that rely on Lifestream. Blocking travel in a specific direction will block it only via Lifestream. You can still travel manually.");
+        ImGuiEx.TextWrapped(EColor.RedBright, "請注意，此功能是避免無法還原錯誤的最後手段。使用此功能可能影響依賴 Lifestream 的其他插件。封鎖特定方向的傳送只會透過 Lifestream 封鎖，手動傳送仍可正常使用。");
 
         ImGuiEx.LineCentered(() =>
         {
@@ -57,7 +57,7 @@ public static class TabTravelBan
                 ImGui.TableNextColumn();
 
                 ImGui.SetNextItemWidth(100f.Scale());
-                if(ImGui.BeginCombo("##from", $"{entry.BannedFrom.Count} worlds", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##from", $"{entry.BannedFrom.Count} 個伺服器", ImGuiComboFlags.HeightLarge))
                 {
                     Utils.DrawWorldSelector(entry.BannedFrom);
                     ImGui.EndCombo();
@@ -65,7 +65,7 @@ public static class TabTravelBan
                 ImGui.TableNextColumn();
 
                 ImGui.SetNextItemWidth(100f.Scale());
-                if(ImGui.BeginCombo("##to", $"{entry.BannedTo.Count} worlds", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##to", $"{entry.BannedTo.Count} 個伺服器", ImGuiComboFlags.HeightLarge))
                 {
                     Utils.DrawWorldSelector(entry.BannedTo);
                     ImGui.EndCombo();

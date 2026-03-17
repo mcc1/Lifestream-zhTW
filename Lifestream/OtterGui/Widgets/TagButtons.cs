@@ -68,7 +68,7 @@ public class TagButtons
                 if (editable)
                 {
                     var delete = ImGui.GetIO().KeyCtrl && ImGui.IsItemClicked(ImGuiMouseButton.Right);
-                    ImGuiUtil.HoverTooltip("Hold CTRL and right-click to delete.");
+                    ImGuiUtil.HoverTooltip("按住 Ctrl 並右鍵點擊以刪除。");
                     if (delete)
                     {
                         editedTag = string.Empty;
@@ -92,7 +92,7 @@ public class TagButtons
         else
         {
             SetPos(ImGui.GetFrameHeight(), x, rightEndOffset);
-            if (!ImGuiUtil.DrawDisabledButton(FontAwesomeIcon.Plus.ToIconString(), new Vector2(ImGui.GetFrameHeight()), "Add Tag...",
+            if (!ImGuiUtil.DrawDisabledButton(FontAwesomeIcon.Plus.ToIconString(), new Vector2(ImGui.GetFrameHeight()), "新增標籤...",
                     false, true))
                 return ret;
 

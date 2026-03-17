@@ -50,7 +50,7 @@ public partial class FileSystemSelector<T, TStateStorage>
         const string newFolderName = "folderName";
 
         if (ImGuiUtil.DrawDisabledButton(FontAwesomeIcon.FolderPlus.ToIconString(), size,
-                "Create a new, empty folder. Can contain '/' to create a directory structure.", false, true))
+"建立新的空資料夾。可使用 '/' 建立目錄結構。", false, true))
             ImGui.OpenPopup(newFolderName);
 
         // Does not need to be delayed since it is not in the iteration itself.

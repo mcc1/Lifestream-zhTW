@@ -192,7 +192,7 @@ public class PerformanceTracker<T> : IDisposable where T : unmanaged, Enum
                 var text = value switch
                 {
                     > 3600000 => $"{(value / 3600000).ToString("F4", CultureInfo.InvariantCulture)} h",
-                    > 60000   => $"{(value / 60000).ToString("F4", CultureInfo.InvariantCulture)} min",
+                    > 60000   => $"{(value / 60000).ToString("F4", CultureInfo.InvariantCulture)} 分鐘",
                     > 1000    => $"{(value / 1000).ToString("F4", CultureInfo.InvariantCulture)} s",
                     _         => $"{value.ToString("F4", CultureInfo.InvariantCulture)} ms",
                 };

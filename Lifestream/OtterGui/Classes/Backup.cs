@@ -34,7 +34,7 @@ public static partial class Backup
     public static bool TryGetFile<T>(DirectoryInfo dir, string fileName, [NotNullWhen(true)] out T? parsedFile, out string message,
         Func<string, T?>? parse = null)
     {
-        message =   $"The configuration file {fileName} was corrupted, trying to automatically restore from backup.\n";
+        message =   $"設定檔 {fileName} 已損毀，嘗試從備份自動還原。";
         parse   ??= JsonConvert.DeserializeObject<T>;
         var directory = CreateBackupDirectory(dir);
         fileName = Path.GetRelativePath(dir.Parent!.FullName, fileName);
@@ -48,7 +48,7 @@ public static partial class Backup
                 var       entry         = oldZip.GetEntry(fileName);
                 if (entry == null)
                 {
-                    message += $"\nBackup from {existingBackup.CreationTime} did not contain the file {fileName}";
+                    message += $"來自 {existingBackup.CreationTime} 的備份不包含檔案 {fileName}";
                     continue;
                 }
 
@@ -58,13 +58,13 @@ public static partial class Backup
                 parsedFile = parse(text);
                 if (parsedFile != null)
                 {
-                    message += $"\nBackup from {existingBackup.CreationTime} successfully loaded {fileName}.";
+                    message += $"已從 {existingBackup.CreationTime} 的備份成功載入 {fileName}。";
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                message += $"\nBackup from {existingBackup.CreationTime} could not successfully load the file {fileName}: {ex.Message}";
+                message += $"無法從 {existingBackup.CreationTime} 的備份成功載入檔案 {fileName}：{ex.Message}";
             }
         }
 
@@ -138,7 +138,7 @@ public static partial class Backup
         return (newest, oldest, count);
     }
 
-    [GeneratedRegex(@"^\d{14}\.zip$", RegexOptions.ExplicitCapture | RegexOptions.NonBacktracking)]
+    [GeneratedRegex("^\\d{0}\\.zip$", RegexOptions.ExplicitCapture | RegexOptions.NonBacktracking)]
     private static partial Regex FormatRegex();
 
     /// <summary> Enumerate existing standard backups. </summary>

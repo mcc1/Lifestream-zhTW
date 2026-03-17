@@ -183,7 +183,7 @@ public static partial class ImGuiUtil
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(string text)
-        => CopyOnClickSelectable(text, text, "Click to copy to clipboard.");
+        => CopyOnClickSelectable(text, text, "點擊複製到剪貼簿。");
 
     // Draw a single FontAwesomeIcon.
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
@@ -395,7 +395,7 @@ public static partial class ImGuiUtil
         var       tmpEdit = edit;
         using var style   = ImRaii.PushStyle(ImGuiStyleVar.ItemSpacing, ImGui.GetStyle().ItemSpacing / 2);
         using var _       = ImRaii.PushId(id);
-        if (DrawDisabledButton(FontAwesomeIcon.Edit.ToIconString(), buttonSize, "Rename", edit, true))
+        if (DrawDisabledButton(FontAwesomeIcon.Edit.ToIconString(), buttonSize, "重新命名", edit, true))
             edit = true;
         ImGui.SameLine();
         style.Pop();
@@ -506,7 +506,7 @@ public static partial class ImGuiUtil
         ImGui.SetNextItemWidth(300 * ImGuiHelpers.GlobalScale);
         if (ImGui.IsWindowAppearing())
             ImGui.SetKeyboardFocusHere();
-        var enterPressed = ImGui.InputTextWithHint("##newName", "Enter New Name...", ref newName, 512, ImGuiInputTextFlags.EnterReturnsTrue);
+        var enterPressed = ImGui.InputTextWithHint("##newName", "輸入新名稱...", ref newName, 512, ImGuiInputTextFlags.EnterReturnsTrue);
 
         if (!enterPressed)
             return false;

@@ -1166,20 +1166,20 @@ internal static unsafe partial class Utils
         builder.Append(ExcelWorldHelper.GetName(entry.World));
         builder.Append(", ");
         builder.Append(TabAddressBook.ResidentialNames.SafeSelect(entry.City) ?? "???");
-        builder.Append(", Ward");
+        builder.Append("，第 ");
         builder.Append(entry.Ward);
         if(entry.PropertyType == PropertyType.House)
         {
-            builder.Append(", Plot");
+            builder.Append("，地號 ");
             builder.Append(entry.Plot);
         }
         if(entry.PropertyType == PropertyType.Apartment)
         {
-            builder.Append(", Apartment");
+            builder.Append("，公寓 ");
             builder.Append(entry.Apartment);
             if(entry.ApartmentSubdivision)
             {
-                builder.Append("(subdivision)");
+                builder.Append("（副地圖）");
             }
         }
         return builder.ToString();

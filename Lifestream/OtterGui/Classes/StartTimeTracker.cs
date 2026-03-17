@@ -88,8 +88,8 @@ public class StartTimeTracker
 
         ImGui.TableSetupColumn("名稱",   ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
         ImGui.TableSetupColumn("Time",   ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
-        ImGui.TableSetupColumn("Start",  ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
-        ImGui.TableSetupColumn("End",    ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
+        ImGui.TableSetupColumn("開始",  ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
+        ImGui.TableSetupColumn("結束",    ImGuiTableColumnFlags.None, 150 * ImGuiHelpers.GlobalScale);
         ImGui.TableSetupColumn("Thread", ImGuiTableColumnFlags.None, 50 * ImGuiHelpers.GlobalScale);
         ImGui.TableHeadersRow();
 

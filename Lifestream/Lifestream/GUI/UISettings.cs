@@ -104,7 +104,7 @@ internal static unsafe class UISettings
                         {
                             C.PreferredSharedEstates[Player.CID] = (-1, 0, 0);
                         }
-                        if(ImGui.RadioButton($"{ExcelTerritoryHelper.GetName(x.TerritoryId)}, Ward {x.Ward}, Plot {x.Plot}", pref == ((int)x.TerritoryId, x.Ward, x.Plot)))
+                        if(ImGui.RadioButton($"{ExcelTerritoryHelper.GetName(x.TerritoryId)}，第 {x.Ward} 區，地號 {x.Plot}", pref == ((int)x.TerritoryId, x.Ward, x.Plot)))
                         {
                             C.PreferredSharedEstates[Player.CID] = ((int)x.TerritoryId, x.Ward, x.Plot);
                         }

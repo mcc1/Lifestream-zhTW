@@ -69,11 +69,11 @@ public class AddressBookFileSystemManager
                 }
                 if(entry == null)
                 {
-                    Notify.Error("Could not move");
+                    Notify.Error("無法移動");
                 }
                 else if(folder == leaf.Value)
                 {
-                    Notify.Error($"Could not move to the same folder");
+                    Notify.Error($"無法移動至相同資料夾");
                 }
                 else
                 {

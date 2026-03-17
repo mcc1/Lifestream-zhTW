@@ -216,12 +216,7 @@ public partial class FileSystemSelector<T, TStateStorage> where T : class where 
         }
         catch (Exception e)
         {
-            throw new Exception("Exception during FileSystemSelector rendering:\n"
-              + $"{_currentIndex} Current Index\n"
-              + $"{_currentDepth} Current Depth\n"
-              + $"{_currentEnd} Current End\n"
-              + $"{_state.Count} Current State Count\n"
-              + $"{_filterDirty} Filter Dirty", e);
+            throw new Exception($"Exception during FileSystemSelector rendering:{_currentIndex} Current Index\n{_currentDepth} Current Depth\n{_currentEnd} Current End\n{_state.Count} Current State Count\n{_filterDirty} Filter Dirty", e);
         }
     }
 
@@ -256,12 +251,7 @@ public partial class FileSystemSelector<T, TStateStorage> where T : class where 
         }
         catch (Exception e)
         {
-            throw new Exception("Exception during FileSystemSelector rendering:\n"
-              + $"{_currentIndex} Current Index\n"
-              + $"{_currentDepth} Current Depth\n"
-              + $"{_currentEnd} Current End\n"
-              + $"{_state.Count} Current State Count\n"
-              + $"{_filterDirty} Filter Dirty", e);
+            throw new Exception($"Exception during FileSystemSelector rendering:{_currentIndex} Current Index\n{_currentDepth} Current Depth\n{_currentEnd} Current End\n{_state.Count} Current State Count\n{_filterDirty} Filter Dirty", e);
         }
     }
     private void DrawButtons(float width)

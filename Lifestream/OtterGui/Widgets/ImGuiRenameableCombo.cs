@@ -29,7 +29,7 @@ public static partial class Widget
         }
 
         ImGui.SetNextItemWidth(-1);
-        if (ImGui.InputTextWithHint($"##{label}_new", "Add new item...", ref newOption, 64, ImGuiInputTextFlags.EnterReturnsTrue))
+        if (ImGui.InputTextWithHint($"##{label}_new", "新增項目...", ref newOption, 64, ImGuiInputTextFlags.EnterReturnsTrue))
         {
             currentItem = numItems;
             newName     = newOption;

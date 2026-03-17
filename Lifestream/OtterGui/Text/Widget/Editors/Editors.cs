@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+using ImGuiNET;
 using OtterGui.Text.HelperObjects;
 using OtterGui.Widgets;
 

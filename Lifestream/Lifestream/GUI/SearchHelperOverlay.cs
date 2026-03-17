@@ -227,7 +227,7 @@ public unsafe class SearchHelperOverlay : Window
         }
 
         ImGui.PushStyleColor(ImGuiCol.Text, 0xFFFFFFFF);
-        ImGui.Text($"Lifestream Commands{(string.IsNullOrEmpty(FilterText) ? "" : $" matching '{FilterText}'")}:");
+        ImGui.Text($"Lifestream 指令{(string.IsNullOrEmpty(FilterText) ? "" : $" matching '{FilterText}'")}：");
         ImGui.PopStyleColor();
         ImGui.Separator();
 

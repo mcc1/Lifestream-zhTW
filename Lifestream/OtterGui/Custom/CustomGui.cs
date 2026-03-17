@@ -18,7 +18,7 @@ public static class CustomGui
         const string address = @"https://discord.gg/kVva7DHV4r";
         using var    color   = ImRaii.PushColor(ImGuiCol.Button, DiscordColor);
 
-        DrawLinkButton(message, "Join Discord for Support", address, width, $"Open {address}");
+        DrawLinkButton(message, "加入 Discord 取得支援", address, width, $"Open {address}");
     }
 
     /// <summary> Draw the button that opens the ReniGuide. </summary>
@@ -29,9 +29,8 @@ public static class CustomGui
             .Push(ImGuiCol.ButtonHovered, ReniColorHovered)
             .Push(ImGuiCol.ButtonActive,  ReniColorActive);
 
-        DrawLinkButton(message, "Beginner's Guides", address, width,
-            $"Open {address}\nImage and text based guides for most functionality of Penumbra made by Serenity.\n"
-          + "Not directly affiliated and potentially, but not usually out of date.");
+        DrawLinkButton(message, "新手指南", address, width,
+            $"Open {address}\nImage and text based guides for most functionality of Penumbra made by Serenity.\nNot directly affiliated and potentially, but not usually out of date.");
     }
 
     /// <summary> Draw a button that opens an address in the browser. </summary>
@@ -48,7 +47,7 @@ public static class CustomGui
             }
             catch
             {
-                message.NotificationMessage($"Could not open {text} at {address} in external browser", NotificationType.Error);
+                message.NotificationMessage($"無法在外部瀏覽器開啟 {text} 的 {address}", NotificationType.Error);
             }
 
         if (tooltip != null)

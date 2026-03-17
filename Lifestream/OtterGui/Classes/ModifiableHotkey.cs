@@ -98,7 +98,7 @@ public struct ModifiableHotkey : IEquatable<ModifiableHotkey>
 
     public override string ToString()
         => Hotkey is VirtualKey.NO_KEY
-            ? "No Key"
+            ? "無按鍵"
             : Modifier1.Modifier is VirtualKey.NO_KEY
                 ? Hotkey.GetFancyName()
                 : Modifier2.Modifier is VirtualKey.NO_KEY

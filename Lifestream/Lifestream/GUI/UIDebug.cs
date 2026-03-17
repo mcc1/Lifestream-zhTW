@@ -777,7 +777,7 @@ internal static unsafe class UIDebug
             ImGui.InputText("伺服器", ref World, 100);
             ImGuiEx.EnumCombo("Resi", ref ResiA);
             ImGui.InputInt("小區", ref Ward);
-            if(ImGui.Button("Go"))
+            if(ImGui.Button("前往"))
             {
                 TaskTpAndGoToWard.Enqueue(World, ResiA, Ward, 1, false, false);
             }

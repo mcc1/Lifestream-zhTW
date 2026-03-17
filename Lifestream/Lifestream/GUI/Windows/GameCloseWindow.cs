@@ -8,7 +8,7 @@ public class GameCloseWindow : Window
     {
         EmptyName = "Disabled",
     };
-    public GameCloseWindow() : base("Lifestream Scheduler", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.AlwaysAutoResize)
+    public GameCloseWindow() : base("Lifestream 排程器", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoSavedSettings | ImGuiWindowFlags.AlwaysAutoResize)
     {
         RespectCloseHotkey = false;
         ShowCloseButton = false;
@@ -18,13 +18,13 @@ public class GameCloseWindow : Window
     {
         if(World == 0)
         {
-            ImGuiEx.Text("Inactive, select target world");
+            ImGuiEx.Text("閒置中，請選擇目標伺服器");
         }
         else
         {
-            ImGuiEx.Text(EColor.RedBright, "Active");
+            ImGuiEx.Text(EColor.RedBright, "使用中");
         }
-        ImGuiEx.Text($"Shutdown game upon arriving to:");
+        ImGuiEx.Text($"抵達後關閉遊戲：");
         ImGui.SetNextItemWidth(200f.Scale());
         WorldSelector.Draw(ref World);
     }

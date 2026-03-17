@@ -49,11 +49,11 @@ public static class SeStringBuilderExtensions
         => sb.AddText(text, Purple, brackets);
 
     public static SeStringBuilder AddCommand(this SeStringBuilder sb, string command, string description)
-        => sb.AddText("    》 ")
+        => sb.AddText("》")
             .AddBlue(command)
-            .AddText($" - {description}");
+            .AddText($"- {description}");
 
     public static SeStringBuilder AddInitialPurple(this SeStringBuilder sb, string word, bool withComma = true)
         => sb.AddPurple($"[{word[0]}]")
-            .AddText(withComma ? $"{word[1..]}, " : word[1..]);
+            .AddText(withComma ? $"{word[1..]}," : word[1..]);
 }

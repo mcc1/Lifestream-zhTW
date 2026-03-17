@@ -31,7 +31,7 @@ public interface ISortMode<T> where T : class
     private struct FoldersFirstT : ISortMode<T>
     {
         public string Name
-            => "Folders First";
+            => "資料夾優先";
 
         public string Description
             => "In each folder, sort all subfolders lexicographically, then sort all leaves lexicographically.";
@@ -55,7 +55,7 @@ public interface ISortMode<T> where T : class
     private struct InverseFoldersFirstT : ISortMode<T>
     {
         public string Name
-            => "Folders First (Inverted)";
+            => "資料夾優先（倒序）";
 
         public string Description
             => "In each folder, sort all subfolders in inverse lexicographical order, then sort all leaves in inverse lexicographical order.";
@@ -79,7 +79,7 @@ public interface ISortMode<T> where T : class
     public struct FoldersLastT : ISortMode<T>
     {
         public string Name
-            => "Folders Last";
+            => "資料夾置後";
 
         public string Description
             => "In each folder, sort all leaves lexicographically, then sort all subfolders lexicographically.";
@@ -91,7 +91,7 @@ public interface ISortMode<T> where T : class
     public struct InverseFoldersLastT : ISortMode<T>
     {
         public string Name
-            => "Folders Last (Inverted)";
+            => "資料夾置後（倒序）";
 
         public string Description
             => "In each folder, sort all leaves in inverse lexicographical order, then sort all subfolders in inverse lexicographical order.";
@@ -103,7 +103,7 @@ public interface ISortMode<T> where T : class
     public struct InternalOrderT : ISortMode<T>
     {
         public string Name
-            => "Internal Order";
+            => "內部順序";
 
         public string Description
             => "In each folder, sort all children in order of their identifiers (i.e. in order of their creation in the filesystem).";
@@ -115,7 +115,7 @@ public interface ISortMode<T> where T : class
     public struct InverseInternalOrderT : ISortMode<T>
     {
         public string Name
-            => "Internal Order (Inverted)";
+            => "內部順序（倒序）";
 
         public string Description
             => "In each folder, sort all children in inverse order of their identifiers (i.e. in inverse order of their creation in the filesystem).";
