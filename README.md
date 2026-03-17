@@ -24,3 +24,5 @@
 
 - 目前先以 API 12 對應的 `2.5.1.13` 作為初始基線。
 - 若後續要升級，應先重新確認 `DalamudApiLevel`、目標 framework 與打包內容。
+- 本地驗證與 build 注意事項請先看：
+  - [docs/LOCAL_BUILD_NOTES.md](docs/LOCAL_BUILD_NOTES.md)
