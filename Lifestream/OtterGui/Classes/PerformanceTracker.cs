@@ -199,7 +199,7 @@ public class PerformanceTracker<T> : IDisposable where T : unmanaged, Enum
                 ImGuiUtil.RightAlign(text);
             }
 
-            ImGui.TableSetupColumn("Name",            ImGuiTableColumnFlags.None, 200 * ImGuiHelpers.GlobalScale);
+            ImGui.TableSetupColumn("名稱",            ImGuiTableColumnFlags.None, 200 * ImGuiHelpers.GlobalScale);
             ImGui.TableSetupColumn("Last Frame",      ImGuiTableColumnFlags.None, 100 * ImGuiHelpers.GlobalScale);
             ImGui.TableSetupColumn("Longest Frame",   ImGuiTableColumnFlags.None, 100 * ImGuiHelpers.GlobalScale);
             ImGui.TableSetupColumn("Average Frame",   ImGuiTableColumnFlags.None, 100 * ImGuiHelpers.GlobalScale);

@@ -132,7 +132,7 @@ public class Tutorial
 
         ImGui.PopTextWrapPos();
         ImGui.NewLine();
-        var buttonText = next == EndStep ? "Finish" : "Next";
+        var buttonText = next == EndStep ? "完成" : "Next";
         nextValue = ImGui.Button(buttonText) ? next : nextValue;
         ImGui.SameLine();
         nextValue = ImGui.Button("Skip Tutorial") ? EndStep : nextValue;

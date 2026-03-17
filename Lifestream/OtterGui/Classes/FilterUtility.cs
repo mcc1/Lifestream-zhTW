@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+using ImGuiNET;
 
 namespace OtterGui.Classes;
 
@@ -20,7 +20,7 @@ public abstract class FilterUtility<T>
     public bool Draw(float width)
     {
         ImGui.SetNextItemWidth(width);
-        var change = ImGui.InputTextWithHint("##filterInput", "Filter...", ref _input, 64);
+        var change = ImGui.InputTextWithHint("##filterInput", "篩選...", ref _input, 64);
         ImGuiUtil.HoverTooltip(Tooltip);
         if (!change)
             return false;

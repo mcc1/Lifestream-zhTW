@@ -39,7 +39,7 @@ public static partial class Widget
         if (colors.TryGetValue(defaultColorIdx, out var def))
         {
             ImGui.SameLine();
-            if (ImGuiUtil.DrawDisabledButton("Default", Vector2.Zero, $"Reset this color to {defaultColorIdx} ({Functions.ColorBytes(def)}).",
+            if (ImGuiUtil.DrawDisabledButton("預設", Vector2.Zero, $"Reset this color to {defaultColorIdx} ({Functions.ColorBytes(def)}).",
                     currentColorIdx == defaultColorIdx))
             {
                 newColorIdx = defaultColorIdx;

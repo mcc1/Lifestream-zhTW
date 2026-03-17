@@ -22,7 +22,7 @@ public static partial class Widget
 
         // Draw a button to return to default.
         ImGui.SameLine();
-        if (ImGuiUtil.DrawDisabledButton("Default", Vector2.Zero, string.Empty, currentColor == defaultColor))
+        if (ImGuiUtil.DrawDisabledButton("預設", Vector2.Zero, string.Empty, currentColor == defaultColor))
         {
             setter(defaultColor);
             ret = true;

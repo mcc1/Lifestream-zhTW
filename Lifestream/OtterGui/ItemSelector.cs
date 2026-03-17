@@ -261,7 +261,7 @@ public class ItemSelector<T>
         var       newFilter = Filter;
         using var style     = ImRaii.PushStyle(ImGuiStyleVar.FrameRounding, 0);
         ImGui.SetNextItemWidth(width);
-        var enterPressed = ImUtf8.InputText("##"u8, ref newFilter, "Filter..."u8, ImGuiInputTextFlags.EnterReturnsTrue);
+        var enterPressed = ImUtf8.InputText("##"u8, ref newFilter, "篩選..."u8, ImGuiInputTextFlags.EnterReturnsTrue);
         if (newFilter != Filter)
         {
             Filter      = newFilter;
