@@ -376,17 +376,17 @@ public unsafe class Lifestream : IDalamudPlugin
 
                 if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.Worlds, out var w))
                 {
-                    PluginLog.Information($"Same dc/{primary}/{w}");
+                    PluginLog.Information($"同資料中心/{primary}/{w}");
                     TPAndChangeWorld(w, false, gateway: gateway);
                 }
                 else if(Utils.TryResolveTravelWorldInput(targetInput, S.Data.DataStore.DCWorlds, out var dcw))
                 {
-                    PluginLog.Information($"Cross dc/{primary}/{w}");
+                    PluginLog.Information($"跨資料中心/{primary}/{w}");
                     TPAndChangeWorld(dcw, true, gateway: gateway);
                 }
                 else if(Utils.TryGetWorldFromDataCenter(normalizedPrimary, out var world, out var dc))
                 {
-                    Utils.DisplayInfo($"Random world from {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name}: {world}");
+                    Utils.DisplayInfo($"從 {Svc.Data.GetExcelSheet<WorldDCGroupType>().GetRow(dc).Name} 隨機選擇伺服器：{world}");
                     TPAndChangeWorld(world, Player.Object.CurrentWorld.ValueNullable?.DataCenter.RowId != dc, gateway: gateway);
                 }
                 else
