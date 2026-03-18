@@ -399,7 +399,7 @@
   "To target: {0}": "到目標：{0}",
   "Data ID": "資料 ID",
   "Target": "目標",
-  "List entries that you would like to select/confirm:": "列出你想選擇／確認的項目：",
+  "List entries that you would like to select/confirm:": "觸發條件關鍵字（選項敘述）：",
   "ItemLst": "ItemLst",
   "Add New Option": "新增選項",
   "Skip on screen fade": "略過畫面淡出",
