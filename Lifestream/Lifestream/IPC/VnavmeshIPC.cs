@@ -1,4 +1,4 @@
-﻿using ECommons.EzIpcManager;
+using ECommons.EzIpcManager;
 
 namespace Lifestream.IPC;
 #pragma warning disable CS8632

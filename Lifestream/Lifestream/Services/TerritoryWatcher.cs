@@ -1,4 +1,4 @@
-﻿using ECommons.ExcelServices;
+using ECommons.ExcelServices;
 using ECommons.ExcelServices.TerritoryEnumeration;
 using ECommons.GameHelpers;
 using ECommons.LazyDataHelpers;

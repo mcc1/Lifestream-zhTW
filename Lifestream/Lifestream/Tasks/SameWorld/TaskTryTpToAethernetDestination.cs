@@ -1,4 +1,4 @@
-﻿using ECommons.Automation.NeoTaskManager;
+using ECommons.Automation.NeoTaskManager;
 using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.ChatMethods;
 using ECommons.ExcelServices;

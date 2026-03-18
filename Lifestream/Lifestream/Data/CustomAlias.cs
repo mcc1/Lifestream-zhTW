@@ -1,4 +1,4 @@
-﻿using NightmareUI.OtterGuiWrapper.FileSystems.Generic;
+using NightmareUI.OtterGuiWrapper.FileSystems.Generic;
 
 namespace Lifestream.Data;
 [Serializable]

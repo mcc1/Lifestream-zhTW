@@ -212,7 +212,7 @@ public unsafe class Lifestream : IDalamudPlugin
             if(innNum != null && !innNum.Value.InRange(0, TaskPropertyShortcut.InnData.Count))
             {
                 var num = 1;
-                DuoLog.Warning($"Invalid inn index. Valid inns are: \n{TaskPropertyShortcut.InnData.Select(s => $"{num++} - {Utils.GetInnNameFromTerritory(s.Key)}").Print("\n")}");
+                DuoLog.Warning($"Invalid inn index. Valid inns are:\n{TaskPropertyShortcut.InnData.Select(s => $"{num++} - {Utils.GetInnNameFromTerritory(s.Key)}").Print("\n")}");
             }
             else
             {

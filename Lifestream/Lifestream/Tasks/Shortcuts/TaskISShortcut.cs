@@ -1,4 +1,4 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager.Tasks;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;

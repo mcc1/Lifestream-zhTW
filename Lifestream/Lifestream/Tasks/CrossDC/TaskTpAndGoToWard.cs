@@ -1,4 +1,4 @@
-﻿
+
 using Dalamud.Game.ClientState.Objects.Enums;
 using ECommons.Automation;
 using ECommons.GameHelpers;

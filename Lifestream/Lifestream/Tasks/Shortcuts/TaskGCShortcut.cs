@@ -1,4 +1,4 @@
-﻿using ECommons.ExcelServices.TerritoryEnumeration;
+using ECommons.ExcelServices.TerritoryEnumeration;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game;

@@ -1,4 +1,4 @@
-﻿using ECommons.Automation;
+using ECommons.Automation;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 
