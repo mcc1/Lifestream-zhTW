@@ -152,39 +152,39 @@ public static partial class ImUtf8
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{byte},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ReadOnlySpan<byte> text, ReadOnlySpan<byte> copiedText)
-        => CopyOnClickSelectable(text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(text, copiedText, "點擊複製到剪貼簿。"u8);
 
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{char},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ReadOnlySpan<char> text, ReadOnlySpan<byte> copiedText)
-        => CopyOnClickSelectable(text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(text, copiedText, "點擊複製到剪貼簿。"u8);
 
     /// <inheritdoc cref="CopyOnClickSelectable(ref Utf8StringHandler{TextStringHandlerBuffer},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ref Utf8StringHandler<TextStringHandlerBuffer> text, ReadOnlySpan<byte> copiedText)
-        => CopyOnClickSelectable(ref text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(ref text, copiedText, "點擊複製到剪貼簿。"u8);
 
 
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{byte},ReadOnlySpan{char},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ReadOnlySpan<byte> text, ReadOnlySpan<char> copiedText)
-        => CopyOnClickSelectable(text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(text, copiedText, "點擊複製到剪貼簿。"u8);
 
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{char},ReadOnlySpan{char},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ReadOnlySpan<char> text, ReadOnlySpan<char> copiedText)
-        => CopyOnClickSelectable(text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(text, copiedText, "點擊複製到剪貼簿。"u8);
 
     /// <inheritdoc cref="CopyOnClickSelectable(ref Utf8StringHandler{TextStringHandlerBuffer},ReadOnlySpan{char},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ref Utf8StringHandler<TextStringHandlerBuffer> text, ReadOnlySpan<char> copiedText)
-        => CopyOnClickSelectable(ref text, copiedText, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(ref text, copiedText, "點擊複製到剪貼簿。"u8);
 
 
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{byte},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static void CopyOnClickSelectable(ReadOnlySpan<byte> text)
-        => CopyOnClickSelectable(text, text, "Click to copy to clipboard."u8);
+        => CopyOnClickSelectable(text, text, "點擊複製到剪貼簿。"u8);
 
     /// <inheritdoc cref="CopyOnClickSelectable(ReadOnlySpan{char},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
@@ -203,7 +203,7 @@ public static partial class ImUtf8
             }
         }
 
-        HoverTooltip("Click to copy to clipboard."u8);
+        HoverTooltip("點擊複製到剪貼簿。"u8);
     }
 
     /// <inheritdoc cref="CopyOnClickSelectable(ref Utf8StringHandler{TextStringHandlerBuffer},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
@@ -223,7 +223,7 @@ public static partial class ImUtf8
             }
         }
 
-        HoverTooltip("Click to copy to clipboard."u8);
+        HoverTooltip("點擊複製到剪貼簿。"u8);
     }
 
     /// <inheritdoc cref="CopyOnClickSelectable(ref Utf8StringHandler{TextStringHandlerBuffer},ReadOnlySpan{byte},ReadOnlySpan{byte})"/>
@@ -246,6 +246,6 @@ public static partial class ImUtf8
             }
         }
 
-        HoverTooltip("Click to copy to clipboard."u8);
+        HoverTooltip("點擊複製到剪貼簿。"u8);
     }
 }
