@@ -13,6 +13,21 @@ public static class TabCustomAlias
 {
     private static ImGuiEx.RealtimeDragDrop<CustomAliasCommand> DragDrop = new("CusACmd", x => x.ID);
 
+    private static readonly Dictionary<CustomAliasKind, string> CustomAliasKindNames = new()
+    {
+        [CustomAliasKind.Teleport_to_Aetheryte] = "傳送至以太之光",
+        [CustomAliasKind.Move_to_point] = "移動至目標點",
+        [CustomAliasKind.Navmesh_to_point] = "Navmesh 至目標點",
+        [CustomAliasKind.Change_world] = "切換伺服器",
+        [CustomAliasKind.Use_Aethernet] = "使用以太網",
+        [CustomAliasKind.Circular_movement] = "環形移動",
+        [CustomAliasKind.Interact] = "互動",
+        [CustomAliasKind.Mount_Up] = "騎乘坐騎",
+        [CustomAliasKind.Select_Yes] = "選擇「是」",
+        [CustomAliasKind.Select_List_Option] = "選擇清單選項",
+        [CustomAliasKind.Confirm_Contents_Finder] = "確認副本配對",
+    };
+
     public static void Draw()
     {
         var selector = S.CustomAliasFileSystemManager.FileSystem.Selector;
@@ -117,7 +132,7 @@ public static class TabCustomAlias
                     });
                 }
 
-                ImGuiEx.TreeNodeCollapsingHeader($"指令 {i + 1}：{x.Kind.ToString().Replace('_', ' ')}{GetExtraText(x)}###{x.ID}", () => DrawCommand(x, selected), ImGuiTreeNodeFlags.CollapsingHeader);
+                ImGuiEx.TreeNodeCollapsingHeader($"指令 {i + 1}：{CustomAliasKindNames.GetValueOrDefault(x.Kind, x.Kind.ToString().Replace('_', ' '))}{GetExtraText(x)}###{x.ID}", () => DrawCommand(x, selected), ImGuiTreeNodeFlags.CollapsingHeader);
                 DrawSplatoon(x, i);
 
 
@@ -194,7 +209,7 @@ public static class TabCustomAlias
 
         ImGui.Separator();
         ImGui.SetNextItemWidth(150f.Scale());
-        ImGuiEx.EnumCombo("別名類型", ref command.Kind);
+        ImGuiEx.EnumCombo("別名類型", ref command.Kind, names: CustomAliasKindNames);
 
         if(command.Kind == CustomAliasKind.Teleport_to_Aetheryte)
         {
