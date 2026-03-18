@@ -628,9 +628,8 @@
   "[Debug] Selecting world visit target={0}, index={1}, available=[{2}]": "[Debug] Selecting world visit target={0}, index={1}, available=[{2}]",
   "Filter...": "篩選...",
   "_force_translate": {
-    "Lifestream/OtterGui/ItemSelector.cs": {
-      "Filter...": "篩選..."
-    }
+    "OtterGui/Text/ImUtf8Test.cs": {},
+    "OtterGui/Services/DynamisIpc.cs": {}
   },
   "{0}##Table": "{0}##Table",
   "Shell.Application": "Shell.Application",
@@ -843,22 +842,5 @@
   "Try##Attach": "Try##Attach",
   "Unlock": "Unlock",
   "Lock": "Lock",
-  "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.": "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.",
-  "Password: {0}": "Password: {0}",
-  "00:00:00.0000": "00:00:00.0000",
-  "Enable Text": "Enable Text",
-  "Enable Text Input": "Enable Text Input",
-  "Enable Button": "Enable Button",
-  "This is a button.##u8": "This is a button.##u8",
-  "Input##u8": "Input##u8",
-  "This is UTF8.": "This is UTF8.",
-  "UTF8": "UTF8",
-  "UTF8 Selectable": "UTF8 Selectable",
-  "UTF8 Button": "UTF8 Button",
-  "UTF8 Tooltip": "UTF8 Tooltip",
-  "UTF8 Label##UTF8": "UTF8 Label##UTF8",
-  "UTF8 Hint...": "UTF8 Hint...",
-  "UTF8 Label##UTF8Deactivate": "UTF8 Label##UTF8Deactivate",
-  "nullptr": "nullptr",
-  "0x0": "0x0"
+  "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.": "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item."
 }
