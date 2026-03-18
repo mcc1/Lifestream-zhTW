@@ -1,0 +1,13 @@
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/bin/Release/OtterGui.deps.json
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/bin/Release/OtterGui.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/bin/Release/JetBrains.Annotations.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/bin/Release/Microsoft.Extensions.DependencyInjection.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/bin/Release/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.csproj.AssemblyReference.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.AssemblyInfoInputs.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.AssemblyInfo.cs
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.csproj.CoreCompileInputs.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.sourcelink.json
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.csproj.Up2Date
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/OtterGui/obj/Release/OtterGui.dll

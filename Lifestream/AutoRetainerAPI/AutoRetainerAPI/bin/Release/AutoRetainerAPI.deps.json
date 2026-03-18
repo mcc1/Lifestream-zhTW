@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "AutoRetainerAPI/1.0.0": {
+        "dependencies": {
+          "ECommons": "2.2.0.2"
+        },
+        "runtime": {
+          "AutoRetainerAPI.dll": {}
+        }
+      },
+      "ECommons/2.2.0.2": {
+        "runtime": {
+          "ECommons.dll": {
+            "assemblyVersion": "2.2.0.2",
+            "fileVersion": "2.2.0.2"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AutoRetainerAPI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ECommons/2.2.0.2": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

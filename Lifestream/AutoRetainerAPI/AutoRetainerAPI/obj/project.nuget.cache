@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "aLdRUHb6xKM=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/AutoRetainerAPI/AutoRetainerAPI/AutoRetainerAPI.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/microsoft.netcore.app.ref/9.0.12/microsoft.netcore.app.ref.9.0.12.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.windowsdesktop.app.ref/9.0.12/microsoft.windowsdesktop.app.ref.9.0.12.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.12/microsoft.aspnetcore.app.ref.9.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}

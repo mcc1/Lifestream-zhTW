@@ -1,0 +1,13 @@
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/bin/Release/ECommons.deps.json
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/bin/Release/ECommons.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/bin/Release/ECommons.pdb
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/bin/Release/ECommons.xml
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.csproj.AssemblyReference.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.AssemblyInfoInputs.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.AssemblyInfo.cs
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.csproj.CoreCompileInputs.cache
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.sourcelink.json
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.dll
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.xml
+/home/runner/work/Lifestream-zhTW/Lifestream-zhTW/Lifestream/ECommons/ECommons/obj/Release/ECommons.pdb
