@@ -39,7 +39,7 @@ public class CustomAlias : IFileSystemStorage
         }
         else
         {
-            Notify.Error("Lifestream is busy!");
+            Notify.Error("Lifestream 正在執行中！");
         }
     }
 }

@@ -128,7 +128,7 @@ public unsafe class Lifestream : IDalamudPlugin
             }
             if(args.Length != 4 || !uint.TryParse(args[2], out var a) || !uint.TryParse(args[3], out var b))
             {
-                DuoLog.Error("Invalid arguments");
+                DuoLog.Error("參數無效");
                 return;
             }
 
@@ -166,7 +166,7 @@ public unsafe class Lifestream : IDalamudPlugin
         {
             if(S.InstanceHandler.GetInstance() == val)
             {
-                DuoLog.Warning($"Already in instance {val}");
+                DuoLog.Warning($"已在副本 {val} 中");
             }
             else if(S.InstanceHandler.CanChangeInstance())
             {
@@ -174,7 +174,7 @@ public unsafe class Lifestream : IDalamudPlugin
             }
             else
             {
-                DuoLog.Error($"Can't change instance now");
+                DuoLog.Error($"目前無法切換副本");
             }
         }
         else if(arguments.EqualsIgnoreCaseAny("open", "select", "window", "w", "world", "travel"))
@@ -249,7 +249,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 }
                 else
                 {
-                    DuoLog.Error($"Could not parse input: {arglist[1]}");
+                    DuoLog.Error($"無法解析輸入：{arglist[1]}");
                 }
             }
         }
@@ -271,7 +271,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 if(S.Data.DataStore.IslandNPCs.TryGetFirst(x => x.Value.Any(y => y.Contains(name, StringComparison.OrdinalIgnoreCase)), out var npc))
                     TaskISShortcut.Enqueue(npc.Key);
                 else
-                    DuoLog.Error($"Could not parse input: {name}");
+                    DuoLog.Error($"無法解析輸入：{name}");
             }
         }
         else if(arguments.EqualsIgnoreCaseAny("cosmic", "ardorum", "moon"))
@@ -287,7 +287,7 @@ public unsafe class Lifestream : IDalamudPlugin
             }
             else
             {
-                Notify.Error("Lifestream is busy");
+                Notify.Error("Lifestream 正在執行中");
             }
         }
         else if(arguments.EqualsIgnoreCase("occult"))
@@ -298,7 +298,7 @@ public unsafe class Lifestream : IDalamudPlugin
             }
             else
             {
-                Notify.Error("Lifestream is busy");
+                Notify.Error("Lifestream 正在執行中");
             }
         }
         else if(arguments.StartsWithAny(StringComparison.OrdinalIgnoreCase, "tp"))
@@ -306,7 +306,7 @@ public unsafe class Lifestream : IDalamudPlugin
             var destination = primary[(primary.IndexOf("tp") + 2)..].Trim();
             if(destination == null || destination == "")
             {
-                DuoLog.Error($"Please type something");
+                DuoLog.Error($"請輸入內容");
             }
             else
             {
@@ -418,23 +418,23 @@ public unsafe class Lifestream : IDalamudPlugin
             {
                 if(isDcTransfer && !C.AllowDcTransfer)
                 {
-                    Notify.Error($"Data center transfers are not enabled in the configuration.");
+                    Notify.Error($"設定中未啟用資料中心轉移功能。");
                     return;
                 }
                 if(TaskManager.IsBusy)
                 {
-                    Notify.Error("Another task is in progress");
+                    Notify.Error("另一項任務執行中");
                     return;
                 }
             }
             if(!Player.Available)
             {
-                Notify.Error("No player");
+                Notify.Error("找不到玩家");
                 return;
             }
             if(destinationWorld == Player.CurrentWorld)
             {
-                Notify.Error("Already in this world");
+                Notify.Error("已在此伺服器");
                 return;
             }
             /*if(ActionManager.Instance()->GetActionStatus(ActionType.Spell, 5) != 0)
@@ -444,7 +444,7 @@ public unsafe class Lifestream : IDalamudPlugin
             }*/
             if(Svc.Party.Length > 1 && !C.LeavePartyBeforeWorldChange && !C.LeavePartyBeforeWorldChange)
             {
-                Notify.Warning("You must disband party in order to switch worlds");
+                Notify.Warning("必須解散隊伍才能切換伺服器");
             }
             Utils.DisplayInfo($"目的地：{destinationWorld}");
             if(isDcTransfer)
@@ -502,7 +502,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 }
                 else
                 {
-                    DuoLog.Error($"Error - unknown data center visit type");
+                    DuoLog.Error($"錯誤 - 未知的資料中心訪問類型");
                 }
                 PluginLog.Information($"資料中心訪問：{type}");
             }
@@ -573,7 +573,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 {
                     if(EzThrottler.Throttle("WarnTerminate", 1000))
                     {
-                        DuoLog.Warning($"Arrived to {ExcelWorldHelper.GetName(TabUtility.TargetWorldID)}. Game is shutting down in {EzThrottler.GetRemainingTime("TerminateGame") / 1000} seconds. Type \"/li stop\" to cancel.");
+                        DuoLog.Warning($"已抵達 {ExcelWorldHelper.GetName(TabUtility.TargetWorldID)}。遊戲將在 {EzThrottler.GetRemainingTime("TerminateGame") / 1000} 秒後關閉。輸入「/li stop」可取消。");
                     }
                 }
             }

@@ -67,13 +67,13 @@ internal static class TaskTryTpToAethernetDestination
                         {
                             if(!Utils.EnqueueTeleport(targetName, null))
                             {
-                                DuoLog.Error("Destination could not be found");
+                                DuoLog.Error("找不到目的地");
                             }
                         });
                     }
                     else
                     {
-                        DuoLog.Error("Destination could not be found");
+                        DuoLog.Error("找不到目的地");
                     }
                 }
                 return;
@@ -167,13 +167,13 @@ internal static class TaskTryTpToAethernetDestination
                 {
                     if(!Utils.EnqueueTeleport(targetName, null))
                     {
-                        DuoLog.Error("Destination could not be found");
+                        DuoLog.Error("找不到目的地");
                     }
                 });
                 return;
             }
 
-            Notify.Error($"No destination {targetName} found");
+            Notify.Error($"找不到目的地 {targetName}");
             return;
         }
     }

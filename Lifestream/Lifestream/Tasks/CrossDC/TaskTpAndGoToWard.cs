@@ -140,13 +140,13 @@ public static unsafe class TaskTpAndGoToWard
                         if(target < 0 || target > 14) throw new InvalidOperationException($"Apartment number was out of range: was {target}, section {section}");
                         if(target >= reader.SectionRoomsCount)
                         {
-                            DuoLog.Error($"Could not find apartment {apartmentNum + 1} ({target} in section {section})");
+                            DuoLog.Error($"找不到公寓 {apartmentNum + 1}（區域 {section} 中的 {target}）");
                             return null;
                         }
                         var roomInfo = reader.Rooms.SafeSelect(target);
                         if(roomInfo.Owner == "" || roomInfo.AccessState == 1)
                         {
-                            DuoLog.Error($"Apartment {apartmentNum + 1} is vacant, could not enter.");
+                            DuoLog.Error($"公寓 {apartmentNum + 1} 目前為空置狀態，無法進入。");
                             return null;
                         }
                         Callback.Fire(addon, true, 0, target);
@@ -157,7 +157,7 @@ public static unsafe class TaskTpAndGoToWard
                 {
                     if(section < 0 || section >= reader.ExistingSectionsCount)
                     {
-                        DuoLog.Error($"Could not find apartment {apartmentNum + 1} (section {section} does not exist)");
+                        DuoLog.Error($"找不到公寓 {apartmentNum + 1}（區域 {section} 不存在）");
                         return null;
                     }
                     if(EzThrottler.Throttle("EnterApartmentRool", 5000))

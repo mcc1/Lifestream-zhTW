@@ -13,7 +13,7 @@ public class VnavmeshIPC
         }
         catch(Exception e)
         {
-            DuoLog.Error($"Vnavmesh not found, navigation failed");
+            DuoLog.Error($"找不到 Vnavmesh，導航失敗。");
             e.LogInternal();
             return null;
         }

@@ -43,7 +43,7 @@ public interface ISortMode<T> where T : class
     private struct LexicographicalT : ISortMode<T>
     {
         public string Name
-            => "Lexicographical";
+            => "字典順序";
 
         public string Description
             => "In each folder, sort all children lexicographically.";
@@ -67,7 +67,7 @@ public interface ISortMode<T> where T : class
     public struct InverseLexicographicalT : ISortMode<T>
     {
         public string Name
-            => "Lexicographical (Inverted)";
+            => "字典順序（倒序）";
 
         public string Description
             => "In each folder, sort all children in inverse lexicographical order.";

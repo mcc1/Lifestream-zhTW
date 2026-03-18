@@ -28,7 +28,7 @@ public class AddressBookFileSystemManager
         if(item.Entries == null)
         {
             item = null;
-            Notify.Error($"Item contains invalid data");
+            Notify.Error($"項目含有無效資料");
         }
         item.IsDefault = false;
         item.GUID = Guid.NewGuid();

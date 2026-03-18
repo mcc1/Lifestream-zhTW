@@ -226,7 +226,7 @@ public static unsafe class UIHouseReg
                 }
                 else
                 {
-                    Notify.Error($"A different {(isPrivate ? "private house plot" : "FC house plot")} is already registered for this character. If you want to override it, hold CTRL and click paste button.");
+                    Notify.Error($"此角色已登記不同的 {(isPrivate ? "private house plot" : "FC house plot")}。如需覆蓋，請按住 CTRL 並點擊貼上按鈕。");
                 }
             }
             catch(Exception e)

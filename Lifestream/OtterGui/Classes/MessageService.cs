@@ -212,7 +212,7 @@ public class MessageService(Logger log, IUiBuilder builder, IChatGui chat, INoti
     {
         using var id = ImRaii.PushId(message.Item2);
         ImGui.TableNextColumn();
-        if (ImUtf8.IconButton(FontAwesomeIcon.Trash, "Remove this from the list."u8))
+        if (ImUtf8.IconButton(FontAwesomeIcon.Trash, "從清單中移除。"u8))
             _deleteTime = message.Item1.Key;
 
         ImGui.TableNextColumn();

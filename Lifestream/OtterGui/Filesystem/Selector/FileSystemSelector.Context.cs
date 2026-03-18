@@ -87,10 +87,10 @@ public partial class FileSystemSelector<T, TStateStorage>
     // Protected so they can be removed by inheritors.
     protected void SetLocked(FileSystem<T>.IPath path)
     {
-        if (ImUtf8.MenuItem(path.IsLocked ? "Unlock"u8 : "Lock"u8))
+        if (ImUtf8.MenuItem(path.IsLocked ? "解鎖"u8 : "鎖定"u8))
             FileSystem.ChangeLockState(path, !path.IsLocked);
         ImUtf8.HoverTooltip(
-            "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item."u8);
+            "鎖定後無法拖曳至其他位置，其他操作不受影響。"u8);
     }
 
     protected void DissolveFolder(FileSystem<T>.Folder folder)

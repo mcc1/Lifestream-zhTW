@@ -45,7 +45,7 @@ public class ColumnFlags<T, TItem> : Column<TItem> where T : struct, Enum
         }
 
         if (!all)
-            ImUtf8.HoverTooltip("Right-click to clear filters."u8);
+            ImUtf8.HoverTooltip("右鍵清除篩選條件。"u8);
 
         if (!combo)
             return false;
@@ -53,7 +53,7 @@ public class ColumnFlags<T, TItem> : Column<TItem> where T : struct, Enum
         color.Pop();
 
         var ret = false;
-        if (ImUtf8.Checkbox("Enable All"u8, ref all))
+        if (ImUtf8.Checkbox("全部啟用"u8, ref all))
         {
             SetValue(AllFlags, all);
             ret = true;
@@ -119,7 +119,7 @@ public abstract class TriStateColumnFlags<T, TItem> : Column<TItem> where T : st
         }
 
         if (!all && ImGui.IsItemHovered())
-            ImUtf8.HoverTooltip("Right-click to clear filters."u8);
+            ImUtf8.HoverTooltip("右鍵清除篩選條件。"u8);
 
         if (!combo)
             return false;

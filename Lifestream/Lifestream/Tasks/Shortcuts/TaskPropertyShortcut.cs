@@ -36,7 +36,7 @@ public static unsafe class TaskPropertyShortcut
     {
         if(P.TaskManager.IsBusy)
         {
-            DuoLog.Error($"Lifestream is busy");
+            DuoLog.Error($"Lifestream 正在執行中");
             return;
         }
         if(!Player.Available) return;
@@ -68,7 +68,7 @@ public static unsafe class TaskPropertyShortcut
                 }
                 else
                 {
-                    DuoLog.Error("Could not find private house");
+                    DuoLog.Error("找不到個人房屋");
                 }
             }
             else if(propertyType == PropertyType.FC)
@@ -79,7 +79,7 @@ public static unsafe class TaskPropertyShortcut
                 }
                 else
                 {
-                    DuoLog.Error("Could not find free company house");
+                    DuoLog.Error("找不到部隊房屋");
                 }
             }
             else if(propertyType == PropertyType.Shared_Estate)
@@ -92,7 +92,7 @@ public static unsafe class TaskPropertyShortcut
                 }
                 else
                 {
-                    DuoLog.Error("Could not find shared estate");
+                    DuoLog.Error("找不到共享房產");
                 }
             }
             else if(propertyType == PropertyType.Apartment)
@@ -103,7 +103,7 @@ public static unsafe class TaskPropertyShortcut
                 }
                 else
                 {
-                    DuoLog.Error("Could not find apartment");
+                    DuoLog.Error("找不到公寓");
                 }
             }
             else if(propertyType == PropertyType.Inn)

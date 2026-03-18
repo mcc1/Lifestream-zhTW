@@ -66,7 +66,7 @@ public unsafe class MapHanderService : IDisposable
                                     {
                                         if(P.ActiveAetheryte.Value.ID == x.ID)
                                         {
-                                            Notify.Error("You are already here!");
+                                            Notify.Error("你已在此處！");
                                         }
                                         else
                                         {
@@ -87,7 +87,7 @@ public unsafe class MapHanderService : IDisposable
                                         {
                                             if(S.Data.ResidentialAethernet.ActiveAetheryte.Value.ID == x.ID)
                                             {
-                                                Notify.Error("You are already here!");
+                                                Notify.Error("你已在此處！");
                                             }
                                             else
                                             {
@@ -109,7 +109,7 @@ public unsafe class MapHanderService : IDisposable
                                         {
                                             if(S.Data.CustomAethernet.ActiveAetheryte.Value.ID == x.ID)
                                             {
-                                                Notify.Error("You are already here!");
+                                                Notify.Error("你已在此處！");
                                             }
                                             else
                                             {

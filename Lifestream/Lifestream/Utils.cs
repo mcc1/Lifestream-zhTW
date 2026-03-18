@@ -1081,12 +1081,12 @@ internal static unsafe partial class Utils
     {
         if(!Player.Available)
         {
-            Notify.Error($"Can not travel while character is not available");
+            Notify.Error($"角色尚未就緒，無法傳送。");
             return;
         }
         if(!S.Data.DataStore.DCWorlds.Contains(ExcelWorldHelper.GetName(entry.World)) && !S.Data.DataStore.Worlds.Contains(ExcelWorldHelper.GetName(entry.World)))
         {
-            Notify.Error($"Can not travel to {ExcelWorldHelper.GetName(entry.World)}");
+            Notify.Error($"無法傳送至 {ExcelWorldHelper.GetName(entry.World)}。");
             return;
         }
         if(entry.IsQuickTravelAvailable())

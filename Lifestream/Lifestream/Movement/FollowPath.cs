@@ -41,13 +41,13 @@ public class FollowPath : IDisposable
             if(S.Ipc.VnavmeshIPC.IsRunning())
             {
                 waypointsInternal.Clear();
-                DuoLog.Error($"Detected vnavmesh movement, Lifestream will abort all tasks now.");
+                DuoLog.Error($"偵測到 Vnavmesh 移動中，Lifestream 將立即中止所有任務。");
                 break;
             }
             if(Environment.TickCount64 > TimeoutAt)
             {
                 waypointsInternal.Clear();
-                DuoLog.Error($"Lifestream movement has timed out.");
+                DuoLog.Error($"Lifestream 移動已逾時。");
                 break;
             }
             var toNext = waypointsInternal[0] - Player.Object.Position;

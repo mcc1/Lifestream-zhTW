@@ -227,7 +227,7 @@ public class ItemSelector<T>
             {
                 _dragDropData = idx;
                 ImGui.SetDragDropPayload(MoveLabel, nint.Zero, 0);
-                ImGui.TextUnformatted($"Reordering {idx + 1}...");
+                ImGui.TextUnformatted($"正在重新排序 {idx + 1}...");
             }
         }
 
@@ -328,7 +328,7 @@ public class ItemSelector<T>
         if (ImGui.Button(FontAwesomeIcon.Clipboard.ToIconString(), Vector2.UnitX * width))
             ImGui.OpenPopup(newNamePopupImport);
         using var font = ImRaii.PushFont(UiBuilder.DefaultFont);
-        ImGuiUtil.HoverTooltip("Import from Clipboard");
+        ImGuiUtil.HoverTooltip("從剪貼簿匯入");
 
         if (!OpenNameField(newNamePopupImport, out var newName))
             return;
@@ -362,7 +362,7 @@ public class ItemSelector<T>
             ImGui.OpenPopup(newNamePopupDuplicate);
 
         using var font = ImRaii.PushFont(UiBuilder.DefaultFont);
-        ImGuiUtil.HoverTooltip("Duplicate Current Selection");
+        ImGuiUtil.HoverTooltip("複製目前選取項目");
 
         if (!OpenNameField(newNamePopupDuplicate, out var newName))
             return;
@@ -378,7 +378,7 @@ public class ItemSelector<T>
         => ImGui.GetIO().KeyCtrl;
 
     protected virtual string DeleteButtonTooltip()
-        => "Delete Current Selection. Hold Control while clicking.";
+        => "刪除目前選取項目。按住 Ctrl 並點擊。";
 
     private void DrawDeleteButton(float width)
     {
