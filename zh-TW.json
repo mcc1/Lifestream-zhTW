@@ -842,5 +842,10 @@
   "Try##Attach": "Try##Attach",
   "Unlock": "Unlock",
   "Lock": "Lock",
-  "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.": "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item."
+  "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.": "Locking an item prevents this item from being dragged to other positions. It does not prevent any other manipulations of the item.",
+  "Reordering {0}...": "Reordering {0}...",
+  "Import from Clipboard": "Import from Clipboard",
+  "Duplicate Current Selection": "Duplicate Current Selection",
+  "Delete Current Selection. Hold Control while clicking.": "Delete Current Selection. Hold Control while clicking.",
+  "00:00:00.0000": "00:00:00.0000"
 }

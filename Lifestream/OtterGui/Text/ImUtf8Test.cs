@@ -67,7 +67,7 @@ public class ImUtf8TestWindow : Window
         _watchImGui.Start();
         if (_enableText)
             ImGui.TextUnformatted(
-"Test Text of some considerable length that I can only imagine to be as long as text will ever be in this world.");
+                "Test Text of some considerable length that I can only imagine to be as long as text will ever be in this world.");
         if (_enableButton)
             ImGui.Button("This is a button.##imgui");
         if (_enableInputText)

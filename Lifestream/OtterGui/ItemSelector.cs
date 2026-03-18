@@ -309,7 +309,7 @@ public class ItemSelector<T>
         if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), Vector2.UnitX * width))
             ImGui.OpenPopup(newNamePopupAdd);
         using var font = ImRaii.PushFont(UiBuilder.DefaultFont);
-        ImGuiUtil.HoverTooltip("Add New");
+        ImGuiUtil.HoverTooltip("新增");
 
         if (!OpenNameField(newNamePopupAdd, out var newName))
             return;
