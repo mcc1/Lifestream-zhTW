@@ -380,7 +380,7 @@ public static class TabCustomAlias
         }
         if(command.Kind.EqualsAny(CustomAliasKind.Select_Yes, CustomAliasKind.Select_List_Option))
         {
-            ImGuiEx.TextWrapped($"列出你想選擇／確認的項目：");
+            ImGuiEx.TextWrapped($"觸發條件關鍵字（選項敘述）：");
             if(ImGuiEx.BeginDefaultTable("ItemLst", ["~1", "2"], false))
             {
                 for(var i = 0; i < command.SelectOption.Count; i++)
