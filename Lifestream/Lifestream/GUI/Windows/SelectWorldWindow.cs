@@ -6,6 +6,21 @@ using Lumina.Excel.Sheets;
 namespace Lifestream.GUI.Windows;
 public class SelectWorldWindow : Window
 {
+    // TW fix: ExcelWorldHelper.Get(string) returns the first row matching Name.
+    // "巴哈姆特" has a duplicate entry (row 1160 Bahamute DC=0 Unknown) that appears
+    // before the correct TW row (row 4033 TcBahamut DC=151). Use direct RowId lookup.
+    private static readonly Dictionary<string, uint> TwWorldRowIds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["伊弗利特"] = 4028,
+        ["迦樓羅"] = 4029,
+        ["利維坦"] = 4030,
+        ["鳳凰"] = 4031,
+        ["奧汀"] = 4032,
+        ["巴哈姆特"] = 4033,
+        ["拉姆"] = 4034,
+        ["泰坦"] = 4035,
+    };
+
     private SelectWorldWindow() : base("Lifestream：選擇伺服器", ImGuiWindowFlags.AlwaysAutoResize)
     {
         EzConfigGui.WindowSystem.AddWindow(this);
@@ -16,10 +31,7 @@ public class SelectWorldWindow : Window
         var playerDc = Player.Object?.HomeWorld.ValueNullable?.DataCenter.RowId ?? 0;
         var worlds = S.Data.DataStore.DCWorlds.Concat(S.Data.DataStore.Worlds).Select(x =>
         {
-            // TW fix: ExcelWorldHelper.Get(string) returns the first row matching Name.
-            // "巴哈姆特" has a duplicate entry (row 1160 Bahamute DC=0 Unknown) that appears
-            // before the correct TW row (row 4033 TcBahamut DC=151). Use direct RowId lookup.
-            if(Utils.ShouldUseTwTravelWorlds(playerDc) && Utils.TwWorldRowIds.TryGetValue(x, out var twRowId))
+            if(Utils.ShouldUseTwTravelWorlds(playerDc) && TwWorldRowIds.TryGetValue(x, out var twRowId))
             {
                 return ExcelWorldHelper.Get(twRowId);
             }
