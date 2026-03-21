@@ -1,0 +1,34 @@
+diff --git a/Lifestream/Lifestream/GUI/Windows/SelectWorldWindow.cs b/Lifestream/Lifestream/GUI/Windows/SelectWorldWindow.cs
+index 3c724f2..154974a 100644
+--- a/Lifestream/Lifestream/GUI/Windows/SelectWorldWindow.cs
++++ b/Lifestream/Lifestream/GUI/Windows/SelectWorldWindow.cs
+@@ -1,6 +1,7 @@
+ using ECommons.ExcelServices;
+ using ECommons.GameHelpers;
+ using ECommons.SimpleGui;
++using Lumina.Excel.Sheets;
+ 
+ namespace Lifestream.GUI.Windows;
+ public class SelectWorldWindow : Window
+@@ -12,7 +13,20 @@ public class SelectWorldWindow : Window
+ 
+     public override void Draw()
+     {
+-        var worlds = S.Data.DataStore.DCWorlds.Concat(S.Data.DataStore.Worlds).Select(x => ExcelWorldHelper.Get(x)).OrderBy(x => x?.Name.ToString());
++        var playerDc = Player.Object?.HomeWorld.ValueNullable?.DataCenter.RowId ?? 0;
++        var worlds = S.Data.DataStore.DCWorlds.Concat(S.Data.DataStore.Worlds).Select(x =>
++        {
++            // TW fix: ExcelWorldHelper.Get(string) searches by Name and returns the first match.
++            // "巴哈姆特" (and other TW worlds) have duplicate Name entries in the World sheet
++            // (e.g. row 1160 Bahamute DC=0 "Unknown" comes before row 4033 TcBahamut DC=151).
++            // For TW players, prefer the world row that belongs to the player's datacenter.
++            if(Utils.ShouldUseTwTravelWorlds(playerDc) &&
++               Svc.Data.GetExcelSheet<World>().TryGetFirst(w => w.Name.ToString().EqualsIgnoreCase(x) && w.DataCenter.RowId == playerDc, out var twWorld))
++            {
++                return ExcelWorldHelper.Get(twWorld.RowId);
++            }
++            return ExcelWorldHelper.Get(x);
++        }).OrderBy(x => x?.Name.ToString());
+         if(!worlds.Any())
+         {
+             ImGuiEx.Text($"沒有可用的目的地");
