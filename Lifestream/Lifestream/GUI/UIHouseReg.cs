@@ -57,7 +57,7 @@ public static unsafe class UIHouseReg
             charaDatas.Add((x, C.HousePathDatas.FirstOrDefault(z => z.IsPrivate && z.CID == x), C.HousePathDatas.FirstOrDefault(z => !z.IsPrivate && z.CID == x)));
         }
         DragDropPathData.Begin();
-        if(ImGuiEx.BeginDefaultTable("##charaTable", ["##move", "~Name or CID", "私人", "##privateCtl", "##privateCtl2", "##privateDlm", "部隊", "##FCCtl", "工房", "##workshopCtl", "##fcCtl", "##fcCtl2"]))
+        if(ImGuiEx.BeginDefaultTable("##charaTable", ["##move", "~Name or CID", "私人", "##privateCtl", "##privateCtl2", "##privateDlm", "部隊", "##FCCtl", "工坊", "##workshopCtl", "##fcCtl", "##fcCtl2"]))
         {
             for(var i = 0; i < charaDatas.Count; i++)
             {
@@ -166,7 +166,7 @@ public static unsafe class UIHouseReg
                     {
                         fc.PathToWorkshop.Clear();
                     }
-                    ImGuiEx.Tooltip("移除工房路徑。按住 CTRL 並點擊。");
+                    ImGuiEx.Tooltip("移除工坊路徑。按住 CTRL 並點擊。");
                 }
 
                 ImGui.TableNextColumn();
@@ -355,10 +355,10 @@ public static unsafe class UIHouseReg
             {
                 var path = data.PathToWorkshop;
                 new NuiBuilder()
-                    .Section("前往工房的路徑")
+                    .Section("前往工坊的路徑")
                     .Widget(() =>
                     {
-                        ImGuiEx.TextWrapped($"建立從房屋入口到工房／私人房間入口的路徑。");
+                        ImGuiEx.TextWrapped($"建立從房屋入口到工坊／私人房間入口的路徑。");
 
                         ImGui.PushID($"workshop");
                         DrawPathEditor(path, data);
@@ -404,7 +404,7 @@ public static unsafe class UIHouseReg
                     P.FollowPath.Move(data.PathToEntrance, true);
                 }
                 ImGui.SameLine();
-                if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Play, "測試工房", data.PathToWorkshop.Count > 0 && Utils.IsInsideHouse()))
+                if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Play, "測試工坊", data.PathToWorkshop.Count > 0 && Utils.IsInsideHouse()))
                 {
                     P.FollowPath.Move(data.PathToWorkshop, true);
                 }

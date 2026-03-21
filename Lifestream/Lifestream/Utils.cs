@@ -53,7 +53,7 @@ internal static unsafe partial class Utils
         "拉姆",
         "泰坦",
     ];
-private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
     {
         ["伊弗利特"] = "Ifrit",
         ["伊弗"] = "Ifrit",

@@ -48,8 +48,8 @@ public class SelectWorldWindow : Window
             foreach(var dc in datacenters)
             {
                 var modifier = "";
-                if(Player.Object?.HomeWorld.ValueNullable?.DataCenter.RowId == dc?.RowId) modifier += "";
-                if(Player.Object?.CurrentWorld.ValueNullable?.DataCenter.RowId != dc?.RowId) modifier += "";
+                if(Player.Object?.HomeWorld.ValueNullable?.DataCenter.RowId == dc?.RowId) modifier += "";
+                if(Player.Object?.CurrentWorld.ValueNullable?.DataCenter.RowId != dc?.RowId) modifier += "";
                 ImGui.TableSetupColumn($"{modifier}{dc.Value.ValueNullable?.Name}");
             }
             ImGui.TableHeadersRow();
@@ -57,7 +57,7 @@ public class SelectWorldWindow : Window
             var buttonSize = Vector2.Zero;
             foreach(var w in worlds)
             {
-                var newSize = ImGuiHelpers.GetButtonSize("" + w?.Name.ToString());
+                var newSize = ImGuiHelpers.GetButtonSize("" + w?.Name.ToString());
                 if(newSize.X > buttonSize.X) buttonSize = newSize;
             }
             buttonSize += new Vector2(0, C.ButtonHeightWorld);
@@ -69,7 +69,7 @@ public class SelectWorldWindow : Window
                     if(world?.DataCenter.RowId == dc?.RowId)
                     {
                         var modifier = "";
-                        if(Player.Object?.HomeWorld.RowId == world?.RowId) modifier += "";
+                        if(Player.Object?.HomeWorld.RowId == world?.RowId) modifier += "";
                         if(ImGuiEx.Button(modifier + world?.Name.ToString(), buttonSize, !Utils.IsBusy() && Player.Interactable && Player.Object?.CurrentWorld.RowId != world?.RowId))
                         {
                             P.ProcessCommand("/li", world?.Name.ToString());

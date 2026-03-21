@@ -35,7 +35,7 @@ internal static class Lang
     /li home → 前往你的私人房屋，別名：/li home|house|private
     /li fc → 前往你的部隊房屋，別名：/li fc|free|company|free company
     /li apt → 前往你的公寓，別名：/li apt|apartment
-    /li ws → 前往你的部隊工房，別名：/li ws|workshop
+    /li ws → 前往你的公會工坊，別名：/li ws|workshop
     
     /li <district> <ward> <plot> → 前往當前伺服器的指定地號
     /li <world> <district> <ward> <plot> → 前往指定伺服器的指定地號
