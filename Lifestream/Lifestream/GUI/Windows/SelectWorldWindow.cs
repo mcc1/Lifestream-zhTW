@@ -16,14 +16,12 @@ public class SelectWorldWindow : Window
         var playerDc = Player.Object?.HomeWorld.ValueNullable?.DataCenter.RowId ?? 0;
         var worlds = S.Data.DataStore.DCWorlds.Concat(S.Data.DataStore.Worlds).Select(x =>
         {
-            // TW fix: ExcelWorldHelper.Get(string) searches by Name and returns the first match.
-            // "巴哈姆特" (and other TW worlds) have duplicate Name entries in the World sheet
-            // (e.g. row 1160 Bahamute DC=0 "Unknown" comes before row 4033 TcBahamut DC=151).
-            // For TW players, prefer the world row that belongs to the player's datacenter.
-            if(Utils.ShouldUseTwTravelWorlds(playerDc) &&
-               Svc.Data.GetExcelSheet<World>().TryGetFirst(w => w.Name.ToString().EqualsIgnoreCase(x) && w.DataCenter.RowId == playerDc, out var twWorld))
+            // TW fix: ExcelWorldHelper.Get(string) returns the first row matching Name.
+            // "巴哈姆特" has a duplicate entry (row 1160 Bahamute DC=0 Unknown) that appears
+            // before the correct TW row (row 4033 TcBahamut DC=151). Use direct RowId lookup.
+            if(Utils.ShouldUseTwTravelWorlds(playerDc) && Utils.TwWorldRowIds.TryGetValue(x, out var twRowId))
             {
-                return ExcelWorldHelper.Get(twWorld.RowId);
+                return ExcelWorldHelper.Get(twRowId);
             }
             return ExcelWorldHelper.Get(x);
         }).OrderBy(x => x?.Name.ToString());

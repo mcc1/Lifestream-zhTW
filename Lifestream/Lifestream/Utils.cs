@@ -53,6 +53,20 @@ internal static unsafe partial class Utils
         "拉姆",
         "泰坦",
     ];
+    // TW fix: ExcelWorldHelper.Get(string) returns the first row matching Name, which for
+    // "巴哈姆特" is row 1160 (Bahamute, DC=0 Unknown) before row 4033 (TcBahamut, DC=151).
+    // Use direct RowId lookup to always get the correct TW world row.
+    internal static readonly Dictionary<string, uint> TwWorldRowIds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["伊弗利特"] = 4028,
+        ["迦樓羅"] = 4029,
+        ["利維坦"] = 4030,
+        ["鳳凰"] = 4031,
+        ["奧汀"] = 4032,
+        ["巴哈姆特"] = 4033,
+        ["拉姆"] = 4034,
+        ["泰坦"] = 4035,
+    };
     private static readonly Dictionary<string, string> TravelWorldAliases = new(StringComparer.OrdinalIgnoreCase)
     {
         ["伊弗利特"] = "Ifrit",
