@@ -1,0 +1,13 @@
+diff --git a/Lifestream/Lifestream/Lifestream.cs b/Lifestream/Lifestream/Lifestream.cs
+index 0000000..0000001 100644
+--- a/Lifestream/Lifestream/Lifestream.cs
++++ b/Lifestream/Lifestream/Lifestream.cs
+@@ -368,7 +368,7 @@ internal void ProcessCommand(string command, string arguments)
+                 WorldChangeAetheryte? gateway = null;
+                 if(additionalCommand == "mb")
+                 {
+-                    gateway = WorldChangeAetheryte.Uldah;
++                    gateway = C.WorldChangeAetheryte;
+                 }
+
+                 var targetInput = primary == "" ? Player.HomeWorld : primary;
