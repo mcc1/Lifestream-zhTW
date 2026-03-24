@@ -32,7 +32,7 @@ index 50c1122..2b29525 100644
      public static void Enqueue()
      {
 -        StaticAlias.UldahMarketboard.Enqueue();
-+        var alias = P.Config.WorldChangeAetheryte switch
++        var alias = C.WorldChangeAetheryte switch
 +        {
 +            WorldChangeAetheryte.Gridania => StaticAlias.GridaniaMarketboard,
 +            WorldChangeAetheryte.Limsa => StaticAlias.LimsaMarketboard,
