@@ -1,0 +1,43 @@
+diff --git a/Lifestream/Lifestream/Data/StaticAlias.cs b/Lifestream/Lifestream/Data/StaticAlias.cs
+index 2ccadfb..7ce27b0 100644
+--- a/Lifestream/Lifestream/Data/StaticAlias.cs
++++ b/Lifestream/Lifestream/Data/StaticAlias.cs
+@@ -35,4 +35,12 @@ public static class StaticAlias
+     public static readonly CustomAlias UldahMarketboard = JsonConvert.DeserializeObject<CustomAlias>("""
+         {"ExportedName":"mbShortcut","Commands":[{"Kind":0,"Aetheryte":9},{"Kind":4,"Aetheryte":125},{"Kind":1,"Point":{"X":138.15443,"Y":4.0,"Z":-31.829441},"Scatter":0.7},{"Kind":1,"Point":{"X":145.9551,"Y":4.0,"Z":-32.124325},"Scatter":0.5},{"Kind":6,"DataID":2000442}]}
+         """);
++
++    public static readonly CustomAlias GridaniaMarketboard = JsonConvert.DeserializeObject<CustomAlias>("""
++        {"ExportedName":"mbGridania","Commands":[{"Kind":0,"Aetheryte":2,"SkipTeleport":15.0},{"Kind":4,"Aetheryte":26},{"Kind":2,"Point":{"X":159.987,"Y":15.5,"Z":-100.58}},{"Kind":6,"DataID":2000402}]}
++        """);
++
++    public static readonly CustomAlias LimsaMarketboard = JsonConvert.DeserializeObject<CustomAlias>("""
++        {"ExportedName":"mbLimsa","Commands":[{"Kind":0,"Aetheryte":8,"SkipTeleport":15.0},{"Kind":4,"Aetheryte":49},{"Kind":2,"Point":{"X":-223.96,"Y":16.0,"Z":50.161}},{"Kind":6,"DataID":2000402}]}
++        """);
+ }
+diff --git a/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs b/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs
+index 50c1122..2b29525 100644
+--- a/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs
++++ b/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs
+@@ -4,6 +4,7 @@ using ECommons.GameHelpers;
+ using ECommons.Throttlers;
+ using FFXIVClientStructs.FFXIV.Client.Game.Control;
+ using Lifestream.Data;
++using Lifestream.Enums;
+ using Lifestream.Tasks.SameWorld;
+ using Lumina.Excel.Sheets;
+ 
+@@ -12,6 +13,12 @@ public static unsafe class TaskMBShortcut
+ {
+     public static void Enqueue()
+     {
+-        StaticAlias.UldahMarketboard.Enqueue();
++        var alias = P.Config.WorldChangeAetheryte switch
++        {
++            WorldChangeAetheryte.Gridania => StaticAlias.GridaniaMarketboard,
++            WorldChangeAetheryte.Limsa => StaticAlias.LimsaMarketboard,
++            _ => StaticAlias.UldahMarketboard,
++        };
++        alias.Enqueue();
+     }
+ }
