@@ -1,0 +1,12 @@
+diff --git a/Lifestream/Lifestream/Lifestream.cs b/Lifestream/Lifestream/Lifestream.cs
+--- a/Lifestream/Lifestream/Lifestream.cs
++++ b/Lifestream/Lifestream/Lifestream.cs
+@@ -368,7 +368,7 @@ public unsafe class Lifestream : IDalamudPlugin
+                 WorldChangeAetheryte? gateway = null;
+                 if(additionalCommand == "mb")
+                 {
+-                    gateway = WorldChangeAetheryte.Uldah;
++                    gateway = C.WorldChangeAetheryte;
+                 }
+
+                 var targetInput = primary == "" ? Player.HomeWorld : primary;
