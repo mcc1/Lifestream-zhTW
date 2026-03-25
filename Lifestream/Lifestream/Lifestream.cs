@@ -365,6 +365,11 @@ public unsafe class Lifestream : IDalamudPlugin
                         arguments = arguments[0..(arguments.Length - x.Length)] + $",{x}";
                     }
                 }
+                // Re-split after space-to-comma rewrite so "泰坦 mb" → primary="泰坦", additionalCommand="mb"
+                argsSplit = arguments.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                primary = argsSplit.SafeSelect(0) ?? "";
+                additionalCommand = argsSplit.Length > 1 ? argsSplit[1..].Join(",") : null;
+
                 WorldChangeAetheryte? gateway = null;
                 if(additionalCommand == "mb")
                 {
