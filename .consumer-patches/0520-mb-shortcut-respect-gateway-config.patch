@@ -15,6 +15,18 @@ index 2ccadfb..7ce27b0 100644
 +        {"ExportedName":"mbLimsa","Commands":[{"Kind":0,"Aetheryte":8,"SkipTeleport":15.0},{"Kind":4,"Aetheryte":49},{"Kind":2,"Point":{"X":-223.96,"Y":16.0,"Z":50.161}},{"Kind":6,"DataID":2000402}]}
 +        """);
  }
+diff --git a/Lifestream/Lifestream/Lifestream.cs b/Lifestream/Lifestream/Lifestream.cs
+--- a/Lifestream/Lifestream/Lifestream.cs
++++ b/Lifestream/Lifestream/Lifestream.cs
+@@ -368,7 +368,7 @@ public unsafe class Lifestream : IDalamudPlugin
+                 WorldChangeAetheryte? gateway = null;
+                 if(additionalCommand == "mb")
+                 {
+-                    gateway = WorldChangeAetheryte.Uldah;
++                    gateway = C.WorldChangeAetheryte;
+                 }
+
+                 var targetInput = primary == "" ? Player.HomeWorld : primary;
 diff --git a/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs b/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs
 index 50c1122..2b29525 100644
 --- a/Lifestream/Lifestream/Tasks/Shortcuts/TaskMBShortcut.cs
@@ -26,7 +38,7 @@ index 50c1122..2b29525 100644
 +using Lifestream.Enums;
  using Lifestream.Tasks.SameWorld;
  using Lumina.Excel.Sheets;
- 
+
 @@ -12,6 +13,12 @@ public static unsafe class TaskMBShortcut
  {
      public static void Enqueue()
