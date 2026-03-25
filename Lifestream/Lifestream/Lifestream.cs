@@ -368,7 +368,7 @@ public unsafe class Lifestream : IDalamudPlugin
                 WorldChangeAetheryte? gateway = null;
                 if(additionalCommand == "mb")
                 {
-                    gateway = WorldChangeAetheryte.Uldah;
+                    gateway = C.WorldChangeAetheryte;
                 }
 
                 var targetInput = primary == "" ? Player.HomeWorld : primary;
